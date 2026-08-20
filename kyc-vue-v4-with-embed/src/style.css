@@ -1,0 +1,43 @@
+/* ============================================================
+   DESIGN TOKENS — mengikuti style PDF mockup:
+   sidebar/header navy gelap + aksi utama hijau brand
+   ============================================================ */
+:root {
+  --navy: #1E2947;        /* sidebar, header modal/section */
+  --navy-soft: #2B3B63;   /* hover/active state di navy */
+  --navy-line: #33436B;
+
+  --green: #43A047;       /* tombol aksi utama, status aktif */
+  --green-dark: #2E7D32;
+  --green-soft: #E8F5E9;
+
+  --ink: #1A2333;
+  --ink-soft: #56607A;
+  --ink-faint: #8A93A8;
+  --bg: #F1F3F8;
+  --surface: #FFFFFF;
+  --line: #E2E6EE;
+
+  --good: #2E7D32;   --good-bg: #E8F5E9;
+  --mid:  #B7791F;   --mid-bg:  #FFF3DE;
+  --risk: #C62828;   --risk-bg: #FDEAEA;
+  --neutral: #5B6478; --neutral-bg: #EEF0F4;
+
+  --radius: 12px;
+  --sidebar-w: 240px;
+  --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 17px; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: var(--font-body);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}

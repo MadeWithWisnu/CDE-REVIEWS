@@ -1,0 +1,84 @@
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\appsettings.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.staticwebassets.endpoints.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.exe
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.deps.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.runtimeconfig.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.pdb
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.csproj.AssemblyReference.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.AssemblyInfoInputs.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.AssemblyInfo.cs
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.csproj.CoreCompileInputs.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\scopedcss\bundle\Miwanet.DocAccess.Api.styles.css
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet..C8C6B563.Up2Date
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\refint\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.pdb
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.genruntimeconfig.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE & FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\ref\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\appsettings.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.staticwebassets.endpoints.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.exe
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.deps.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.runtimeconfig.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Miwanet.DocAccess.Api.pdb
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.csproj.AssemblyReference.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.AssemblyInfoInputs.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.AssemblyInfo.cs
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.csproj.CoreCompileInputs.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\scopedcss\bundle\Miwanet.DocAccess.Api.styles.css
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet..C8C6B563.Up2Date
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\refint\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.pdb
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.genruntimeconfig.cache
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\ref\Miwanet.DocAccess.Api.dll
