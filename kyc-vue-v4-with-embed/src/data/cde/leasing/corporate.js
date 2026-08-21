@@ -11,20 +11,29 @@ export const leasingCorporate = {
     { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
     { type: 'group', label: 'Deed of Establishment' },
     { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
+
+    { type: 'group', label: 'Company Guarantor' },
+    { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
+    { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
+
+    { type: 'group', label: 'Personal Guarantor' },
+    { type: 'row', label: 'Dukcapil', value: 'Match', indent: 1 },
+    { type: 'row', label: 'Phone Verification (ID Match)', value: 'Match', indent: 1 },
+    { type: 'row', label: 'Phone Verification (Phone Age)', value: '(>12 months)', indent: 1 },
   ],
 
   preScoring: [
-    { type: 'group', label: 'SLIK Score:' },
-    { type: 'badge', label: 'Customer', value: 'Good', indent: 1 },
-    { type: 'badge', label: 'Mr Febby - Director & Shareholder', value: 'Medium-Good', indent: 1 },
-    { type: 'badge', label: 'Mr Ivan - Commisioner & Shareholder', value: 'Medium-Good', indent: 1 },
-    { type: 'badge', label: 'Aggregate', value: 'Good', indent: 1 },
     {
-      type: 'links', label: 'Summary SLIK', indent: 1, links: [
-        { text: 'Link to dashboard Customer', url: '#' },
-        { text: 'Link to dashboard Mr Febby', url: '#' },
-        { text: 'Link to dashboard Mr Ivan', url: '#' },
-      ]
+      type: 'peopleTable',
+      label: 'SLIK Score',
+      people: [
+        { name: 'Customer', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Mr Febby', positionStatus: 'Director & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Mr Ivan', positionStatus: 'Commissioner & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Company Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Personal Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
+      ],
     },
     { type: 'row', label: 'Pre Scoring Result', value: 'Tend to Approve' },
     { type: 'row', label: 'Survey Treatment', value: 'SO and Surveyor' },
@@ -35,7 +44,7 @@ export const leasingCorporate = {
     { type: 'row', label: 'Chassis No', value: 'MJEC1JG43J1234567', mono: true, indent: 1 },
     { type: 'row', label: 'Engine No', value: 'W04DTRR12345', mono: true, indent: 1 },
     { type: 'row', label: 'Vehicle Type', value: 'Dutro 130 HD', indent: 1 },
-    { type: 'row', label: 'License Type', value: 'H 1234 HC', mono: true, indent: 1 },
+    { type: 'row', label: 'License Plate', value: 'H 1234 HC', mono: true, indent: 1 },
     { type: 'row', label: 'Manufacture Year', value: '2025', indent: 1 },
     { type: 'row', label: 'Brand', value: 'Hino', indent: 1 },
     { type: 'badge', label: 'Certificate Status', value: 'Active', indent: 1 },
@@ -60,7 +69,7 @@ export const leasingCorporate = {
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
     { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result (Mr Febby)', url: '#' }] },
 
-    { type: 'group', label: 'Commisioner LPIP' },
+    { type: 'group', label: 'Commissioner LPIP' },
     { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
     { type: 'row', label: 'Score', value: '123', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
@@ -68,17 +77,17 @@ export const leasingCorporate = {
   ],
 
   finalScoring: [
-    { type: 'group', label: 'SLIK Score Final:' },
-    { type: 'badge', label: 'Customer', value: 'Good', indent: 1 },
-    { type: 'badge', label: 'Mr Febby - Director & Shareholder', value: 'Medium-Good', indent: 1 },
-    { type: 'badge', label: 'Mr Ivan - Commisioner & Shareholder', value: 'Medium-Good', indent: 1 },
-    { type: 'badge', label: 'Aggregate', value: 'Good', indent: 1 },
     {
-      type: 'links', label: 'Summary SLIK', indent: 1, links: [
-        { text: 'Link to dashboard Customer', url: '#' },
-        { text: 'Link to dashboard Mr Febby', url: '#' },
-        { text: 'Link to dashboard Mr Ivan', url: '#' },
-      ]
+      type: 'peopleTable',
+      label: 'SLIK Score Final',
+      people: [
+        { name: 'Customer', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Mr Febby', positionStatus: 'Director & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Mr Ivan', positionStatus: 'Commissioner & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Company Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Personal Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+        { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
+      ],
     },
     { type: 'badge', label: 'Bank Statement Analyzer', value: 'Valid' },
     { type: 'row', label: 'Credit Deviation', value: '0' },

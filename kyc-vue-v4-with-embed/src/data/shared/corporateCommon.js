@@ -1,14 +1,14 @@
 /**
  * corporateCommon.js
  * -------------------
- * KYC Screening, APU PPT Check, dan SLIK Check untuk Corporate Customer
- * bentuknya SAMA di beberapa tipe CDE (Review CF, FL, Factory, MOU & CWR).
- * Daripada duplikat di 4 file, isinya ditaruh di sini dan tinggal di-import.
+ * KYC Screening, APU PPT Check, and SLIK Check for Corporate Customer share
+ * the same shape across several CDE types (Review CF, FL, Factory, MOU &
+ * CWR). Instead of duplicating them in 4 files, they live here and get
+ * imported where needed.
  *
- * Kalau suatu saat ada satu tipe CDE yang butuh versi berbeda (mis. ada
- * field tambahan), tinggal jangan pakai import ini di file data tipe
- * tersebut — buat array sendiri di situ. Section lain tetap boleh pakai
- * yang common.
+ * If a CDE type ever needs a different version (e.g. an extra field), just
+ * skip this import in that type's data file and build a dedicated array
+ * there instead — other sections can still use the common one.
  */
 
 export const kycCorporateCommon = [
@@ -16,6 +16,15 @@ export const kycCorporateCommon = [
   { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
   { type: 'group', label: 'Deed of Establishment' },
   { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
+
+  { type: 'group', label: 'Company Guarantor' },
+  { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
+  { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
+
+  { type: 'group', label: 'Personal Guarantor' },
+  { type: 'row', label: 'Dukcapil', value: 'Match', indent: 1 },
+  { type: 'row', label: 'Phone Verification (ID Match)', value: 'Match', indent: 1 },
+  { type: 'row', label: 'Phone Verification (Phone Age)', value: '(>12 months)', indent: 1 },
 ];
 
 export const apupptCorporateCommon = [
@@ -25,16 +34,16 @@ export const apupptCorporateCommon = [
 ];
 
 export const slikCheckCorporateCommon = [
-  { type: 'group', label: 'SLIK Score:' },
-  { type: 'badge', label: 'Customer', value: 'Good', indent: 1 },
-  { type: 'badge', label: 'Mr Febby - Director & Shareholder', value: 'Medium-Good', indent: 1 },
-  { type: 'badge', label: 'Mr Ivan - Commisioner & Shareholder', value: 'Medium-Good', indent: 1 },
-  { type: 'badge', label: 'Aggregate', value: 'Good', indent: 1 },
   {
-    type: 'links', label: 'Summary SLIK', indent: 1, links: [
-      { text: 'Link to dashboard Customer', url: '#' },
-      { text: 'Link to dashboard Mr Febby', url: '#' },
-      { text: 'Link to dashboard Mr Ivan', url: '#' },
-    ]
+    type: 'peopleTable',
+    label: 'SLIK Score',
+    people: [
+      { name: 'Customer', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+      { name: 'Mr Febby', positionStatus: 'Director & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+      { name: 'Mr Ivan', positionStatus: 'Commissioner & Shareholder', result: 'Medium-Good', summaryUrl: '#' },
+      { name: 'Company Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+      { name: 'Personal Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
+      { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
+    ],
   },
 ];

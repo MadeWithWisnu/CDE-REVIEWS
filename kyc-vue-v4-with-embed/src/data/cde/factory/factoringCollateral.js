@@ -4,7 +4,7 @@
  * Collateral Check untuk skema Factoring (Invoice). Dipakai oleh CDE Factory.
  */
 export const factoringCollateralCorporate = [
-  { type: 'note', label: 'Untuk pengecekan Factoring (Invoice)' },
+  { type: 'note', label: 'For Factoring (Invoice) verification' },
   { type: 'group', label: 'Rapindo:' },
   { type: 'row', label: 'Purchase Order No (PO or SO or SPK Number)', value: '1234.123/ABC', mono: true, indent: 1 },
   { type: 'row', label: 'Customer Name', value: 'PT ABC', indent: 1 },

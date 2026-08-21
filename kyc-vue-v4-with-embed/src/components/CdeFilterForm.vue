@@ -42,7 +42,7 @@ function submit() {
       <div class="field">
         <label>Debtor Type / Model</label>
         <select v-model="debtorType" class="select" :class="{ invalid: touched && !debtorType }">
-          <option value="" disabled>Pilih debtor type</option>
+          <option value="" disabled>Select debtor type</option>
           <option v-for="d in DEBTOR_TYPES" :key="d.key" :value="d.key">{{ d.label }}</option>
         </select>
       </div>
@@ -50,7 +50,7 @@ function submit() {
       <div class="field">
         <label>Way of Financing</label>
         <select v-model="financingWay" class="select" :class="{ invalid: touched && !financingWay }">
-          <option value="" disabled>Pilih way of financing</option>
+          <option value="" disabled>Select way of financing</option>
           <option v-for="f in FINANCING_WAYS" :key="f.key" :value="f.key">{{ f.label }}</option>
         </select>
       </div>
@@ -60,15 +60,15 @@ function submit() {
       </button>
     </div>
 
-    <p v-if="touched && !isValid()" class="form-error">Lengkapi App No, Debtor Type, dan Way of Financing dulu.</p>
+    <p v-if="touched && !isValid()" class="form-error">Please complete App No, Debtor Type, and Way of Financing.</p>
 
     <div class="hint-panel">
-      <div class="hint-title">Cara pakai</div>
+      <div class="hint-title">How to use</div>
       <ol class="hint-list">
-        <li>Masukkan <b>App No</b> aplikasi yang mau di-review.</li>
-        <li>Pilih <b>Debtor Type</b> — Personal atau Company.</li>
-        <li>Pilih <b>Way of Financing</b> — IF, FMU, atau FL.</li>
-        <li>Klik <b>Search</b> untuk melihat dokumen CDE yang sesuai.</li>
+        <li>Enter the <b>App No</b> of the application you want to review.</li>
+        <li>Select the <b>Debtor Type</b> — Personal or Company.</li>
+        <li>Select the <b>Way of Financing</b> — IF, FMU, or FL.</li>
+        <li>Click <b>Search</b> to view the matching CDE document.</li>
       </ol>
     </div>
   </div>

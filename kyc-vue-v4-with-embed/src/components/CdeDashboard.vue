@@ -16,8 +16,9 @@ const appNo = route.query.appNo || '';
 const cdeType = getCdeType(cdeKey);
 const currentData = CDE_DATA[cdeKey] || {};
 
-// Guard untuk mode embed (dibuka di iframe Confins). Kalau bukan embed, status langsung 'ready'
-// dan halaman berjalan seperti biasa (mengandalkan sesi login Miwanet yang sudah ada).
+// Guard for embed mode (opened inside the Confins iframe). If not embed, status
+// is 'ready' right away and the page behaves normally (relies on the existing
+// Miwanet login session).
 const { isEmbed, status, validate } = useEmbedGuard();
 onMounted(validate);
 
@@ -32,26 +33,29 @@ const openSections = reactive(
 function toggleSection(key) {
   openSections[key] = !openSections[key];
 }
+
+// Document Upload is always the LAST section in the accordion.
+const uploadSectionOpen = reactive({ open: false });
 </script>
 
 <template>
-  <!-- Mode embed: sedang cek token ke Miwanet BE, jangan tampilkan apa-apa dulu -->
+  <!-- Embed mode: checking token with Miwanet BE, don't show anything yet -->
   <div v-if="isEmbed && status === 'checking'" class="not-found">
-    <p>Memuat...</p>
+    <p>Loading...</p>
   </div>
 
-  <!-- Mode embed: token tidak ada / tidak valid / kedaluwarsa -->
+  <!-- Embed mode: token missing / invalid / expired -->
   <div v-else-if="isEmbed && status === 'invalid'" class="not-found">
-    <p>Akses tidak valid atau sudah kedaluwarsa. Silakan buka ulang dari Confins.</p>
+    <p>Access invalid or expired. Please reopen this from Confins.</p>
   </div>
 
   <div v-else-if="!cdeType" class="not-found">
-    <p>Dokumen CDE <code>{{ cdeKey }}</code> tidak ditemukan.</p>
-    <button class="back-link" @click="router.push('/')">← Kembali ke pencarian</button>
+    <p>CDE document <code>{{ cdeKey }}</code> not found.</p>
+    <button class="back-link" @click="router.push('/')">← Back to search</button>
   </div>
 
   <template v-else>
-    <button v-if="!isEmbed" class="back-link" @click="router.back()">← Kembali ke daftar dokumen</button>
+    <button v-if="!isEmbed" class="back-link" @click="router.back()">← Back to document list</button>
 
     <div class="doc-header">
       <div class="doc-header-icon" :style="{ background: cdeType.bg, color: cdeType.color }">{{ cdeType.icon }}</div>
@@ -62,7 +66,6 @@ function toggleSection(key) {
       <div v-if="appNo" class="app-no-tag">App No<br /><b>{{ appNo }}</b></div>
     </div>
 
-    
     <div v-if="currentData.verdict" class="verdict">
       <div class="verdict-left">
         <div class="label">Final Score Result</div>
@@ -76,20 +79,27 @@ function toggleSection(key) {
         Instant Approval: {{ currentData.verdict.instantApproval }}
       </div>
     </div>
-    
+
     <div class="accordion">
       <AccordionSection
-      v-for="sec in activeSections" :key="sec.key"
-      :meta="sec.meta"
-      :rows="currentData[sec.key] || []"
-      :is-open="openSections[sec.key]"
-      @toggle="toggleSection(sec.key)"
+        v-for="sec in activeSections" :key="sec.key"
+        :meta="sec.meta"
+        :rows="currentData[sec.key] || []"
+        :is-open="openSections[sec.key]"
+        @toggle="toggleSection(sec.key)"
       />
+
+      <!-- Document Upload — always the last section -->
+      <AccordionSection
+        :meta="{ title: 'Document Upload', icon: '📎' }"
+        :is-open="uploadSectionOpen.open"
+        @toggle="uploadSectionOpen.open = !uploadSectionOpen.open"
+      >
+        <CaReviewUpload />
+      </AccordionSection>
     </div>
-    
-    <CaReviewUpload />
-    
-    <footer class="note">Data ditampilkan berdasarkan hasil proses screening terakhir untuk {{ cdeType.name }}.</footer>
+
+    <footer class="note">Data shown reflects the latest screening result for {{ cdeType.name }}.</footer>
   </template>
 </template>
 

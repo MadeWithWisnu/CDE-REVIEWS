@@ -4,12 +4,12 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-// Saat dibuka sebagai iframe embed dari Confins (?embed=1), sembunyikan chrome Miwanet
-// (sidebar, topbar) supaya yang tampil di iframe cuma konten CDE-nya saja.
+// When opened as an embedded iframe from Confins (?embed=1), hide the Miwanet
+// chrome (sidebar, topbar) so only the CDE content shows inside the iframe.
 const isEmbed = computed(() => route.query.embed === '1');
 
 const navItems = [
-  { label: 'Cari CDE', icon: '🔍', to: '/', active: r => r === 'filter' || r === 'results' },
+  { label: 'Search CDE', icon: '🔍', to: '/', active: r => r === 'filter' || r === 'results' },
   { label: 'Task Order', icon: '🗂️', comingSoon: true },
   { label: 'Monitoring', icon: '📊', comingSoon: true },
   { label: 'Report', icon: '📁', comingSoon: true },
@@ -37,7 +37,7 @@ function isActive(item) {
         </router-link>
         <div v-for="item in navItems.slice(1)" :key="item.label" class="nav-item disabled">
           <span class="nav-icon">{{ item.icon }}</span>{{ item.label }}
-          <span class="soon-tag">Segera</span>
+          <span class="soon-tag">Coming Soon</span>
         </div>
       </nav>
 

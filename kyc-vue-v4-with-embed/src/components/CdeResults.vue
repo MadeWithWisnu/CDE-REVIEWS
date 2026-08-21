@@ -22,7 +22,7 @@ function openCde(key) {
 
 <template>
   <div class="results-page">
-    <button class="back-link" @click="router.push('/')">← Ubah pencarian</button>
+    <button class="back-link" @click="router.push('/')">← Edit search</button>
 
     <div class="summary-bar">
       <div class="summary-item">
@@ -37,23 +37,23 @@ function openCde(key) {
         <span class="summary-label">Way of Financing</span>
         <span class="summary-value">{{ financingLabel }}</span>
       </div>
-      <div class="summary-count">{{ matches.length }} dokumen ditemukan</div>
+      <div class="summary-count">{{ matches.length }} document(s) found</div>
     </div>
 
     <div v-if="matches.length === 0" class="empty-state">
       <div class="empty-icon">🔍</div>
-      <p>Tidak ada dokumen CDE yang cocok dengan kombinasi filter ini.</p>
-      <button class="back-link inline" @click="router.push('/')">← Coba filter lain</button>
+      <p>No CDE documents match this filter combination.</p>
+      <button class="back-link inline" @click="router.push('/')">← Try another filter</button>
     </div>
 
     <div v-else class="table-wrap">
       <table class="doc-table">
         <thead>
           <tr>
-            <th>Dokumen CDE</th>
+            <th>CDE Document</th>
             <th>Debtor Type</th>
             <th>Way of Financing</th>
-            <th class="col-action">Aksi</th>
+            <th class="col-action">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -72,7 +72,7 @@ function openCde(key) {
               <span v-for="fw in t.financingWays" :key="fw" class="tag tag-outline">{{ fw }}</span>
             </td>
             <td class="col-action">
-              <button class="open-btn" @click.stop="openCde(t.key)">Buka →</button>
+              <button class="open-btn" @click.stop="openCde(t.key)">Open →</button>
             </td>
           </tr>
         </tbody>
