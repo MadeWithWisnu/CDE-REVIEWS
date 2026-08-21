@@ -52,8 +52,8 @@ export const leasingCorporate = {
   ],
 
   apuppt: [
-    { type: 'badge', label: 'AML News', value: 'Not Listed' },
-    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Medium Risk' },
+    { type: 'badge', label: 'AML News', value: 'Not Listed', indent: 1 },
+    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Medium Risk', indent: 1 },
   ],
 
   lpip: [
@@ -89,9 +89,33 @@ export const leasingCorporate = {
         { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
       ],
     },
-    { type: 'badge', label: 'Bank Statement Analyzer', value: 'Valid' },
-    { type: 'row', label: 'Credit Deviation', value: '0' },
-    { type: 'row', label: 'Product Deviation', value: '0' },
+    { type: 'group', label: 'Bank Statement Analyzer' },
+    { type: 'badge', label: 'Status', value: 'Valid' },
+
+    {
+      type: 'subAccordion',
+      title: 'Credit Deviation',
+      icon: '📉',
+      rows: [
+        { type: 'row', label: 'Company Age', value: '0', indent: 1 },
+        { type: 'row', label: 'Tenor', value: '0', indent: 1 },
+        { type: 'row', label: 'Down Payment Percentage', value: '0', indent: 1 },
+        { type: 'row', label: 'Debt Service Coverage Ratio', value: '0', indent: 1 },
+        { type: 'badge', label: 'Total Credit Deviation', value: '0' },
+      ],
+    },
+    {
+      type: 'subAccordion',
+      title: 'Product Deviation',
+      icon: '📦',
+      rows: [
+        { type: 'row', label: 'Unit Price', value: '0', indent: 1 },
+        { type: 'row', label: 'Manufacture Year', value: '0', indent: 1 },
+        { type: 'row', label: 'Residual Value', value: '0', indent: 1 },
+        { type: 'badge', label: 'Total Product Deviation', value: '0' },
+      ],
+    },
+
     { type: 'badge', label: 'Final Score Result', value: 'Recommend to Approve' },
     { type: 'badge', label: 'Instant Approval', value: 'Yes' },
   ],

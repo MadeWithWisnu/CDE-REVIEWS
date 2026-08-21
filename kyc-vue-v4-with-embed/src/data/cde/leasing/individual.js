@@ -12,16 +12,22 @@ export const leasingIndividual = {
     { type: 'row', label: 'Spouse', value: 'Match', indent: 1 },
     { type: 'row', label: 'Guarantor', value: 'Match', indent: 1 },
 
-    { type: 'group', label: 'Phone Verification (ID Match)' },
-    { type: 'row', label: 'Customer Name - Customer', value: 'Match - Not Match', indent: 1 },
-    { type: 'row', label: 'Spouse Name - Spouse', value: 'Match - Not Match', indent: 1 },
-    { type: 'row', label: 'Guarantor Name - Guarantor', value: 'Match - Not Match', indent: 1 },
+    {
+      type: 'peopleTable',
+      label: 'Phone Verification',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'idMatch', label: 'ID Match' },
+        { key: 'phoneAge', label: 'Phone Age' },
+      ],
+      people: [
+        { name: 'Customer Name - Customer', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { name: 'Spouse Name - Spouse', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { name: 'Guarantor Name - Guarantor', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+      ],
+    },
 
-    { type: 'group', label: 'Phone Verification (Phone Age)' },
-    { type: 'row', label: 'Customer Name - Customer', value: '(>12 months)', indent: 1 },
-    { type: 'row', label: 'Spouse Name - Spouse', value: '(>12 months)', indent: 1 },
-    { type: 'row', label: 'Guarantor Name - Guarantor', value: '(>12 months)', indent: 1 },
-
+    { type: 'group', label: 'Location Verification' },
     { type: 'row', label: 'Location Verification (House)', value: '0 - 200 meter' },
     { type: 'row', label: 'Location Verification (Office)', value: '0 - 200 meter' },
   ],
@@ -30,11 +36,16 @@ export const leasingIndividual = {
     {
       type: 'peopleTable',
       label: 'SLIK Score',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'result', label: 'Check Result', badge: true },
+        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
+      ],
       people: [
-        { name: 'Customer', positionStatus: '—', result: 'Good', summaryUrl: '#' },
-        { name: 'Spouse', positionStatus: '—', result: 'Medium-Good', summaryUrl: '#' },
-        { name: 'Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
-        { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
+        { name: 'Customer', result: 'Good', summaryUrl: '#' },
+        { name: 'Spouse', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Guarantor', result: 'Good', summaryUrl: '#' },
+        { name: 'Aggregate', result: 'Good', summaryUrl: '' },
       ],
     },
     { type: 'row', label: 'Pre Scoring Result', value: 'Tend to Approve' },
@@ -82,16 +93,45 @@ export const leasingIndividual = {
     {
       type: 'peopleTable',
       label: 'SLIK Score Final',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'result', label: 'Check Result', badge: true },
+        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
+      ],
       people: [
-        { name: 'Customer', positionStatus: '—', result: 'Good', summaryUrl: '#' },
-        { name: 'Spouse', positionStatus: '—', result: 'Medium-Good', summaryUrl: '#' },
-        { name: 'Guarantor', positionStatus: '—', result: 'Good', summaryUrl: '#' },
-        { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
+        { name: 'Customer', result: 'Good', summaryUrl: '#' },
+        { name: 'Spouse', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Guarantor', result: 'Good', summaryUrl: '#' },
+        { name: 'Aggregate', result: 'Good', summaryUrl: '' },
       ],
     },
-    { type: 'badge', label: 'Bank Statement Analyzer', value: 'Valid' },
-    { type: 'row', label: 'Credit Deviation', value: '0' },
-    { type: 'row', label: 'Product Deviation', value: '0' },
+     { type: 'group', label: 'Bank Statement Analyzer' },
+    { type: 'badge', label: 'Status', value: 'Valid' },
+
+    {
+      type: 'subAccordion',
+      title: 'Credit Deviation',
+      icon: '📉',
+      rows: [
+        { type: 'row', label: 'Age', value: '0', indent: 1 },
+        { type: 'row', label: 'Tenor', value: '0', indent: 1 },
+        { type: 'row', label: 'Down Payment Percentage', value: '0', indent: 1 },
+        { type: 'row', label: 'Installment to Income Ratio', value: '0', indent: 1 },
+        { type: 'badge', label: 'Total Credit Deviation', value: '0' },
+      ],
+    },
+    {
+      type: 'subAccordion',
+      title: 'Product Deviation',
+      icon: '📦',
+      rows: [
+        { type: 'row', label: 'Unit Price', value: '0', indent: 1 },
+        { type: 'row', label: 'Manufacture Year', value: '0', indent: 1 },
+        { type: 'row', label: 'Residual Value', value: '0', indent: 1 },
+        { type: 'badge', label: 'Total Product Deviation', value: '0' },
+      ],
+    },
+
     { type: 'badge', label: 'Final Score Result', value: 'Recommend to Approve' },
     { type: 'badge', label: 'Instant Approval', value: 'Yes' },
   ],

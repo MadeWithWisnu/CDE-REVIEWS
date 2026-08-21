@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { badgeTone } from '../data/sections.js';
 
 const props = defineProps({
@@ -11,6 +11,23 @@ const props = defineProps({
 const emit = defineEmits(['toggle']);
 
 const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || null);
+
+// Local open/close state for nested `subAccordion` rows (e.g. Credit Deviation /
+// Product Deviation living inside Final Scoring). Independent from the parent
+// section's own open state, keyed by row index.
+const openSubs = reactive({});
+function toggleSub(i) {
+  openSubs[i] = !openSubs[i];
+}
+
+// Default columns for `peopleTable` rows that don't specify their own
+// `columns` — keeps existing SLIK-style tables working unchanged.
+const defaultPeopleTableColumns = [
+  { key: 'name', label: 'Name' },
+  { key: 'positionStatus', label: 'Position / Status' },
+  { key: 'result', label: 'Check Result', badge: true },
+  { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
+];
 </script>
 
 <template>
@@ -46,7 +63,7 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
 
           <div v-else-if="row.type === 'badge'" class="field-cell" :class="{ indent: row.indent }">
             <div class="field-label">{{ row.label }}</div>
-            <div class="field-value"><span class="badge" :class="badgeTone(row.value)">{{ row.value }}</span></div>
+            <div class="field-value"><span class="badge" :class="badgeTone(row.value)" :title="row.value">{{ row.value }}</span></div>
           </div>
 
           <div v-else-if="row.type === 'links'" class="field-cell wide" :class="{ indent: row.indent }">
@@ -62,24 +79,49 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
             <table class="people-table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position / Status</th>
-                  <th>Check Result</th>
-                  <th>Summary Link</th>
+                  <th v-for="col in (row.columns || defaultPeopleTableColumns)" :key="col.key">{{ col.label }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(p, pi) in row.people" :key="pi">
-                  <td class="pt-name">{{ p.name }}</td>
-                  <td class="pt-position">{{ p.positionStatus || '—' }}</td>
-                  <td><span class="badge" :class="badgeTone(p.result)">{{ p.result }}</span></td>
-                  <td>
-                    <a v-if="p.summaryUrl" class="link" :href="p.summaryUrl">View Summary</a>
-                    <span v-else class="pt-muted">—</span>
+                  <td v-for="col in (row.columns || defaultPeopleTableColumns)" :key="col.key"
+                      :class="{ 'pt-name': col.key === 'name' }">
+                    <span v-if="col.badge" class="badge" :class="badgeTone(p[col.key])" :title="p[col.key]">{{ p[col.key] }}</span>
+                    <template v-else-if="col.link">
+                      <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
+                      <span v-else class="pt-muted">—</span>
+                    </template>
+                    <span v-else>{{ p[col.key] || '—' }}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Nested sub-accordion (e.g. Credit Deviation / Product Deviation inside Final Scoring) -->
+          <div v-else-if="row.type === 'subAccordion'" class="sub-accordion" :class="{ open: openSubs[i] }">
+            <div class="sub-head" @click="toggleSub(i)">
+              <span v-if="row.icon" class="sub-icon">{{ row.icon }}</span>
+              <span class="sub-title">{{ row.title }}</span>
+              <svg class="chevron sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="sub-body">
+              <div class="field-grid sub-field-grid">
+                <template v-for="(sr, si) in row.rows" :key="si">
+                  <div v-if="sr.type === 'group'" class="grp-label">{{ sr.label }}</div>
+                  <div v-else-if="sr.type === 'row'" class="field-cell" :class="{ indent: sr.indent }">
+                    <div class="field-label">{{ sr.label }}</div>
+                    <div class="field-value" :class="{ mono: sr.mono }">{{ sr.value }}</div>
+                  </div>
+                  <div v-else-if="sr.type === 'badge'" class="field-cell" :class="{ indent: sr.indent }">
+                    <div class="field-label">{{ sr.label }}</div>
+                    <div class="field-value"><span class="badge" :class="badgeTone(sr.value)" :title="sr.value">{{ sr.value }}</span></div>
+                  </div>
+                </template>
+              </div>
+            </div>
           </div>
 
         </template>
@@ -184,7 +226,7 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
   text-transform: uppercase;
   color: var(--ink-faint);
   flex: none;
-  max-width: 46%;
+  max-width: 66%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -206,8 +248,19 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
 .field-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
 .field-cell.wide .field-value { text-align: left; }
 
-.badge { display: inline-block; font-size: 13px; font-weight: 700; padding: 3px 12px; border-radius: 999px; white-space: nowrap; }
-.badge.good { color: var(--good); background: var(--good-bg); }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.badge.good { color: var(--good); background: var(--good-bg); white-space: normal; text-align: center; }
 .badge.mid { color: var(--mid); background: var(--mid-bg); }
 .badge.risk { color: var(--risk); background: var(--risk-bg); }
 .badge.neutral { color: var(--neutral); background: var(--neutral-bg); }
@@ -218,6 +271,44 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
 .link:hover { text-decoration: underline; }
 
 /* Elongated SLIK-style table: Name | Position/Status | Check Result | Summary Link */
+/* Nested sub-accordion (Credit Deviation / Product Deviation inside Final Scoring) */
+.sub-accordion {
+  grid-column: 1 / -1;
+  margin: 10px 0 2px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.sub-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.sub-head:hover { background: #fff; }
+.sub-icon { font-size: 14px; }
+.sub-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--navy);
+  flex: 1;
+}
+.sub-chevron { color: var(--ink-faint); transition: transform .2s ease; flex: none; }
+.sub-accordion.open .sub-chevron { transform: rotate(180deg); }
+
+.sub-body { max-height: 0; overflow: hidden; transition: max-height .2s ease; }
+.sub-accordion.open .sub-body { max-height: 1200px; }
+
+.sub-field-grid {
+  padding: 4px 14px 14px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+.sub-field-grid > .grp-label:first-child { margin-top: 0; }
+
 .people-table-wrap { grid-column: 1 / -1; margin-top: 4px; }
 .people-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
 .people-table thead tr { border-bottom: 1.5px solid var(--line); }
@@ -238,6 +329,8 @@ const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || 
   color: var(--ink);
   vertical-align: middle;
 }
+.people-table tbody tr:nth-child(even) { background: var(--bg); }
+.people-table tbody tr:hover { background: var(--green-soft); }
 .pt-name { font-weight: 700; }
 .pt-position { color: var(--ink-soft); font-weight: 500; font-size: 13.5px; }
 .pt-muted { color: var(--ink-faint); }

@@ -41,7 +41,7 @@ function isActive(item) {
         </div>
       </nav>
 
-      <div class="sidebar-foot">MLCI · Mobile Order System</div>
+      <div class="sidebar-foot">MLCI · Credit Decisions Engine</div>
     </aside>
 
     <div class="main">
@@ -53,7 +53,7 @@ function isActive(item) {
           <div class="user-avatar">SA</div>
           <div class="user-info">
             <div class="user-name">System Admin</div>
-            <div class="user-role">Mobile Order · Head Office</div>
+            <div class="user-role">Credit Decisions Engine · Head Office</div>
           </div>
         </div>
       </header>
