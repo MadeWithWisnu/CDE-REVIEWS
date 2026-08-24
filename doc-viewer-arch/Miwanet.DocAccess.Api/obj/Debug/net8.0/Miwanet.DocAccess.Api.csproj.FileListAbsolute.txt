@@ -82,3 +82,4 @@ C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEW
 C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.pdb
 C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.genruntimeconfig.cache
 C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\ref\Miwanet.DocAccess.Api.dll
+C:\Users\made_wisnu\OneDrive - PT Mitsui Leasing Capital Indonesia\1. CDE REVIEWS\BE_FE\doc-viewer-arch\Miwanet.DocAccess.Api\obj\Debug\net8.0\Miwanet.DocAccess.Api.sourcelink.json
