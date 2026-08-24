@@ -175,7 +175,7 @@ const defaultPeopleTableColumns = [
    grid auto-fill supaya field ke-3 dst otomatis nempel di samping, bukan turun ke bawah */
 .field-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   padding: 6px 20px 18px;
   align-items: start;
@@ -237,13 +237,13 @@ const defaultPeopleTableColumns = [
   font-weight: 700;
   font-size: 14.5px;
   color: var(--ink);
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-align: right;
+  text-align: left;
 }
 .field-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
 .field-cell.wide .field-value { text-align: left; }
