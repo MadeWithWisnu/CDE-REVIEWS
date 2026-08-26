@@ -7,10 +7,19 @@ export const leasingIndividual = {
   },
 
   kyc: [
-    { type: 'group', label: 'Dukcapil:' },
-    { type: 'row', label: 'Customer', value: 'Match', indent: 1 },
-    { type: 'row', label: 'Spouse', value: 'Match', indent: 1 },
-    { type: 'row', label: 'Guarantor', value: 'Match', indent: 1 },
+    {
+      type : 'peopleTable',
+      label: 'Dukcapil',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'result', label: 'Check Result', badge: true },
+      ],
+      people: [
+        { name: 'Customer', result: 'Match' },
+        { name: 'Spouse', result: 'Match' },
+        { name: 'Guarantor', result: 'Match' },
+      ],
+    },
 
     {
       type: 'peopleTable',
