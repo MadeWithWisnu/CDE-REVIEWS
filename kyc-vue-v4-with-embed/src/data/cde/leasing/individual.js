@@ -7,17 +7,38 @@ export const leasingIndividual = {
   },
 
   kyc: [
+    { type: 'group', label: 'Dukcapil:' },
     {
-      type : 'peopleTable',
-      label: 'Dukcapil',
-      columns: [
-        { key: 'name', label: 'Name' },
-        { key: 'result', label: 'Check Result', badge: true },
+      type: 'subAccordion',
+      title: 'Customer KYC',
+      icon: '📦',
+      rows: [
+        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
       ],
-      people: [
-        { name: 'Customer', result: 'Match' },
-        { name: 'Spouse', result: 'Match' },
-        { name: 'Guarantor', result: 'Match' },
+    },
+    {
+      type: 'subAccordion',
+      title: 'Spouse KYC',
+      icon: '📦',
+      rows: [
+        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
+      ],
+    },
+    {
+      type: 'subAccordion',
+      title: 'Guarantor KYC',
+      icon: '📦',
+      rows: [
+        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
       ],
     },
 
@@ -26,39 +47,49 @@ export const leasingIndividual = {
       label: 'Phone Verification',
       columns: [
         { key: 'name', label: 'Name' },
+        { key: 'typeName', label: 'Type' },
         { key: 'idMatch', label: 'ID Match' },
         { key: 'phoneAge', label: 'Phone Age' },
       ],
       people: [
-        { name: 'Customer Name - Customer', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
-        { name: 'Spouse Name - Spouse', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
-        { name: 'Guarantor Name - Guarantor', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { name: 'Customer Name', typeName: 'Customer', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { name: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { name: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
       ],
     },
 
     { type: 'group', label: 'Location Verification' },
     { type: 'row', label: 'Location Verification (House)', value: '0 - 200 meter' },
     { type: 'row', label: 'Location Verification (Office)', value: '0 - 200 meter' },
+    { type: 'row', label: 'Full Name Address', value: 'Jl. Merdeka No. 123' },
+
+    
   ],
 
   preScoring: [
     {
-      type: 'peopleTable',
-      label: 'SLIK Score',
-      columns: [
-        { key: 'name', label: 'Name' },
-        { key: 'result', label: 'Check Result', badge: true },
-        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
-      ],
-      people: [
-        { name: 'Customer', result: 'Good', summaryUrl: '#' },
-        { name: 'Spouse', result: 'Medium-Good', summaryUrl: '#' },
-        { name: 'Guarantor', result: 'Good', summaryUrl: '#' },
-        { name: 'Aggregate', result: 'Good', summaryUrl: '' },
-      ],
+      type: 'group',
+      label: 'SLIK Score'
     },
+    { type: 'group', label: 'Customer' },
+    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
+    { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
+    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
+
+    { type: 'group', label: 'Spouse' },
+    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
+    { type: 'badge', label: 'Grade', value: 'Medium-Good', indent: 1 },
+    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
+
+    { type: 'group', label: 'Guarantor' },
+    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
+    { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
+    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
+
     { type: 'row', label: 'Pre Scoring Result', value: 'Tend to Approve' },
     { type: 'row', label: 'Survey Treatment', value: 'SO and Surveyor' },
+    { type: 'row', label: 'Knockout Result', value: 'Tend to Approve' },
+    { type: 'row', label: 'Knockout Reason', value: 'Tend to Approve' },
   ],
 
   collateral: [
@@ -74,7 +105,9 @@ export const leasingIndividual = {
   ],
 
   apuppt: [
-    { type: 'badge', label: 'AML News', value: 'Not Listed' },
+    { type: 'group', label: 'AML News' },
+    { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
+    { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
     { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Medium Risk' },
   ],
 
