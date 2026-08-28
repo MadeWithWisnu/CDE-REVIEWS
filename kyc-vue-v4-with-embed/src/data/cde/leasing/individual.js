@@ -52,16 +52,27 @@ export const leasingIndividual = {
         { key: 'phoneAge', label: 'Phone Age' },
       ],
       people: [
-        { name: 'Customer Name', typeName: 'Customer', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
-        { name: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
-        { name: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match - Not Match', phoneAge: '(>12 months)' },
+        { type: 'Badge',name: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { name: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { name: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
       ],
     },
 
-    { type: 'group', label: 'Location Verification' },
-    { type: 'row', label: 'Location Verification (House)', value: '0 - 200 meter' },
-    { type: 'row', label: 'Location Verification (Office)', value: '0 - 200 meter' },
-    { type: 'row', label: 'Full Name Address', value: 'Jl. Merdeka No. 123' },
+    {
+      type: 'peopleTable',
+      label: 'Location Verification',
+      columns: [
+        { key: 'address', label: ' Full Address' },
+        { key: 'typeName', label: 'Type Location' },
+        { key: 'rangeMatch', label: 'Range' },
+        { key: 'status', label: 'Status' },
+
+      ],
+      people: [
+        { address: 'Jl. Merdeka No. 123', typeName: 'House', rangeMatch: '0 - 200 meter', status: 'Verified' },
+        { address: 'Jl. MH. Thamrin No. 123', typeName: 'Office', rangeMatch: '0 - 200 meter', status: 'Verified' },
+      ],
+    },
 
     
   ],
