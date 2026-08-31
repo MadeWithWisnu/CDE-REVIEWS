@@ -9,7 +9,8 @@ const route = useRoute();
 const isEmbed = computed(() => route.query.embed === '1');
 
 const navItems = [
-  { label: 'Search CDE', icon: '🔍', to: '/', active: r => r === 'filter' || r === 'results' },
+  { label: 'Search CDE', icon: '🔍', to: '/', active: r => r === 'filter' || r === 'results' || r === 'cde-dashboard' },
+  { label: 'Report CAM', icon: '📄', to: '/cam', active: r => r === 'cam-filter' || r === 'cam-dashboard' },
   { label: 'Task Order', icon: '🗂️', comingSoon: true },
   { label: 'Monitoring', icon: '📊', comingSoon: true },
   { label: 'Report', icon: '📁', comingSoon: true },
@@ -32,13 +33,15 @@ function isActive(item) {
       </div>
 
       <nav class="nav">
-        <router-link v-if="!navItems[0].comingSoon" :to="navItems[0].to" class="nav-item" :class="{ active: isActive(navItems[0]) }">
-          <span class="nav-icon">{{ navItems[0].icon }}</span>{{ navItems[0].label }}
-        </router-link>
-        <div v-for="item in navItems.slice(1)" :key="item.label" class="nav-item disabled">
-          <span class="nav-icon">{{ item.icon }}</span>{{ item.label }}
-          <span class="soon-tag">Coming Soon</span>
-        </div>
+        <template v-for="item in navItems" :key="item.label">
+          <router-link v-if="!item.comingSoon" :to="item.to" class="nav-item" :class="{ active: isActive(item) }">
+            <span class="nav-icon">{{ item.icon }}</span>{{ item.label }}
+          </router-link>
+          <div v-else class="nav-item disabled">
+            <span class="nav-icon">{{ item.icon }}</span>{{ item.label }}
+            <span class="soon-tag">Coming Soon</span>
+          </div>
+        </template>
       </nav>
 
       <div class="sidebar-foot">MLCI · Credit Decisions Engine</div>
