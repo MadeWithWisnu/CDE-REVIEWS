@@ -1,11 +1,14 @@
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive, ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AccordionSection from './AccordionSection.vue';
 import CaReviewUpload from './CaReviewUpload.vue';
 import { getCdeType } from '../data/cdeTypes.js';
 import { SECTION_LIBRARY, badgeTone } from '../data/sections.js';
 import { CDE_DATA } from '../data/cdeData.js';
+import { getCamType } from '../data/camTypes.js';
+import { CAM_SECTION_LIBRARY } from '../data/camSections.js';
+import { CAM_DATA } from '../data/camData.js';
 import { useEmbedGuard } from '../composables/useEmbedGuard.js';
 
 const route = useRoute();
@@ -16,17 +19,25 @@ const appNo = route.query.appNo || '';
 const cdeType = getCdeType(cdeKey);
 const currentData = CDE_DATA[cdeKey] || {};
 
+// Report CAM shares the SAME Application No as CDE — only the debtor type
+// (personal/company) is needed to pick the matching CAM template. Both tabs
+// on this page always refer to the one application being viewed.
+const camType = cdeType ? getCamType(cdeType.debtorType) : null;
+const camData = camType ? (CAM_DATA[camType.key] || {}) : {};
+
 // Guard for embed mode (opened inside the Confins iframe). If not embed, status
 // is 'ready' right away and the page behaves normally (relies on the existing
 // Miwanet login session).
 const { isEmbed, status, validate } = useEmbedGuard();
 onMounted(validate);
 
+// --- Tabs: CDE / Report CAM — same App No, different section set ---
+const activeTab = ref('cde'); // 'cde' | 'cam'
+
 const activeSections = (cdeType?.sectionOrder || []).map(key => ({
   key,
   meta: SECTION_LIBRARY[key],
 }));
-
 const openSections = reactive(
   Object.fromEntries(activeSections.map((s, i) => [s.key, i < 2]))
 );
@@ -34,8 +45,22 @@ function toggleSection(key) {
   openSections[key] = !openSections[key];
 }
 
-// Document Upload is always the LAST section in the accordion.
+const camActiveSections = (camType?.sectionOrder || []).map(key => ({
+  key,
+  meta: CAM_SECTION_LIBRARY[key],
+}));
+const openCamSections = reactive(
+  Object.fromEntries(camActiveSections.map((s, i) => [s.key, i < 2]))
+);
+function toggleCamSection(key) {
+  openCamSections[key] = !openCamSections[key];
+}
+
+// Document Upload is always the LAST section in the CDE tab.
 const uploadSectionOpen = reactive({ open: false });
+
+const currentVerdict = computed(() => (activeTab.value === 'cde' ? currentData.verdict : camData.verdict));
+const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Result' : 'Credit Recommendation'));
 </script>
 
 <template>
@@ -66,21 +91,36 @@ const uploadSectionOpen = reactive({ open: false });
       <div v-if="appNo" class="app-no-tag">App No<br /><b>{{ appNo }}</b></div>
     </div>
 
-    <div v-if="currentData.verdict" class="verdict">
+    <!-- Tab switcher: CDE / Report CAM — same App No, different section set -->
+    <div class="tab-bar">
+      <button class="tab-btn" :class="{ active: activeTab === 'cde' }" @click="activeTab = 'cde'">
+        🔍 CDE
+      </button>
+      <button
+        class="tab-btn" :class="{ active: activeTab === 'cam' }"
+        :disabled="!camType"
+        @click="camType && (activeTab = 'cam')"
+      >
+        📄 Report CAM
+      </button>
+    </div>
+
+    <div v-if="currentVerdict" class="verdict">
       <div class="verdict-left">
-        <div class="label">Final Score Result</div>
-        <div class="value">{{ currentData.verdict.result }}</div>
+        <div class="label">{{ verdictLabel }}</div>
+        <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">
-          <div><b>{{ currentData.verdict.slikAggregate }}</b>SLIK Aggregate</div>
-          <div><b>{{ currentData.verdict.surveyTreatment }}</b>Survey Treatment</div>
+          <div><b>{{ currentVerdict.slikAggregate }}</b>SLIK Aggregate</div>
+          <div><b>{{ currentVerdict.surveyTreatment }}</b>Survey Treatment</div>
         </div>
       </div>
-      <div class="verdict-pill" :class="badgeTone(currentData.verdict.instantApproval)">
-        Instant Approval: {{ currentData.verdict.instantApproval }}
+      <div class="verdict-pill" :class="badgeTone(currentVerdict.instantApproval)">
+        Instant Approval: {{ currentVerdict.instantApproval }}
       </div>
     </div>
 
-    <div class="accordion">
+    <!-- CDE tab -->
+    <div v-if="activeTab === 'cde'" class="accordion">
       <AccordionSection
         v-for="sec in activeSections" :key="sec.key"
         :meta="sec.meta"
@@ -89,7 +129,7 @@ const uploadSectionOpen = reactive({ open: false });
         @toggle="toggleSection(sec.key)"
       />
 
-      <!-- Document Upload — always the last section -->
+      <!-- Document Upload — always the last section of the CDE tab -->
       <AccordionSection
         :meta="{ title: 'Document Upload', icon: '📎' }"
         :is-open="uploadSectionOpen.open"
@@ -99,7 +139,20 @@ const uploadSectionOpen = reactive({ open: false });
       </AccordionSection>
     </div>
 
-    <footer class="note">Data shown reflects the latest screening result for {{ cdeType.name }}.</footer>
+    <!-- Report CAM tab -->
+    <div v-else-if="activeTab === 'cam' && camType" class="accordion">
+      <AccordionSection
+        v-for="sec in camActiveSections" :key="sec.key"
+        :meta="sec.meta"
+        :rows="camData[sec.key] || []"
+        :is-open="openCamSections[sec.key]"
+        @toggle="toggleCamSection(sec.key)"
+      />
+    </div>
+
+    <footer class="note">
+      Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : 'Credit Approval Memorandum' }} for App No {{ appNo || cdeKey }}.
+    </footer>
   </template>
 </template>
 
@@ -136,7 +189,7 @@ const uploadSectionOpen = reactive({ open: false });
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px 24px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .doc-header-icon {
   width: 52px; height: 52px; border-radius: 14px; flex: none;
@@ -164,6 +217,32 @@ const uploadSectionOpen = reactive({ open: false });
   margin-top: 2px;
 }
 
+.tab-bar {
+  display: flex;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+.tab-btn {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14.5px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.tab-btn:hover:not(:disabled):not(.active) { background: var(--bg); }
+.tab-btn.active { background: var(--navy); color: #fff; }
+.tab-btn:disabled { opacity: .4; cursor: not-allowed; }
+
 .verdict {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--navy);
@@ -183,4 +262,9 @@ const uploadSectionOpen = reactive({ open: false });
 .accordion { display: flex; flex-direction: column; gap: 14px; }
 
 footer.note { margin-top: 28px; font-size: 14px; color: var(--ink-faint); text-align: center; }
+
+@media (max-width: 640px) {
+  .tab-bar { width: 100%; }
+  .tab-btn { flex: 1; padding: 10px 12px; font-size: 13.5px; }
+}
 </style>

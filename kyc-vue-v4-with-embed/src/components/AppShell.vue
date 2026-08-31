@@ -10,7 +10,6 @@ const isEmbed = computed(() => route.query.embed === '1');
 
 const navItems = [
   { label: 'Search CDE', icon: '🔍', to: '/', active: r => r === 'filter' || r === 'results' || r === 'cde-dashboard' },
-  { label: 'Report CAM', icon: '📄', to: '/cam', active: r => r === 'cam-filter' || r === 'cam-dashboard' },
   { label: 'Task Order', icon: '🗂️', comingSoon: true },
   { label: 'Monitoring', icon: '📊', comingSoon: true },
   { label: 'Report', icon: '📁', comingSoon: true },
