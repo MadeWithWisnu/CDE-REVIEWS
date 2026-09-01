@@ -443,11 +443,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\Confins.Gateway.Api.csproj",
+      "projectUniqueName": "C:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\Confins.Gateway.Api.csproj",
       "projectName": "Confins.Gateway.Api",
-      "projectPath": "c:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\Confins.Gateway.Api.csproj",
+      "projectPath": "C:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\Confins.Gateway.Api.csproj",
       "packagesPath": "C:\\Users\\made_wisnu\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\obj\\",
+      "outputPath": "C:\\Users\\made_wisnu\\OneDrive - PT Mitsui Leasing Capital Indonesia\\1. CDE REVIEWS\\BE_FE\\doc-viewer-arch\\Confins.Gateway.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

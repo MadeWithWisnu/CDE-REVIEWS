@@ -305,7 +305,7 @@ const defaultPeopleTableColumns = [
 
 .sub-field-grid {
   padding: 4px 14px 14px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .sub-field-grid > .grp-label:first-child { margin-top: 0; }
 

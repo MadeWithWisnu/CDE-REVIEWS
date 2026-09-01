@@ -82,15 +82,6 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
   <template v-else>
     <button v-if="!isEmbed" class="back-link" @click="router.back()">← Back to document list</button>
 
-    <div class="doc-header">
-      <div class="doc-header-icon" :style="{ background: cdeType.bg, color: cdeType.color }">{{ cdeType.icon }}</div>
-      <div>
-        <div class="doc-header-name">{{ cdeType.name }}</div>
-        <div class="doc-header-desc">{{ cdeType.description }}</div>
-      </div>
-      <div v-if="appNo" class="app-no-tag">App No<br /><b>{{ appNo }}</b></div>
-    </div>
-
     <!-- Tab switcher: CDE / Report CAM — same App No, different section set -->
     <div class="tab-bar">
       <button class="tab-btn" :class="{ active: activeTab === 'cde' }" @click="activeTab = 'cde'">
@@ -107,6 +98,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 
     <div v-if="currentVerdict" class="verdict">
       <div class="verdict-left">
+        <div v-if="appNo" class="verdict-appno">App No: <b>{{ appNo }}</b></div>
         <div class="label">{{ verdictLabel }}</div>
         <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">
@@ -181,42 +173,6 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
   font-size: 16px;
 }
 
-.doc-header {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  margin-bottom: 16px;
-}
-.doc-header-icon {
-  width: 52px; height: 52px; border-radius: 14px; flex: none;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px;
-}
-.doc-header-name { font-family: var(--font-head); font-weight: 800; font-size: 21px; color: var(--ink); }
-.doc-header-desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 3px; }
-.app-no-tag {
-  margin-left: auto;
-  text-align: right;
-  font-size: 12px;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  font-family: var(--font-mono);
-}
-.app-no-tag b {
-  display: block;
-  font-family: var(--font-head);
-  font-size: 15px;
-  color: var(--ink);
-  text-transform: none;
-  letter-spacing: 0;
-  margin-top: 2px;
-}
-
 .tab-bar {
   display: flex;
   gap: 6px;
@@ -249,6 +205,14 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
   color: #fff; border-radius: var(--radius); padding: 24px 28px; margin-bottom: 22px;
   flex-wrap: wrap; gap: 16px;
 }
+.verdict-appno {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: .04em;
+  opacity: .7;
+  margin-bottom: 8px;
+}
+.verdict-appno b { font-family: var(--font-head); font-weight: 700; opacity: 1; letter-spacing: 0; }
 .verdict-left .label { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; opacity: .65; font-family: var(--font-mono); }
 .verdict-left .value { font-family: var(--font-head); font-size: 24px; font-weight: 800; margin-top: 4px; }
 .verdict-pill { font-family: var(--font-head); font-weight: 700; font-size: 15px; padding: 11px 20px; border-radius: 999px; white-space: nowrap; }
