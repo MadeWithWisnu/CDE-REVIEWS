@@ -13,10 +13,10 @@ export const leasingIndividual = {
       title: 'Customer KYC',
       icon: '📦',
       rows: [
-        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
       ],
     },
     {
@@ -24,10 +24,10 @@ export const leasingIndividual = {
       title: 'Spouse KYC',
       icon: '📦',
       rows: [
-        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
       ],
     },
     {
@@ -35,10 +35,10 @@ export const leasingIndividual = {
       title: 'Guarantor KYC',
       icon: '📦',
       rows: [
-        { type: 'row', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'row', label: 'Gender', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
+        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
       ],
     },
 
@@ -52,7 +52,7 @@ export const leasingIndividual = {
         { key: 'phoneAge', label: 'Phone Age' },
       ],
       people: [
-        { type: 'Badge',name: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { name: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
         { name: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
         { name: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
       ],

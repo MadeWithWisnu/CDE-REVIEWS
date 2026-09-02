@@ -6,6 +6,11 @@ const props = defineProps({
   meta: { type: Object, required: true },   // { title, icon }
   rows: { type: Array, default: () => [] },
   isOpen: { type: Boolean, default: false },
+  // When true, plain row/badge/group/links/note content renders as a
+  // 2-column "Field | Value" table instead of the flex field-grid layout —
+  // used for Report CAM to give it a denser, form-like table appearance.
+  // `peopleTable` rows already have named columns so they're unaffected.
+  tableMode: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['toggle']);
@@ -48,6 +53,103 @@ const defaultPeopleTableColumns = [
     <div class="section-body">
       <!-- Custom slot content (e.g. the Document Upload section) bypasses the data-driven field grid entirely -->
       <slot v-if="$slots.default" />
+
+      <!-- Table mode (Report CAM): plain row/badge/group/links/note render as a
+           2-column Field | Value table. peopleTable already has named columns
+           so it keeps rendering as its own table either way. -->
+      <table v-else-if="tableMode" class="field-table">
+        <tbody>
+          <template v-for="(row, i) in rows" :key="i">
+
+            <tr v-if="row.type === 'note'" class="ft-note-row">
+              <td colspan="2">{{ row.label }}</td>
+            </tr>
+
+            <tr v-else-if="row.type === 'group'" class="ft-group-row">
+              <td colspan="2">{{ row.label }}</td>
+            </tr>
+
+            <tr v-else-if="row.type === 'row'" :class="{ indent: row.indent }">
+              <td class="ft-field">{{ row.label }}</td>
+              <td class="ft-value" :class="{ mono: row.mono }">{{ row.value }}</td>
+            </tr>
+
+            <tr v-else-if="row.type === 'badge'" :class="{ indent: row.indent }">
+              <td class="ft-field">{{ row.label }}</td>
+              <td class="ft-value"><span class="badge" :class="badgeTone(row.value)" :title="row.value">{{ row.value }}</span></td>
+            </tr>
+
+            <tr v-else-if="row.type === 'links'" :class="{ indent: row.indent }">
+              <td class="ft-field">{{ row.label }}</td>
+              <td class="ft-value">
+                <div class="links">
+                  <a v-for="(l, li) in row.links" :key="li" class="link" :href="l.url">{{ l.text }}</a>
+                </div>
+              </td>
+            </tr>
+
+            <!-- peopleTable: own table with named columns, nested full-width -->
+            <tr v-else-if="row.type === 'peopleTable'">
+              <td colspan="2" class="ft-nested-table-cell">
+                <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+                <table class="people-table">
+                  <thead>
+                    <tr>
+                      <th v-for="col in (row.columns || defaultPeopleTableColumns)" :key="col.key">{{ col.label }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(p, pi) in row.people" :key="pi">
+                      <td v-for="col in (row.columns || defaultPeopleTableColumns)" :key="col.key"
+                          :class="{ 'pt-name': col.key === 'name' }">
+                        <span v-if="col.badge" class="badge" :class="badgeTone(p[col.key])" :title="p[col.key]">{{ p[col.key] }}</span>
+                        <template v-else-if="col.link">
+                          <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
+                          <span v-else class="pt-muted">—</span>
+                        </template>
+                        <span v-else>{{ p[col.key] || '—' }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+            <!-- subAccordion: nested collapsible, its own body also renders as a field table -->
+            <tr v-else-if="row.type === 'subAccordion'">
+              <td colspan="2" class="ft-nested-table-cell">
+                <div class="sub-accordion" :class="{ open: openSubs[i] }">
+                  <div class="sub-head" @click="toggleSub(i)">
+                    <span v-if="row.icon" class="sub-icon">{{ row.icon }}</span>
+                    <span class="sub-title">{{ row.title }}</span>
+                    <svg class="chevron sub-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <div class="sub-body">
+                    <table class="field-table sub-field-table">
+                      <tbody>
+                        <template v-for="(sr, si) in row.rows" :key="si">
+                          <tr v-if="sr.type === 'group'" class="ft-group-row"><td colspan="2">{{ sr.label }}</td></tr>
+                          <tr v-else-if="sr.type === 'row'" :class="{ indent: sr.indent }">
+                            <td class="ft-field">{{ sr.label }}</td>
+                            <td class="ft-value" :class="{ mono: sr.mono }">{{ sr.value }}</td>
+                          </tr>
+                          <tr v-else-if="sr.type === 'badge'" :class="{ indent: sr.indent }">
+                            <td class="ft-field">{{ sr.label }}</td>
+                            <td class="ft-value"><span class="badge" :class="badgeTone(sr.value)" :title="sr.value">{{ sr.value }}</span></td>
+                          </tr>
+                        </template>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+          </template>
+        </tbody>
+      </table>
 
       <div v-else class="field-grid">
         <template v-for="(row, i) in rows" :key="i">
@@ -171,6 +273,65 @@ const defaultPeopleTableColumns = [
 .section-body { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
 .section.open .section-body { max-height: 4000px; }
 
+/* Table mode (Report CAM): plain Field | Value table */
+.field-table {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 6px 20px 18px;
+}
+.field-table td { padding: 10px 14px; border-bottom: 1px solid #F0F2F7; vertical-align: top; }
+.field-table tr.indent .ft-field { padding-left: 32px; }
+
+.ft-field {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  width: 38%;
+  white-space: normal;
+}
+.ft-value {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--ink);
+  white-space: normal;
+  word-break: break-word;
+}
+.ft-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
+
+.field-table tbody tr:nth-child(even):not(.ft-group-row):not(.ft-note-row) { background: var(--bg); }
+
+.ft-group-row td {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--navy);
+  background: var(--surface);
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-top: 14px;
+}
+.field-table tbody tr:first-child.ft-group-row td { border-top: none; }
+
+.ft-note-row td {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--green-dark);
+  background: var(--green-soft);
+}
+
+.ft-nested-table-cell { padding: 12px 14px !important; background: var(--surface); }
+.ft-nested-table-cell .people-table { margin-top: 4px; }
+
+.sub-field-table { padding: 4px 14px 14px; }
+.sub-field-table .ft-field { width: 42%; }
+
+.field-table > tbody > tr:first-child > td { padding-top: 14px; }
+.field-table > tbody > tr:last-child > td { border-bottom: none; padding-bottom: 4px; }
+
 /* body ala tabel side-by-side: label & value dalam 1 baris (max 2 baris info per cell),
    grid auto-fill supaya field ke-3 dst otomatis nempel di samping, bukan turun ke bawah */
 .field-grid {
@@ -212,7 +373,7 @@ const defaultPeopleTableColumns = [
   padding: 10px 14px 10px 0;
   border-bottom: 1px solid #F0F2F7;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 8px;
   min-width: 0;
 }
@@ -235,13 +396,13 @@ const defaultPeopleTableColumns = [
 .field-value {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--ink);
   flex: 0 1 auto;
   min-width: 0;
+  white-space: normal;
+  word-break: break-word;
   text-align: left;
-  white-space: normal;    /* boleh wrap ke baris baru, tidak dipaksa 1 baris */
-  word-break: break-word; /* kalau ada 1 kata yang sangat panjang, dipecah biar tidak bikin layout jebol */
 }
 .field-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
 .field-cell.wide .field-value { text-align: left; }
@@ -323,7 +484,7 @@ const defaultPeopleTableColumns = [
   padding: 10px 10px;
   border-bottom: 1px solid #F0F2F7;
   font-family: var(--font-head);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--ink);
   vertical-align: middle;
 }

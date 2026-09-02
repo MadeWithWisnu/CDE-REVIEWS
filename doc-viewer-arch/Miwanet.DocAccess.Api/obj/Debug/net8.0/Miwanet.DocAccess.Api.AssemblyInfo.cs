@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Miwanet.DocAccess.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62c05a12ff31157dd60a19fde673b6392df249c9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf80e93179e51acf9e8257c122bce171cd3154a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Miwanet.DocAccess.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Miwanet.DocAccess.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

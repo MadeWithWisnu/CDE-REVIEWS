@@ -45,12 +45,17 @@ function toggleSection(key) {
   openSections[key] = !openSections[key];
 }
 
-const camActiveSections = (camType?.sectionOrder || []).map(key => ({
-  key,
-  meta: CAM_SECTION_LIBRARY[key],
-}));
+// sectionOrder items can be a plain key (full-width section) OR an array of
+// keys (rendered side-by-side in one row) — matches the source CAM report's
+// own 2-column layout for some blocks (e.g. Finance Information sits next
+// to Insurance/Notary/Agency, Asset Information next to Dealer Information).
+const camSectionRows = (camType?.sectionOrder || []).map(item => {
+  const keys = Array.isArray(item) ? item : [item];
+  return keys.map(key => ({ key, meta: CAM_SECTION_LIBRARY[key] }));
+});
+const camAllKeys = camSectionRows.flat().map(s => s.key);
 const openCamSections = reactive(
-  Object.fromEntries(camActiveSections.map((s, i) => [s.key, i < 2]))
+  Object.fromEntries(camAllKeys.map((key, i) => [key, i < 2]))
 );
 function toggleCamSection(key) {
   openCamSections[key] = !openCamSections[key];
@@ -133,13 +138,19 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 
     <!-- Report CAM tab -->
     <div v-else-if="activeTab === 'cam' && camType" class="accordion">
-      <AccordionSection
-        v-for="sec in camActiveSections" :key="sec.key"
-        :meta="sec.meta"
-        :rows="camData[sec.key] || []"
-        :is-open="openCamSections[sec.key]"
-        @toggle="toggleCamSection(sec.key)"
-      />
+      <div
+        v-for="(row, ri) in camSectionRows" :key="ri"
+        class="accordion-row" :class="{ 'side-by-side': row.length > 1 }"
+      >
+        <AccordionSection
+          v-for="sec in row" :key="sec.key"
+          :meta="sec.meta"
+          :rows="camData[sec.key] || []"
+          :is-open="openCamSections[sec.key]"
+          table-mode
+          @toggle="toggleCamSection(sec.key)"
+        />
+      </div>
     </div>
 
     <footer class="note">
@@ -224,6 +235,17 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 .verdict-meta b { display: block; font-family: var(--font-head); font-size: 16px; font-weight: 700; opacity: 1; }
 
 .accordion { display: flex; flex-direction: column; gap: 14px; }
+
+.accordion-row { display: flex; flex-direction: column; gap: 14px; }
+.accordion-row.side-by-side {
+  flex-direction: row;
+  align-items: flex-start;
+}
+.accordion-row.side-by-side > * { flex: 1; min-width: 0; }
+
+@media (max-width: 900px) {
+  .accordion-row.side-by-side { flex-direction: column; }
+}
 
 footer.note { margin-top: 28px; font-size: 14px; color: var(--ink-faint); text-align: center; }
 
