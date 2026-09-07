@@ -7,19 +7,20 @@ const props = defineProps({
   rows: { type: Array, default: () => [] },
   isOpen: { type: Boolean, default: false },
   // When true, plain row/badge/group/links/note content renders as a
-  // 2-column "Field | Value" table instead of the flex field-grid layout —
-  // used for Report CAM to give it a denser, form-like table appearance.
+  // 2-column "Field | Value" table instead of the flex field-grid layout.
   // `peopleTable` rows already have named columns so they're unaffected.
   tableMode: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['toggle']);
 
-const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge') || null);
+// Only show a badge in the section header when a row explicitly opts in via
+// `summary: true` — picking the FIRST badge found anywhere in the section
+// (the old behavior) could surface an unrelated/misleading value (e.g. a
+// "Status: Available" badge from deep inside the section body).
+const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge' && r.summary) || null);
 
-// Local open/close state for nested `subAccordion` rows (e.g. Credit Deviation /
-// Product Deviation living inside Final Scoring). Independent from the parent
-// section's own open state, keyed by row index.
+// Local open/close state for nested `subAccordion` rows.
 const openSubs = reactive({});
 function toggleSub(i) {
   openSubs[i] = !openSubs[i];
@@ -54,9 +55,9 @@ const defaultPeopleTableColumns = [
       <!-- Custom slot content (e.g. the Document Upload section) bypasses the data-driven field grid entirely -->
       <slot v-if="$slots.default" />
 
-      <!-- Table mode (Report CAM): plain row/badge/group/links/note render as a
-           2-column Field | Value table. peopleTable already has named columns
-           so it keeps rendering as its own table either way. -->
+      <!-- Table mode: plain row/badge/group/links/note render as a 2-column
+           Field | Value table. peopleTable already has named columns so it
+           keeps rendering as its own table either way. -->
       <table v-else-if="tableMode" class="field-table">
         <tbody>
           <template v-for="(row, i) in rows" :key="i">
@@ -85,6 +86,35 @@ const defaultPeopleTableColumns = [
                 <div class="links">
                   <a v-for="(l, li) in row.links" :key="li" class="link" :href="l.url">{{ l.text }}</a>
                 </div>
+              </td>
+            </tr>
+
+            <!-- Highlighted result banner (e.g. Pre Scoring Result + Survey Treatment,
+                 Final Score + Instant Approval) — pulled out visually from the plain
+                 field list since these are the section's main takeaway. -->
+            <tr v-else-if="row.type === 'highlight'">
+              <td colspan="2" class="ft-highlight-cell">
+                <div class="highlight-bar">
+                  <div v-for="(it, hi) in row.items" :key="hi" class="highlight-item">
+                    <div class="highlight-label">{{ it.label }}</div>
+                    <div class="highlight-value" :class="it.tone ? `hv-${it.tone}` : ''">{{ it.value }}</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Knockout-style list: each entry shows its reason if present,
+                 otherwise its result. Shows "-" when there's nothing to list. -->
+            <tr v-else-if="row.type === 'knockoutList'">
+              <td colspan="2" class="ft-nested-table-cell">
+                <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+                <div v-if="!row.items || row.items.length === 0" class="knockout-empty">-</div>
+                <ul v-else class="knockout-list">
+                  <li v-for="(it, ki) in row.items" :key="ki">
+                    <span v-if="it.result" class="badge" :class="badgeTone(it.result)">{{ it.result }}</span>
+                    <span class="knockout-text">{{ it.reason || it.result }}</span>
+                  </li>
+                </ul>
               </td>
             </tr>
 
@@ -139,6 +169,18 @@ const defaultPeopleTableColumns = [
                             <td class="ft-field">{{ sr.label }}</td>
                             <td class="ft-value"><span class="badge" :class="badgeTone(sr.value)" :title="sr.value">{{ sr.value }}</span></td>
                           </tr>
+                          <tr v-else-if="sr.type === 'knockoutList'">
+                            <td colspan="2" class="ft-nested-table-cell">
+                              <div v-if="sr.label" class="grp-label">{{ sr.label }}</div>
+                              <div v-if="!sr.items || sr.items.length === 0" class="knockout-empty">-</div>
+                              <ul v-else class="knockout-list">
+                                <li v-for="(it, ki) in sr.items" :key="ki">
+                                  <span v-if="it.result" class="badge" :class="badgeTone(it.result)">{{ it.result }}</span>
+                                  <span class="knockout-text">{{ it.reason || it.result }}</span>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
                         </template>
                       </tbody>
                     </table>
@@ -175,6 +217,26 @@ const defaultPeopleTableColumns = [
             </div>
           </div>
 
+          <div v-else-if="row.type === 'highlight'" class="field-cell wide">
+            <div class="highlight-bar">
+              <div v-for="(it, hi) in row.items" :key="hi" class="highlight-item">
+                <div class="highlight-label">{{ it.label }}</div>
+                <div class="highlight-value" :class="it.tone ? `hv-${it.tone}` : ''">{{ it.value }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div v-else-if="row.type === 'knockoutList'" class="field-cell wide">
+            <div v-if="row.label" class="grp-label" style="grid-column:auto;border:none;margin:0;padding:0;">{{ row.label }}</div>
+            <div v-if="!row.items || row.items.length === 0" class="knockout-empty">-</div>
+            <ul v-else class="knockout-list">
+              <li v-for="(it, ki) in row.items" :key="ki">
+                <span v-if="it.result" class="badge" :class="badgeTone(it.result)">{{ it.result }}</span>
+                <span class="knockout-text">{{ it.reason || it.result }}</span>
+              </li>
+            </ul>
+          </div>
+
           <!-- Elongated table: Name | Position/Status | Check Result | Summary Link -->
           <div v-else-if="row.type === 'peopleTable'" class="people-table-wrap">
             <div v-if="row.label" class="grp-label">{{ row.label }}</div>
@@ -200,7 +262,7 @@ const defaultPeopleTableColumns = [
             </table>
           </div>
 
-          <!-- Nested sub-accordion (e.g. Credit Deviation / Product Deviation inside Final Scoring) -->
+          <!-- Nested sub-accordion -->
           <div v-else-if="row.type === 'subAccordion'" class="sub-accordion" :class="{ open: openSubs[i] }">
             <div class="sub-head" @click="toggleSub(i)">
               <span v-if="row.icon" class="sub-icon">{{ row.icon }}</span>
@@ -221,6 +283,15 @@ const defaultPeopleTableColumns = [
                     <div class="field-label">{{ sr.label }}</div>
                     <div class="field-value"><span class="badge" :class="badgeTone(sr.value)" :title="sr.value">{{ sr.value }}</span></div>
                   </div>
+                  <div v-else-if="sr.type === 'knockoutList'" class="field-cell wide">
+                    <div v-if="!sr.items || sr.items.length === 0" class="knockout-empty">-</div>
+                    <ul v-else class="knockout-list">
+                      <li v-for="(it, ki) in sr.items" :key="ki">
+                        <span v-if="it.result" class="badge" :class="badgeTone(it.result)">{{ it.result }}</span>
+                        <span class="knockout-text">{{ it.reason || it.result }}</span>
+                      </li>
+                    </ul>
+                  </div>
                 </template>
               </div>
             </div>
@@ -240,7 +311,6 @@ const defaultPeopleTableColumns = [
   overflow: hidden;
 }
 
-/* header ala "View Detail Assignment" — bar navy penuh */
 .section-head {
   display: flex;
   align-items: center;
@@ -271,9 +341,9 @@ const defaultPeopleTableColumns = [
 .section.open .chevron { transform: rotate(180deg); }
 
 .section-body { max-height: 0; overflow: hidden; transition: max-height .25s ease; }
-.section.open .section-body { max-height: 4000px; }
+.section.open .section-body { max-height: 6000px; }
 
-/* Table mode (Report CAM): plain Field | Value table */
+/* Table mode: plain Field | Value table */
 .field-table {
   width: 100%;
   border-collapse: collapse;
@@ -326,11 +396,48 @@ const defaultPeopleTableColumns = [
 .ft-nested-table-cell { padding: 12px 14px !important; background: var(--surface); }
 .ft-nested-table-cell .people-table { margin-top: 4px; }
 
+.ft-highlight-cell { padding: 14px !important; background: var(--surface); }
+
 .sub-field-table { padding: 4px 14px 14px; }
 .sub-field-table .ft-field { width: 42%; }
 
 .field-table > tbody > tr:first-child > td { padding-top: 14px; }
 .field-table > tbody > tr:last-child > td { border-bottom: none; padding-bottom: 4px; }
+
+/* Highlighted result banner — used for the section's main takeaway
+   (Pre Scoring Result + Survey Treatment, Final Score + Instant Approval) */
+.highlight-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.highlight-item { flex: 1; min-width: 160px; }
+.highlight-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  margin-bottom: 4px;
+}
+.highlight-value {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 19px;
+  color: #fff;
+}
+.highlight-value.hv-good { color: #8FE3B6; }
+.highlight-value.hv-mid { color: #F7D48A; }
+.highlight-value.hv-risk { color: #F5A3A3; }
+
+/* Knockout list: dash when empty, bulleted reason/result list otherwise */
+.knockout-empty { font-family: var(--font-head); font-size: 14.5px; color: var(--ink-faint); padding: 4px 0; }
+.knockout-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.knockout-list li { display: flex; align-items: center; gap: 10px; }
+.knockout-text { font-family: var(--font-head); font-size: 14px; color: var(--ink); }
 
 /* body ala tabel side-by-side: label & value dalam 1 baris (max 2 baris info per cell),
    grid auto-fill supaya field ke-3 dst otomatis nempel di samping, bukan turun ke bawah */
@@ -429,8 +536,6 @@ const defaultPeopleTableColumns = [
 .link { color: var(--green-dark); font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
 .link:hover { text-decoration: underline; }
 
-/* Elongated SLIK-style table: Name | Position/Status | Check Result | Summary Link */
-/* Nested sub-accordion (Credit Deviation / Product Deviation inside Final Scoring) */
 .sub-accordion {
   grid-column: 1 / -1;
   margin: 10px 0 2px;
@@ -460,7 +565,7 @@ const defaultPeopleTableColumns = [
 .sub-accordion.open .sub-chevron { transform: rotate(180deg); }
 
 .sub-body { max-height: 0; overflow: hidden; transition: max-height .2s ease; }
-.sub-accordion.open .sub-body { max-height: 1200px; }
+.sub-accordion.open .sub-body { max-height: 2000px; }
 
 .sub-field-grid {
   padding: 4px 14px 14px;
@@ -497,5 +602,6 @@ const defaultPeopleTableColumns = [
 @media (max-width: 640px) {
   .field-grid { grid-template-columns: 1fr; }
   .people-table { display: block; overflow-x: auto; white-space: nowrap; }
+  .highlight-bar { flex-direction: column; }
 }
 </style>

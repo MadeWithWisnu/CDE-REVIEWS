@@ -5,7 +5,9 @@ import { reactive, ref, onBeforeUnmount } from 'vue';
  * CaReviewUpload.vue
  * -------------------
  * Document Upload section.
- * - "CA Review" is mandatory and always present as the first row.
+ * - "CA Review" is always present as the first row (fixed label, not
+ *   removable) but is NO LONGER required before sending — Send is enabled
+ *   regardless of which items have a file attached.
  * - "+ Add Section" lets the user add extra upload slots for other files.
  * - Files stay in-memory only until "Send" is pressed — BACKEND INTEGRATION:
  *   replace the body of `sendAll()` with a real call to the DMS API, and
@@ -106,17 +108,7 @@ function addSection() {
 function openViewer(item) { viewerItem.value = item; }
 function closeViewer() { viewerItem.value = null; }
 
-const canSend = () => {
-  const ca = items.find(i => i.mandatory);
-  return !!ca?.fileUrl;
-};
-
 async function sendAll() {
-  if (!canSend()) {
-    errorMsg.value = 'CA Review file is mandatory before sending.';
-    return;
-  }
-
   errorMsg.value = '';
   sendState.value = 'sending';
 
@@ -163,7 +155,7 @@ onBeforeUnmount(() => {
           class="label-input"
           placeholder="Document name"
         />
-        <span v-else class="label-fixed">{{ item.label }}<span class="required-star">*</span></span>
+        <span v-else class="label-fixed">{{ item.label }}</span>
 
         <span v-if="item.sent" class="sent-tag">Sent to DMS</span>
         <button
@@ -202,10 +194,9 @@ onBeforeUnmount(() => {
 
     <div class="send-bar">
       <span v-if="sendState === 'sent'" class="send-status sent">✓ Documents sent to DMS</span>
-      <span v-else-if="!canSend()" class="send-status hint">CA Review file is required before sending</span>
       <button
         class="btn btn-send"
-        :disabled="!canSend() || sendState === 'sending'"
+        :disabled="sendState === 'sending'"
         @click="sendAll"
       >
         {{ sendState === 'sending' ? 'Sending...' : 'Send' }}

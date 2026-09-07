@@ -7,48 +7,41 @@ export const leasingIndividual = {
   },
 
   kyc: [
-    { type: 'group', label: 'Dukcapil:' },
+    { type: 'group', label: 'Dukcapil' },
     {
-      type: 'subAccordion',
-      title: 'Customer KYC',
-      icon: '📦',
-      rows: [
-        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'nikMatch', label: 'ID Number', badge: true },
+        { key: 'dobMatch', label: 'Birth Date', badge: true },
+        { key: 'genderMatch', label: 'Gender', badge: true },
+        { key: 'placeOfBirthMatch', label: 'Place of Birth', badge: true },
+        { key: 'addressMatch', label: 'Full Address', badge: true },
+        { key: 'provinceMatch', label: 'Province', badge: true },
+        { key: 'regencyMatch', label: 'Regency', badge: true },
+        { key: 'districtMatch', label: 'District', badge: true },
+        { key: 'subdistrictMatch', label: 'Sub District', badge: true },
+        { key: 'RTMatch', label: 'RT', badge: true },
+        { key: 'RWMatch', label: 'RW', badge: true },
+        { key: 'MaritalStatusMatch', label: 'Marital Status', badge: true },
+        { key: 'OccupationMatch', label: 'Occupation', badge: true },
+
+
       ],
-    },
-    {
-      type: 'subAccordion',
-      title: 'Spouse KYC',
-      icon: '📦',
-      rows: [
-        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
-      ],
-    },
-    {
-      type: 'subAccordion',
-      title: 'Guarantor KYC',
-      icon: '📦',
-      rows: [
-        { type: 'badge', label: 'Name', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Nomor Induk Kependudukan', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Birth Of Date', value: 'Match', indent: 1 },
-        { type: 'badge', label: 'Gender', value: 'Match', indent: 1 },
+      people: [
+        { name: 'Customer', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: 'Match', RTMatch: 'Match', RWMatch: 'Match', MaritalStatusMatch: 'Match', OccupationMatch: 'Match' },
+        { name: 'Spouse', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: ' Match', RTMatch: ' Match', RWMatch: ' Match', MaritalStatusMatch: 'Match', OccupationMatch: 'Match' },
+        { name: 'Guarantor', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: ' Match', RTMatch: ' Match', RWMatch: ' Match', MaritalStatusMatch: ' Match', OccupationMatch: ' Match' },
       ],
     },
 
+    { type: 'group', label: 'Phone Verification' },
     {
       type: 'peopleTable',
-      label: 'Phone Verification',
       columns: [
         { key: 'name', label: 'Name' },
         { key: 'typeName', label: 'Type' },
-        { key: 'idMatch', label: 'ID Match' },
+        { key: 'idMatch', label: 'ID Match', badge: true },
         { key: 'phoneAge', label: 'Phone Age' },
       ],
       people: [
@@ -58,15 +51,14 @@ export const leasingIndividual = {
       ],
     },
 
+    { type: 'group', label: 'Location Verification' },
     {
       type: 'peopleTable',
-      label: 'Location Verification',
       columns: [
-        { key: 'address', label: ' Full Address' },
+        { key: 'address', label: 'Full Address' },
         { key: 'typeName', label: 'Type Location' },
         { key: 'rangeMatch', label: 'Range' },
-        { key: 'status', label: 'Status' },
-
+        { key: 'status', label: 'Status', badge: true },
       ],
       people: [
         { address: 'Jl. Merdeka No. 123', typeName: 'House', rangeMatch: '0 - 200 meter', status: 'Verified' },
@@ -74,14 +66,48 @@ export const leasingIndividual = {
       ],
     },
 
-    
+    { type: 'group', label: 'Relationship Check' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Relationship' },
+        { key: 'relatedTo', label: 'Related To' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Spouse', relatedTo: 'Customer', status: 'Verified' },
+        { name: 'Guarantor', relatedTo: 'Customer', status: 'Verified' },
+      ],
+    },
+
+    // Biometric Check — Personal debtor only.
+    { type: 'group', label: 'Biometric Check' },
+    { type: 'note', label: 'Selfie Photo requires ≥75% match to be considered Verified.' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Item' },
+        { key: 'score', label: 'Match Score' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Name', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', score: '83%', status: 'Verified' },
+      ],
+    },
   ],
 
   preScoring: [
     {
-      type: 'group',
-      label: 'SLIK Score'
+      type: 'highlight',
+      items: [
+        { label: 'Pre Scoring Result', value: 'Tend to Approve', tone: 'good' },
+        { label: 'Survey Treatment', value: 'SO and Surveyor' },
+      ],
     },
+
+    { type: 'group', label: 'SLIK Score' },
     { type: 'group', label: 'Customer' },
     { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
@@ -97,10 +123,13 @@ export const leasingIndividual = {
     { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
     { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
 
-    { type: 'row', label: 'Pre Scoring Result', value: 'Tend to Approve' },
-    { type: 'row', label: 'Survey Treatment', value: 'SO and Surveyor' },
-    { type: 'row', label: 'Knockout Result', value: 'Tend to Approve' },
-    { type: 'row', label: 'Knockout Reason', value: 'Tend to Approve' },
+    {
+      type: 'knockoutList',
+      label: 'Knockout',
+      items: [
+        { result: 'Passed', reason: 'Customer age within acceptable range (25–55 years old)' },
+      ],
+    },
   ],
 
   collateral: [
@@ -113,13 +142,37 @@ export const leasingIndividual = {
     { type: 'row', label: 'Brand', value: 'Hino', indent: 1 },
     { type: 'badge', label: 'Certificate Status', value: 'Active', indent: 1 },
     { type: 'row', label: 'Finance Company', value: 'Mitsui Leasing Capital Indonesia', indent: 1 },
+
+    { type: 'group', label: 'Asset Financing History' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'contractNo', label: 'Contract No' },
+        { key: 'customerNo', label: 'Customer No' },
+        { key: 'otrAmount', label: 'OTR Amount' },
+        { key: 'totalNetFinance', label: 'Total Net Finance' },
+        { key: 'disbursementDate', label: 'Disbursement Date' },
+        { key: 'finishDate', label: 'Finish Date' },
+      ],
+      people: [
+        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', finishDate: '02-2026' },
+      ],
+    },
   ],
 
   apuppt: [
     { type: 'group', label: 'AML News' },
     { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
     { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
-    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Medium Risk' },
+
+    {
+      type: 'subAccordion',
+      title: 'AML-CFT Customer Classification',
+      icon: '🛡️',
+      rows: [
+        { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
+      ],
+    },
   ],
 
   lpip: [
@@ -134,15 +187,17 @@ export const leasingIndividual = {
     { type: 'row', label: 'Score', value: '123', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
     { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result', url: '#' }] },
-
-    { type: 'group', label: 'Guarantor LPIP' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'row', label: 'Score', value: '123', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result', url: '#' }] },
   ],
 
   finalScoring: [
+    {
+      type: 'highlight',
+      items: [
+        { label: 'Final Score Result', value: 'Recommend to Approve', tone: 'good' },
+        { label: 'Instant Approval', value: 'Yes', tone: 'good' },
+      ],
+    },
+
     {
       type: 'peopleTable',
       label: 'SLIK Score Final',
@@ -158,19 +213,34 @@ export const leasingIndividual = {
         { name: 'Aggregate', result: 'Good', summaryUrl: '' },
       ],
     },
-     { type: 'group', label: 'Bank Statement Analyzer' },
-    { type: 'badge', label: 'Status', value: 'Valid' },
+
+    { type: 'group', label: 'Bank Statement Analyzer' },
+    { type: 'badge', label: 'Status', value: 'Valid', indent: 1 },
+
+    { type: 'group', label: 'Document Validity' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Document' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'KTP Customer', status: 'Valid' },
+        { name: 'KTP Spouse', status: 'Valid' },
+        { name: 'Kartu Keluarga', status: 'Valid' },
+        { name: 'NPWP', status: 'Not Valid' },
+      ],
+    },
 
     {
       type: 'subAccordion',
       title: 'Credit Deviation',
       icon: '📉',
       rows: [
-        { type: 'row', label: 'Age', value: '0', indent: 1 },
-        { type: 'row', label: 'Tenor', value: '0', indent: 1 },
-        { type: 'row', label: 'Down Payment Percentage', value: '0', indent: 1 },
-        { type: 'row', label: 'Installment to Income Ratio', value: '0', indent: 1 },
-        { type: 'badge', label: 'Total Credit Deviation', value: '0' },
+        {
+          type: 'knockoutList',
+          items: [], // no deviation on this application — renders as "-"
+        },
       ],
     },
     {
@@ -178,14 +248,13 @@ export const leasingIndividual = {
       title: 'Product Deviation',
       icon: '📦',
       rows: [
-        { type: 'row', label: 'Unit Price', value: '0', indent: 1 },
-        { type: 'row', label: 'Manufacture Year', value: '0', indent: 1 },
-        { type: 'row', label: 'Residual Value', value: '0', indent: 1 },
-        { type: 'badge', label: 'Total Product Deviation', value: '0' },
+        {
+          type: 'knockoutList',
+          items: [
+            { result: 'Deviated', reason: 'Unit manufacture year is 1 year older than policy standard' },
+          ],
+        },
       ],
     },
-
-    { type: 'badge', label: 'Final Score Result', value: 'Recommend to Approve' },
-    { type: 'badge', label: 'Instant Approval', value: 'Yes' },
   ],
 };

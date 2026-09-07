@@ -7,22 +7,54 @@ export const leasingCorporate = {
   },
 
   kyc: [
-    { type: 'group', label: 'AHU:' },
-    { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
+    { type: 'group', label: 'AHU' },
+    { type: 'badge', label: 'Inquiry', value: 'Registered', indent: 1 },
+
     { type: 'group', label: 'Deed of Establishment' },
     { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
 
     { type: 'group', label: 'Company Guarantor' },
-    { type: 'row', label: 'Inquiry', value: 'Registered', indent: 1 },
+    { type: 'badge', label: 'Inquiry', value: 'Registered', indent: 1 },
     { type: 'badge', label: 'Shareholder & Management', value: 'Match', indent: 1 },
 
     { type: 'group', label: 'Personal Guarantor' },
-    { type: 'row', label: 'Dukcapil', value: 'Match', indent: 1 },
-    { type: 'row', label: 'Phone Verification (ID Match)', value: 'Match', indent: 1 },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Check Item' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Dukcapil', status: 'Match' },
+        { name: 'Phone Verification (ID Match)', status: 'Match' },
+      ],
+    },
     { type: 'row', label: 'Phone Verification (Phone Age)', value: '(>12 months)', indent: 1 },
+
+    { type: 'group', label: 'Relationship Check' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Relationship' },
+        { key: 'relatedTo', label: 'Related To' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Personal Guarantor', relatedTo: 'Company (Director/Shareholder)', status: 'Verified' },
+        { name: 'Company Guarantor', relatedTo: 'Company', status: 'Verified' },
+      ],
+    },
   ],
 
   preScoring: [
+    {
+      type: 'highlight',
+      items: [
+        { label: 'Pre Scoring Result', value: 'Tend to Approve', tone: 'good' },
+        { label: 'Survey Treatment', value: 'SO and Surveyor' },
+      ],
+    },
+
     {
       type: 'peopleTable',
       label: 'SLIK Score',
@@ -35,8 +67,12 @@ export const leasingCorporate = {
         { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
       ],
     },
-    { type: 'row', label: 'Pre Scoring Result', value: 'Tend to Approve' },
-    { type: 'row', label: 'Survey Treatment', value: 'SO and Surveyor' },
+
+    {
+      type: 'knockoutList',
+      label: 'Knockout',
+      items: [],
+    },
   ],
 
   collateral: [
@@ -49,11 +85,36 @@ export const leasingCorporate = {
     { type: 'row', label: 'Brand', value: 'Hino', indent: 1 },
     { type: 'badge', label: 'Certificate Status', value: 'Active', indent: 1 },
     { type: 'row', label: 'Finance Company', value: 'Mitsui Leasing Capital Indonesia', indent: 1 },
+
+    { type: 'group', label: 'Asset Financing History' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'contractNo', label: 'Contract No' },
+        { key: 'customerNo', label: 'Customer No' },
+        { key: 'otrAmount', label: 'OTR Amount' },
+        { key: 'totalNetFinance', label: 'Total Net Finance' },
+        { key: 'disbursementDate', label: 'Disbursement Date' },
+        { key: 'finishDate', label: 'Finish Date' },
+      ],
+      people: [
+        { contractNo: '21093302015', customerNo: 'CUST-55019', otrAmount: 'Rp 780,000,000', totalNetFinance: 'Rp 624,000,000', disbursementDate: '09-2021', finishDate: '09-2025' },
+      ],
+    },
   ],
 
   apuppt: [
-    { type: 'badge', label: 'AML News', value: 'Not Listed', indent: 1 },
-    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Medium Risk', indent: 1 },
+    { type: 'group', label: 'AML News' },
+    { type: 'badge', label: 'Status', value: 'Not Listed', indent: 1 },
+
+    {
+      type: 'subAccordion',
+      title: 'AML-CFT Customer Classification',
+      icon: '🛡️',
+      rows: [
+        { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
+      ],
+    },
   ],
 
   lpip: [
@@ -62,21 +123,17 @@ export const leasingCorporate = {
     { type: 'row', label: 'Score', value: '123', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
     { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result', url: '#' }] },
-
-    { type: 'group', label: 'Director LPIP' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'row', label: 'Score', value: '123', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result (Mr Febby)', url: '#' }] },
-
-    { type: 'group', label: 'Commissioner LPIP' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'row', label: 'Score', value: '123', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result (Mr Ivan)', url: '#' }] },
   ],
 
   finalScoring: [
+    {
+      type: 'highlight',
+      items: [
+        { label: 'Final Score Result', value: 'Recommend to Approve', tone: 'good' },
+        { label: 'Instant Approval', value: 'Yes', tone: 'good' },
+      ],
+    },
+
     {
       type: 'peopleTable',
       label: 'SLIK Score Final',
@@ -89,19 +146,36 @@ export const leasingCorporate = {
         { name: 'Aggregate', positionStatus: '—', result: 'Good', summaryUrl: '' },
       ],
     },
+
     { type: 'group', label: 'Bank Statement Analyzer' },
-    { type: 'badge', label: 'Status', value: 'Valid' },
+    { type: 'badge', label: 'Status', value: 'Valid', indent: 1 },
+
+    { type: 'group', label: 'Document Validity' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Document' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Akta Pendirian & Perubahan', status: 'Valid' },
+        { name: 'SK Kemenkumham', status: 'Valid' },
+        { name: 'NPWP Perusahaan', status: 'Valid' },
+        { name: 'Laporan Keuangan', status: 'Not Valid' },
+      ],
+    },
 
     {
       type: 'subAccordion',
       title: 'Credit Deviation',
       icon: '📉',
       rows: [
-        { type: 'row', label: 'Company Age', value: '0', indent: 1 },
-        { type: 'row', label: 'Tenor', value: '0', indent: 1 },
-        { type: 'row', label: 'Down Payment Percentage', value: '0', indent: 1 },
-        { type: 'row', label: 'Debt Service Coverage Ratio', value: '0', indent: 1 },
-        { type: 'badge', label: 'Total Credit Deviation', value: '0' },
+        {
+          type: 'knockoutList',
+          items: [
+            { result: 'Deviated', reason: 'Company age below 3 years — mitigated by Personal & Company Guarantor' },
+          ],
+        },
       ],
     },
     {
@@ -109,14 +183,11 @@ export const leasingCorporate = {
       title: 'Product Deviation',
       icon: '📦',
       rows: [
-        { type: 'row', label: 'Unit Price', value: '0', indent: 1 },
-        { type: 'row', label: 'Manufacture Year', value: '0', indent: 1 },
-        { type: 'row', label: 'Residual Value', value: '0', indent: 1 },
-        { type: 'badge', label: 'Total Product Deviation', value: '0' },
+        {
+          type: 'knockoutList',
+          items: [],
+        },
       ],
     },
-
-    { type: 'badge', label: 'Final Score Result', value: 'Recommend to Approve' },
-    { type: 'badge', label: 'Instant Approval', value: 'Yes' },
   ],
 };

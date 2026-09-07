@@ -107,8 +107,14 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
         <div class="label">{{ verdictLabel }}</div>
         <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">
-          <div><b>{{ currentVerdict.slikAggregate }}</b>SLIK Aggregate</div>
-          <div><b>{{ currentVerdict.surveyTreatment }}</b>Survey Treatment</div>
+          <div class="vm-item">
+            <div class="vm-label">SLIK Aggregate</div>
+            <div class="vm-value">{{ currentVerdict.slikAggregate }}</div>
+          </div>
+          <div class="vm-item">
+            <div class="vm-label">Survey Treatment</div>
+            <div class="vm-value">{{ currentVerdict.surveyTreatment }}</div>
+          </div>
         </div>
       </div>
       <div class="verdict-pill" :class="badgeTone(currentVerdict.instantApproval)">
@@ -123,6 +129,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
         :meta="sec.meta"
         :rows="currentData[sec.key] || []"
         :is-open="openSections[sec.key]"
+        table-mode
         @toggle="toggleSection(sec.key)"
       />
 
@@ -130,6 +137,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
       <AccordionSection
         :meta="{ title: 'Document Upload', icon: '📎' }"
         :is-open="uploadSectionOpen.open"
+        table-mode
         @toggle="uploadSectionOpen.open = !uploadSectionOpen.open"
       >
         <CaReviewUpload />
@@ -231,8 +239,8 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 .verdict-pill.mid { background: #FBEBCC; color: #8A5A0E; }
 .verdict-pill.risk { background: #FBDADA; color: #8E2222; }
 .verdict-meta { display: flex; gap: 26px; margin-top: 16px; flex-wrap: wrap; }
-.verdict-meta div { font-size: 14px; opacity: .85; }
-.verdict-meta b { display: block; font-family: var(--font-head); font-size: 16px; font-weight: 700; opacity: 1; }
+.vm-label { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; opacity: .65; font-family: var(--font-mono); }
+.vm-value { font-family: var(--font-head); font-size: 16px; font-weight: 700; margin-top: 3px; }
 
 .accordion { display: flex; flex-direction: column; gap: 14px; }
 

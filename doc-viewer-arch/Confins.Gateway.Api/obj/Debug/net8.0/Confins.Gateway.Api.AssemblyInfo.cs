@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Confins.Gateway.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf80e93179e51acf9e8257c122bce171cd3154a5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0c8876e55f21236753f49feb67a79572d916066")]
 [assembly: System.Reflection.AssemblyProductAttribute("Confins.Gateway.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Confins.Gateway.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
