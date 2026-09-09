@@ -243,6 +243,30 @@ const defaultPeopleTableColumns = [
               </td>
             </tr>
 
+            <!-- Repeating small person cards (e.g. Dukcapil Customer/Spouse/Guarantor...) —
+                 add/remove entries in row.people and cards appear/disappear automatically.
+                 If any of a person's mandatory fields is Not Match, the whole card cascades
+                 to Not Match (this is computed in the data, not here — see row.people[].overall). -->
+            <tr v-else-if="row.type === 'personFieldCards'">
+              <td colspan="2" class="ft-nested-table-cell">
+                <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+                <div class="person-cards">
+                  <div v-for="(p, pi) in row.people" :key="pi" class="person-card">
+                    <div class="person-card-head">
+                      <span>{{ p.name }}</span>
+                      <span class="badge" :class="badgeTone(p.overall)">{{ p.overall }}</span>
+                    </div>
+                    <div class="person-card-body">
+                      <div v-for="f in row.fields" :key="f.key" class="person-card-row">
+                        <span class="pc-label">{{ f.label }}<span v-if="f.mandatory" class="pc-star">*</span></span>
+                        <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])">{{ p.values[f.key] }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
           </template>
         </tbody>
       </table>
@@ -391,6 +415,25 @@ const defaultPeopleTableColumns = [
                   </table>
                 </div>
               </template>
+            </div>
+          </div>
+
+          <!-- Repeating small person cards (flex mode) -->
+          <div v-else-if="row.type === 'personFieldCards'" class="field-cell wide">
+            <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+            <div class="person-cards">
+              <div v-for="(p, pi) in row.people" :key="pi" class="person-card">
+                <div class="person-card-head">
+                  <span>{{ p.name }}</span>
+                  <span class="badge" :class="badgeTone(p.overall)">{{ p.overall }}</span>
+                </div>
+                <div class="person-card-body">
+                  <div v-for="f in row.fields" :key="f.key" class="person-card-row">
+                    <span class="pc-label">{{ f.label }}<span v-if="f.mandatory" class="pc-star">*</span></span>
+                    <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])">{{ p.values[f.key] }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -711,6 +754,64 @@ const defaultPeopleTableColumns = [
 }
 .rel-detail-wrap { padding: 4px 0 14px; }
 .rel-detail-wrap .people-table { margin-top: 0; }
+
+/* Repeating small person cards (e.g. Dukcapil Customer/Spouse/Guarantor...) —
+   data-driven: add/remove an entry in row.people and a card appears/disappears
+   automatically, no template changes needed. */
+.person-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+.person-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.person-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.person-card-body { padding: 2px 12px 8px; }
+.person-card-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px dashed #EEF0F4;
+}
+.person-card-row:last-child { border-bottom: none; }
+.pc-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  flex: none;
+  max-width: 55%;
+}
+.pc-star { color: var(--risk); margin-left: 1px; }
+.pc-value { font-family: var(--font-head); font-weight: 700; font-size: 12.5px; text-align: right; white-space: normal; word-break: break-word; }
+.pc-value.tone-good { color: var(--good); }
+.pc-value.tone-mid { color: var(--mid); }
+.pc-value.tone-risk { color: var(--risk); }
+.pc-value.tone-neutral { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .person-cards { grid-template-columns: 1fr; }
+}
 .people-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
 .people-table thead tr { border-bottom: 1.5px solid var(--line); }
 .people-table th {

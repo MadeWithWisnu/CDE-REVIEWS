@@ -1,3 +1,41 @@
+/**
+ * Dukcapil check fields — shared by every person card (Customer, Spouse,
+ * Guarantor, and any additional Guarantor added later). `mandatory: true`
+ * marks the 4 primary identity-match criteria.
+ */
+const DUKCAPIL_FIELDS = [
+  { key: 'nik', label: 'NIK', mandatory: true },
+  { key: 'namaLengkap', label: 'Nama Lengkap', mandatory: true },
+  { key: 'tanggalLahir', label: 'Tanggal Lahir', mandatory: true },
+  { key: 'jenisKelamin', label: 'Jenis Kelamin', mandatory: true },
+  { key: 'tempatLahir', label: 'Tempat Lahir' },
+  { key: 'alamat', label: 'Alamat' },
+  { key: 'namaProvinsi', label: 'Nama Provinsi' },
+  { key: 'namaKabupaten', label: 'Nama Kabupaten' },
+  { key: 'namaKecamatan', label: 'Nama Kecamatan' },
+  { key: 'rt', label: 'RT' },
+  { key: 'rw', label: 'RW' },
+  { key: 'statusPerkawinan', label: 'Status Perkawinan' },
+  { key: 'jenisPekerjaan', label: 'Jenis Pekerjaan' },
+];
+const DUKCAPIL_MANDATORY_KEYS = DUKCAPIL_FIELDS.filter(f => f.mandatory).map(f => f.key);
+
+/**
+ * buildDukcapilPerson(name, raw)
+ * --------------------------------
+ * Business rule: if ANY of the 4 mandatory fields (NIK, Nama Lengkap,
+ * Tanggal Lahir, Jenis Kelamin) is Not Match, the ENTIRE person's Dukcapil
+ * check cascades to Not Match — every field shows Not Match, not just the
+ * failing one. To add a new Guarantor, just call this again and push it
+ * into the `people` array below; a new small card appears automatically.
+ */
+function buildDukcapilPerson(name, raw) {
+  const failed = DUKCAPIL_MANDATORY_KEYS.some(k => raw[k] !== 'Match');
+  const values = {};
+  for (const key in raw) values[key] = failed ? 'Not Match' : raw[key];
+  return { name, overall: failed ? 'Not Match' : 'Match', values };
+}
+
 export const leasingIndividual = {
   verdict: {
     result: 'Recommend to Approve',
@@ -8,29 +46,31 @@ export const leasingIndividual = {
 
   kyc: [
     { type: 'group', label: 'Dukcapil' },
-    ...['Customer', 'Spouse', 'Guarantor'].map(person => ({
-      type: 'subAccordion',
-      title: person,
-      icon: '🪪',
-      rows: [
-        // Top 4 fields are the primary identity-match criteria — marked with *
-        { type: 'badge', label: 'NIK *', value: 'Match' },
-        { type: 'badge', label: 'Nama Lengkap *', value: 'Match' },
-        { type: 'badge', label: 'Tanggal Lahir *', value: 'Match' },
-        { type: 'badge', label: 'Jenis Kelamin *', value: 'Match' },
-        // Supporting fields
-        { type: 'row', label: 'Tempat Lahir', value: 'Match' },
-        { type: 'row', label: 'Alamat', value: 'Match' },
-        { type: 'row', label: 'Nama Provinsi', value: 'Match' },
-        { type: 'row', label: 'Nama Kabupaten', value: 'Match' },
-        { type: 'row', label: 'Nama Kecamatan', value: 'Match' },
-        { type: 'row', label: 'Nama Kelurahan', value: 'Match' },
-        { type: 'row', label: 'RT', value: 'Match' },
-        { type: 'row', label: 'RW', value: 'Match' },
-        { type: 'row', label: 'Status Perkawinan', value: 'Match' },
-        { type: 'row', label: 'Jenis Pekerjaan', value: 'Match' },
+    {
+      type: 'personFieldCards',
+      fields: DUKCAPIL_FIELDS,
+      // To add a new Guarantor, just push another buildDukcapilPerson(...)
+      // entry here — a new small card appears automatically, no other
+      // code changes needed.
+      people: [
+        buildDukcapilPerson('Customer', {
+          nik: 'Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
+          tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
+          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+        }),
+        buildDukcapilPerson('Spouse', {
+          nik: 'Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
+          tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
+          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+        }),
+        // Example: NIK doesn't match → cascades to Not Match across every field for this person
+        buildDukcapilPerson('Guarantor', {
+          nik: 'Not Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
+          tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
+          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+        }),
       ],
-    })),
+    },
 
     { type: 'group', label: 'Phone Verification' },
     {
@@ -117,13 +157,15 @@ export const leasingIndividual = {
       type: 'peopleTable',
       columns: [
         { key: 'name', label: 'Item' },
+        { key: 'input', label: 'Input' },
+        { key: 'original', label: 'Original / Reference' },
         { key: 'score', label: 'Match Score' },
         { key: 'status', label: 'Status', badge: true },
       ],
       people: [
-        { name: 'Name', score: '99%', status: 'Verified' },
-        { name: 'Place and Date of Birth', score: '100%', status: 'Verified' },
-        { name: 'Selfie Photo', score: '83%', status: 'Verified' },
+        { name: 'Name', input: 'Aswar Pasaribu', original: 'ASWAR PASARIBU (KTP)', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', original: 'SIBOLGA / 06-06-1969 (KTP)', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', input: 'Live Selfie Capture', original: 'ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
       ],
     },
   ],
