@@ -8,32 +8,29 @@ export const leasingIndividual = {
 
   kyc: [
     { type: 'group', label: 'Dukcapil' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Name' },
-        { key: 'nikMatch', label: 'ID Number', badge: true },
-        { key: 'dobMatch', label: 'Birth Date', badge: true },
-        { key: 'genderMatch', label: 'Gender', badge: true },
-        { key: 'placeOfBirthMatch', label: 'Place of Birth', badge: true },
-        { key: 'addressMatch', label: 'Full Address', badge: true },
-        { key: 'provinceMatch', label: 'Province', badge: true },
-        { key: 'regencyMatch', label: 'Regency', badge: true },
-        { key: 'districtMatch', label: 'District', badge: true },
-        { key: 'subdistrictMatch', label: 'Sub District', badge: true },
-        { key: 'RTMatch', label: 'RT', badge: true },
-        { key: 'RWMatch', label: 'RW', badge: true },
-        { key: 'MaritalStatusMatch', label: 'Marital Status', badge: true },
-        { key: 'OccupationMatch', label: 'Occupation', badge: true },
-
-
+    ...['Customer', 'Spouse', 'Guarantor'].map(person => ({
+      type: 'subAccordion',
+      title: person,
+      icon: '🪪',
+      rows: [
+        // Top 4 fields are the primary identity-match criteria — marked with *
+        { type: 'badge', label: 'NIK *', value: 'Match' },
+        { type: 'badge', label: 'Nama Lengkap *', value: 'Match' },
+        { type: 'badge', label: 'Tanggal Lahir *', value: 'Match' },
+        { type: 'badge', label: 'Jenis Kelamin *', value: 'Match' },
+        // Supporting fields
+        { type: 'row', label: 'Tempat Lahir', value: 'Match' },
+        { type: 'row', label: 'Alamat', value: 'Match' },
+        { type: 'row', label: 'Nama Provinsi', value: 'Match' },
+        { type: 'row', label: 'Nama Kabupaten', value: 'Match' },
+        { type: 'row', label: 'Nama Kecamatan', value: 'Match' },
+        { type: 'row', label: 'Nama Kelurahan', value: 'Match' },
+        { type: 'row', label: 'RT', value: 'Match' },
+        { type: 'row', label: 'RW', value: 'Match' },
+        { type: 'row', label: 'Status Perkawinan', value: 'Match' },
+        { type: 'row', label: 'Jenis Pekerjaan', value: 'Match' },
       ],
-      people: [
-        { name: 'Customer', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: 'Match', RTMatch: 'Match', RWMatch: 'Match', MaritalStatusMatch: 'Match', OccupationMatch: 'Match' },
-        { name: 'Spouse', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: ' Match', RTMatch: ' Match', RWMatch: ' Match', MaritalStatusMatch: 'Match', OccupationMatch: 'Match' },
-        { name: 'Guarantor', nikMatch: 'Match', dobMatch: 'Match', genderMatch: 'Match', placeOfBirthMatch: 'Match', addressMatch: 'Match', provinceMatch: 'Match', regencyMatch: 'Match', districtMatch: 'Match', subdistrictMatch: ' Match', RTMatch: ' Match', RWMatch: ' Match', MaritalStatusMatch: ' Match', OccupationMatch: ' Match' },
-      ],
-    },
+    })),
 
     { type: 'group', label: 'Phone Verification' },
     {
@@ -66,17 +63,50 @@ export const leasingIndividual = {
       ],
     },
 
+    // Relationship Check — click a count to reveal the related contract list
     { type: 'group', label: 'Relationship Check' },
     {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Relationship' },
-        { key: 'relatedTo', label: 'Related To' },
-        { key: 'status', label: 'Status', badge: true },
-      ],
-      people: [
-        { name: 'Spouse', relatedTo: 'Customer', status: 'Verified' },
-        { name: 'Guarantor', relatedTo: 'Customer', status: 'Verified' },
+      type: 'relationshipSummary',
+      label: 'Contract(s) Related with Customer',
+      categories: [
+        {
+          name: 'Debtor',
+          count: 5,
+          contracts: [
+            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+          ],
+        },
+        {
+          name: 'Spouse',
+          count: 0,
+          contracts: [],
+        },
+        {
+          name: 'Emergency Contact',
+          count: 5,
+          contracts: [
+            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'Outstanding' },
+            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+          ],
+        },
+        {
+          name: 'Board / Management',
+          count: 5,
+          contracts: [
+            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+          ],
+        },
       ],
     },
 

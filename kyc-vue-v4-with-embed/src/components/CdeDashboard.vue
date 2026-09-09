@@ -39,7 +39,7 @@ const activeSections = (cdeType?.sectionOrder || []).map(key => ({
   meta: SECTION_LIBRARY[key],
 }));
 const openSections = reactive(
-  Object.fromEntries(activeSections.map((s, i) => [s.key, i < 2]))
+  Object.fromEntries(activeSections.map((s) => [s.key, true]))
 );
 function toggleSection(key) {
   openSections[key] = !openSections[key];
@@ -55,7 +55,7 @@ const camSectionRows = (camType?.sectionOrder || []).map(item => {
 });
 const camAllKeys = camSectionRows.flat().map(s => s.key);
 const openCamSections = reactive(
-  Object.fromEntries(camAllKeys.map((key, i) => [key, i < 2]))
+  Object.fromEntries(camAllKeys.map((key) => [key, true]))
 );
 function toggleCamSection(key) {
   openCamSections[key] = !openCamSections[key];

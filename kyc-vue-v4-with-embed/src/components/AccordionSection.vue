@@ -26,6 +26,15 @@ function toggleSub(i) {
   openSubs[i] = !openSubs[i];
 }
 
+// Local open/close state for `relationshipSummary` category detail tables —
+// keyed by `${rowIndex}:${categoryIndex}` since one section can have
+// multiple relationshipSummary rows, each with several clickable categories.
+const openRelCats = reactive({});
+function toggleRelCat(rowIndex, catIndex) {
+  const key = `${rowIndex}:${catIndex}`;
+  openRelCats[key] = !openRelCats[key];
+}
+
 // Default columns for `peopleTable` rows that don't specify their own
 // `columns` — keeps existing SLIK-style tables working unchanged.
 const defaultPeopleTableColumns = [
@@ -189,6 +198,51 @@ const defaultPeopleTableColumns = [
               </td>
             </tr>
 
+            <!-- Relationship Check summary (table mode): category counts, click a count to reveal its contract detail table -->
+            <tr v-else-if="row.type === 'relationshipSummary'">
+              <td colspan="2" class="ft-nested-table-cell">
+                <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+                <div class="rel-summary">
+                  <template v-for="(cat, ci) in row.categories" :key="ci">
+                    <div class="rel-summary-row">
+                      <span class="rel-summary-label">{{ cat.name }}</span>
+                      <span class="rel-summary-sep">:</span>
+                      <button
+                        class="rel-summary-count"
+                        :class="{ zero: !cat.count }"
+                        :disabled="!cat.count"
+                        @click="toggleRelCat(i, ci)"
+                      >{{ cat.count }}</button>
+                    </div>
+                    <div v-if="openRelCats[`${i}:${ci}`] && cat.contracts?.length" class="rel-detail-wrap">
+                      <table class="people-table">
+                        <thead>
+                          <tr>
+                            <th>Contract No.</th>
+                            <th>Customer Name</th>
+                            <th>OTR Amount</th>
+                            <th>Total Net Finance</th>
+                            <th>Disbursement Date</th>
+                            <th>Status (Outstanding / WO)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(c, cci) in cat.contracts" :key="cci">
+                            <td class="mono">{{ c.contractNo }}</td>
+                            <td>{{ c.customerName }}</td>
+                            <td>{{ c.otrAmount }}</td>
+                            <td>{{ c.totalNetFinance }}</td>
+                            <td>{{ c.disbursementDate }}</td>
+                            <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </template>
+                </div>
+              </td>
+            </tr>
+
           </template>
         </tbody>
       </table>
@@ -294,6 +348,49 @@ const defaultPeopleTableColumns = [
                   </div>
                 </template>
               </div>
+            </div>
+          </div>
+
+          <!-- Relationship Check summary: category counts, click a count to reveal its contract detail table -->
+          <div v-else-if="row.type === 'relationshipSummary'" class="rel-summary-wrap">
+            <div v-if="row.label" class="grp-label">{{ row.label }}</div>
+            <div class="rel-summary">
+              <template v-for="(cat, ci) in row.categories" :key="ci">
+                <div class="rel-summary-row">
+                  <span class="rel-summary-label">{{ cat.name }}</span>
+                  <span class="rel-summary-sep">:</span>
+                  <button
+                    class="rel-summary-count"
+                    :class="{ zero: !cat.count }"
+                    :disabled="!cat.count"
+                    @click="toggleRelCat(i, ci)"
+                  >{{ cat.count }}</button>
+                </div>
+                <div v-if="openRelCats[`${i}:${ci}`] && cat.contracts?.length" class="rel-detail-wrap">
+                  <table class="people-table">
+                    <thead>
+                      <tr>
+                        <th>Contract No.</th>
+                        <th>Customer Name</th>
+                        <th>OTR Amount</th>
+                        <th>Total Net Finance</th>
+                        <th>Disbursement Date</th>
+                        <th>Status (Outstanding / WO)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(c, cci) in cat.contracts" :key="cci">
+                        <td class="mono">{{ c.contractNo }}</td>
+                        <td>{{ c.customerName }}</td>
+                        <td>{{ c.otrAmount }}</td>
+                        <td>{{ c.totalNetFinance }}</td>
+                        <td>{{ c.disbursementDate }}</td>
+                        <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </template>
             </div>
           </div>
 
@@ -569,11 +666,51 @@ const defaultPeopleTableColumns = [
 
 .sub-field-grid {
   padding: 4px 14px 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .sub-field-grid > .grp-label:first-child { margin-top: 0; }
 
 .people-table-wrap { grid-column: 1 / -1; margin-top: 4px; }
+
+/* Relationship Check summary — label : clickable count, expands to a contract detail table */
+.rel-summary-wrap { grid-column: 1 / -1; }
+.rel-summary {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px 16px;
+  margin-top: 4px;
+}
+.rel-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 0;
+  border-bottom: 1px solid #E7EAF0;
+}
+.rel-summary-row:last-of-type { border-bottom: none; }
+.rel-summary-label { font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--ink); }
+.rel-summary-sep { color: var(--ink-faint); }
+.rel-summary-count {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--green-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rel-summary-count:hover:not(:disabled) { color: var(--green); }
+.rel-summary-count.zero, .rel-summary-count:disabled {
+  color: var(--ink-faint);
+  cursor: default;
+  text-decoration: none;
+}
+.rel-detail-wrap { padding: 4px 0 14px; }
+.rel-detail-wrap .people-table { margin-top: 0; }
 .people-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
 .people-table thead tr { border-bottom: 1.5px solid var(--line); }
 .people-table th {
