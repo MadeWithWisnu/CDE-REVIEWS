@@ -1,6 +1,7 @@
 <script setup>
 import { computed, reactive } from 'vue';
 import { badgeTone } from '../data/sections.js';
+import RpAmount from './RpAmount.vue';
 
 const props = defineProps({
   meta: { type: Object, required: true },   // { title, icon }
@@ -19,6 +20,14 @@ const emit = defineEmits(['toggle']);
 // (the old behavior) could surface an unrelated/misleading value (e.g. a
 // "Status: Available" badge from deep inside the section body).
 const summaryBadge = computed(() => props.rows.find(r => r.type === 'badge' && r.summary) || null);
+
+// Dipakai untuk kasih class tambahan ke `.field-value` (mode field-grid/kartu)
+// supaya value nominal Rupiah bisa melebar sampai ke tepi kanan cell-nya —
+// baru RpAmount di dalamnya bisa align-right dengan tepi yang konsisten
+// antar baris (lihat CSS `.field-value.value-rp`).
+function isRpValue(val) {
+  return typeof val === 'string' && /^Rp\.?\s*[\d.,]+/i.test(val.trim());
+}
 
 // Local open/close state for nested `subAccordion` rows.
 const openSubs = reactive({});
@@ -81,7 +90,7 @@ const defaultPeopleTableColumns = [
 
             <tr v-else-if="row.type === 'row'" :class="{ indent: row.indent }">
               <td class="ft-field">{{ row.label }}</td>
-              <td class="ft-value" :class="{ mono: row.mono }">{{ row.value }}</td>
+              <td class="ft-value" :class="{ mono: row.mono }"><RpAmount :value="row.value" /></td>
             </tr>
 
             <tr v-else-if="row.type === 'badge'" :class="{ indent: row.indent }">
@@ -146,7 +155,7 @@ const defaultPeopleTableColumns = [
                           <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
                           <span v-else class="pt-muted">—</span>
                         </template>
-                        <span v-else>{{ p[col.key] || '—' }}</span>
+                        <RpAmount v-else :value="p[col.key] || '—'" />
                       </td>
                     </tr>
                   </tbody>
@@ -172,7 +181,7 @@ const defaultPeopleTableColumns = [
                           <tr v-if="sr.type === 'group'" class="ft-group-row"><td colspan="2">{{ sr.label }}</td></tr>
                           <tr v-else-if="sr.type === 'row'" :class="{ indent: sr.indent }">
                             <td class="ft-field">{{ sr.label }}</td>
-                            <td class="ft-value" :class="{ mono: sr.mono }">{{ sr.value }}</td>
+                            <td class="ft-value" :class="{ mono: sr.mono }"><RpAmount :value="sr.value" /></td>
                           </tr>
                           <tr v-else-if="sr.type === 'badge'" :class="{ indent: sr.indent }">
                             <td class="ft-field">{{ sr.label }}</td>
@@ -230,8 +239,8 @@ const defaultPeopleTableColumns = [
                           <tr v-for="(c, cci) in cat.contracts" :key="cci">
                             <td class="mono">{{ c.contractNo }}</td>
                             <td>{{ c.customerName }}</td>
-                            <td>{{ c.otrAmount }}</td>
-                            <td>{{ c.totalNetFinance }}</td>
+                            <td><RpAmount :value="c.otrAmount" /></td>
+                            <td><RpAmount :value="c.totalNetFinance" /></td>
                             <td>{{ c.disbursementDate }}</td>
                             <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
                           </tr>
@@ -259,7 +268,7 @@ const defaultPeopleTableColumns = [
                     <div class="person-card-body">
                       <div v-for="f in row.fields" :key="f.key" class="person-card-row">
                         <span class="pc-label">{{ f.label }}<span v-if="f.mandatory" class="pc-star">*</span></span>
-                        <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])">{{ p.values[f.key] }}</span>
+                        <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])"><RpAmount :value="p.values[f.key]" /></span>
                       </div>
                     </div>
                   </div>
@@ -280,7 +289,7 @@ const defaultPeopleTableColumns = [
 
           <div v-else-if="row.type === 'row'" class="field-cell" :class="{ indent: row.indent }">
             <div class="field-label">{{ row.label }}</div>
-            <div class="field-value" :class="{ mono: row.mono }">{{ row.value }}</div>
+            <div class="field-value" :class="{ mono: row.mono, 'value-rp': isRpValue(row.value) }"><RpAmount :value="row.value" /></div>
           </div>
 
           <div v-else-if="row.type === 'badge'" class="field-cell" :class="{ indent: row.indent }">
@@ -333,7 +342,7 @@ const defaultPeopleTableColumns = [
                       <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
                       <span v-else class="pt-muted">—</span>
                     </template>
-                    <span v-else>{{ p[col.key] || '—' }}</span>
+                    <RpAmount v-else :value="p[col.key] || '—'" />
                   </td>
                 </tr>
               </tbody>
@@ -355,7 +364,7 @@ const defaultPeopleTableColumns = [
                   <div v-if="sr.type === 'group'" class="grp-label">{{ sr.label }}</div>
                   <div v-else-if="sr.type === 'row'" class="field-cell" :class="{ indent: sr.indent }">
                     <div class="field-label">{{ sr.label }}</div>
-                    <div class="field-value" :class="{ mono: sr.mono }">{{ sr.value }}</div>
+                    <div class="field-value" :class="{ mono: sr.mono, 'value-rp': isRpValue(sr.value) }"><RpAmount :value="sr.value" /></div>
                   </div>
                   <div v-else-if="sr.type === 'badge'" class="field-cell" :class="{ indent: sr.indent }">
                     <div class="field-label">{{ sr.label }}</div>
@@ -406,8 +415,8 @@ const defaultPeopleTableColumns = [
                       <tr v-for="(c, cci) in cat.contracts" :key="cci">
                         <td class="mono">{{ c.contractNo }}</td>
                         <td>{{ c.customerName }}</td>
-                        <td>{{ c.otrAmount }}</td>
-                        <td>{{ c.totalNetFinance }}</td>
+                        <td><RpAmount :value="c.otrAmount" /></td>
+                        <td><RpAmount :value="c.totalNetFinance" /></td>
                         <td>{{ c.disbursementDate }}</td>
                         <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
                       </tr>
@@ -430,7 +439,7 @@ const defaultPeopleTableColumns = [
                 <div class="person-card-body">
                   <div v-for="f in row.fields" :key="f.key" class="person-card-row">
                     <span class="pc-label">{{ f.label }}<span v-if="f.mandatory" class="pc-star">*</span></span>
-                    <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])">{{ p.values[f.key] }}</span>
+                    <span class="pc-value" :class="'tone-' + badgeTone(p.values[f.key])"><RpAmount :value="p.values[f.key]" /></span>
                   </div>
                 </div>
               </div>
@@ -466,7 +475,7 @@ const defaultPeopleTableColumns = [
 .sec-title {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 15.5px;
+  font-size: var(--fs-header-1);
   flex: 1;
   letter-spacing: .01em;
 }
@@ -494,29 +503,30 @@ const defaultPeopleTableColumns = [
 
 .ft-field {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-field-label);
   letter-spacing: .03em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: #05153b;
   width: 38%;
   white-space: normal;
+  font-weight: bolder;
 }
 .ft-value {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: var(--fs-field-value);
   color: var(--ink);
   white-space: normal;
   word-break: break-word;
 }
-.ft-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
+.ft-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-field-value-mono); }
 
 .field-table tbody tr:nth-child(even):not(.ft-group-row):not(.ft-note-row) { background: var(--bg); }
 
 .ft-group-row td {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: var(--fs-header-2);
   color: var(--navy);
   background: var(--surface);
   border-top: 1px dashed var(--line);
@@ -557,7 +567,7 @@ const defaultPeopleTableColumns = [
 .highlight-item { flex: 1; min-width: 160px; }
 .highlight-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-field-label);
   letter-spacing: .06em;
   text-transform: uppercase;
   color: rgba(255,255,255,.65);
@@ -574,7 +584,7 @@ const defaultPeopleTableColumns = [
 .highlight-value.hv-risk { color: #F5A3A3; }
 
 /* Knockout list: dash when empty, bulleted reason/result list otherwise */
-.knockout-empty { font-family: var(--font-head); font-size: 14.5px; color: var(--ink-faint); padding: 4px 0; }
+.knockout-empty { font-family: var(--font-head); font-size: var(--fs-field-value); color: var(--ink-faint); padding: 4px 0; }
 .knockout-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .knockout-list li { display: flex; align-items: center; gap: 10px; }
 .knockout-text { font-family: var(--font-head); font-size: 14px; color: var(--ink); }
@@ -593,7 +603,7 @@ const defaultPeopleTableColumns = [
   grid-column: 1 / -1;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: var(--fs-header-2);
   color: var(--navy);
   margin: 16px 0 2px;
   padding-top: 14px;
@@ -629,7 +639,7 @@ const defaultPeopleTableColumns = [
 
 .field-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-field-label);
   letter-spacing: .03em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -643,7 +653,7 @@ const defaultPeopleTableColumns = [
 .field-value {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: var(--fs-field-value);
   color: var(--ink);
   flex: 0 1 auto;
   min-width: 0;
@@ -651,8 +661,13 @@ const defaultPeopleTableColumns = [
   word-break: break-word;
   text-align: left;
 }
-.field-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: 13.5px; }
+.field-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-field-value-mono); }
 .field-cell.wide .field-value { text-align: left; }
+
+/* Value nominal Rupiah: biarkan melebar sampai tepi kanan cell supaya
+   RpAmount di dalamnya bisa align-right dengan tepi yang konsisten
+   antar baris di kolom grid yang sama. */
+.field-value.value-rp { flex: 1 1 auto; }
 
 .badge {
   display: inline-block;
@@ -671,7 +686,7 @@ const defaultPeopleTableColumns = [
 .badge.risk { color: var(--risk); background: var(--risk-bg); }
 .badge.neutral { color: var(--neutral); background: var(--neutral-bg); }
 
-.links { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+.links { display: flex; flex-direction: column; gap: 5px; align-items: baseline; }
 .field-cell.wide .links { align-items: flex-start; }
 .link { color: var(--green-dark); font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
 .link:hover { text-decoration: underline; }
@@ -697,7 +712,7 @@ const defaultPeopleTableColumns = [
 .sub-title {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: var(--fs-header-3);
   color: var(--navy);
   flex: 1;
 }
@@ -780,7 +795,7 @@ const defaultPeopleTableColumns = [
   border-bottom: 1px solid var(--line);
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: var(--fs-header-3);
   color: var(--ink);
 }
 .person-card-body { padding: 2px 12px 8px; }
@@ -795,7 +810,7 @@ const defaultPeopleTableColumns = [
 .person-card-row:last-child { border-bottom: none; }
 .pc-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-field-label);
   letter-spacing: .02em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -803,7 +818,7 @@ const defaultPeopleTableColumns = [
   max-width: 55%;
 }
 .pc-star { color: var(--risk); margin-left: 1px; }
-.pc-value { font-family: var(--font-head); font-weight: 700; font-size: 12.5px; text-align: right; white-space: normal; word-break: break-word; }
+.pc-value { font-family: var(--font-head); font-weight: 700; font-size: var(--fs-field-value); text-align: right; white-space: normal; word-break: break-word; }
 .pc-value.tone-good { color: var(--good); }
 .pc-value.tone-mid { color: var(--mid); }
 .pc-value.tone-risk { color: var(--risk); }
@@ -817,7 +832,7 @@ const defaultPeopleTableColumns = [
 .people-table th {
   text-align: left;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: var(--fs-field-label);
   letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -827,14 +842,14 @@ const defaultPeopleTableColumns = [
   padding: 10px 10px;
   border-bottom: 1px solid #F0F2F7;
   font-family: var(--font-head);
-  font-size: 14px;
+  font-size: var(--fs-field-value);
   color: var(--ink);
   vertical-align: middle;
 }
 .people-table tbody tr:nth-child(even) { background: var(--bg); }
 .people-table tbody tr:hover { background: var(--green-soft); }
 .pt-name { font-weight: 700; }
-.pt-position { color: var(--ink-soft); font-weight: 500; font-size: 13.5px; }
+.pt-position { color: var(--ink-soft); font-weight: 500; font-size: var(--fs-field-value-mono); }
 .pt-muted { color: var(--ink-faint); }
 
 @media (max-width: 640px) {

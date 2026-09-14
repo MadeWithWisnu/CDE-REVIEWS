@@ -9,12 +9,6 @@
  * Structure is corporate-only (see camTypes.js sectionOrder).
  */
 export const camIndividual = {
-  verdict: {
-    result: 'Recommended to Approve',
-    slikAggregate: 'Good',
-    surveyTreatment: 'SO and Surveyor',
-    instantApproval: 'Yes',
-  },
 
   applicationInfo: [
     { type: 'row', label: 'Application No', value: '23182604118', mono: true },

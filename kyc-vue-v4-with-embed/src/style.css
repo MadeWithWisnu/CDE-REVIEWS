@@ -28,6 +28,23 @@
   --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* ------------------------------------------------------------
+     TYPOGRAPHY HIERARCHY — field name & isian (value)
+     Dipakai di semua tempat yang menampilkan pasangan
+     "field name : isian" (field-grid, field-table, sub-accordion,
+     person cards, dst) supaya font & size-nya SETIPE/konsisten.
+     Header body (section title > group header > sub header) tetap
+     pakai font-family & weight yang sama, cuma beda size sesuai
+     tingkatannya (hierarchy).
+     ------------------------------------------------------------ */
+  --fs-header-1: 15.5px;   /* section title (level tertinggi) */
+  --fs-header-2: 14.5px;   /* group / category header (mis. grp-label) */
+  --fs-header-3: 13.5px;   /* sub-accordion title */
+
+  --fs-field-label: 11px;        /* nama field — konsisten di semua tempat */
+  --fs-field-value: 14.5px;      /* isian/value — konsisten di semua tempat */
+  --fs-field-value-mono: 13.5px; /* varian isian mono (mis. nomor akun) */
 }
 
 * { box-sizing: border-box; }

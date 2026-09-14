@@ -111,7 +111,7 @@ function openCde(key) {
   margin-bottom: 20px;
 }
 .summary-item { display: flex; flex-direction: column; gap: 3px; }
-.summary-label { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; opacity: .6; font-family: var(--font-mono); }
+.summary-label { font-size: var(--fs-field-label); text-transform: uppercase; letter-spacing: .08em; opacity: .6; font-family: var(--font-mono); }
 .summary-value { font-family: var(--font-head); font-weight: 700; font-size: 15.5px; }
 .summary-count {
   margin-left: auto;

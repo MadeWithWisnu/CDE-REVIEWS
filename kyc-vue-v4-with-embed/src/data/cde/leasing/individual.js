@@ -113,11 +113,11 @@ export const leasingIndividual = {
           name: 'Debtor',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
           ],
         },
         {
@@ -129,22 +129,22 @@ export const leasingIndividual = {
           name: 'Emergency Contact',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'Outstanding' },
-            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'Outstanding' },
+            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
           ],
         },
         {
           name: 'Board / Management',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09-2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01-2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06-2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11-2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
           ],
         },
       ],
@@ -176,6 +176,8 @@ export const leasingIndividual = {
       items: [
         { label: 'Pre Scoring Result', value: 'Tend to Approve', tone: 'good' },
         { label: 'Survey Treatment', value: 'SO and Surveyor' },
+        { label: 'Surveyor Name', value: 'Name of Surveyor' },
+
       ],
     },
 
@@ -199,7 +201,7 @@ export const leasingIndividual = {
       type: 'knockoutList',
       label: 'Knockout',
       items: [
-        { result: 'Passed', reason: 'Customer age within acceptable range (25–55 years old)' },
+        { reason: 'Customer age within acceptable range (25–55 years old)' },
       ],
     },
   ],
@@ -227,7 +229,7 @@ export const leasingIndividual = {
         { key: 'finishDate', label: 'Finish Date' },
       ],
       people: [
-        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '02-2022', finishDate: '02-2026' },
+        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', finishDate: '21 Feb 2026' },
       ],
     },
   ],
@@ -236,13 +238,26 @@ export const leasingIndividual = {
     { type: 'group', label: 'AML News' },
     { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
     { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
+    { type: 'group', label: 'AML-CFT Customer Classification' },
+    { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
+    { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
+    { type: 'row', label: 'Identification & Verification Process', value: 'Enhanced Due Diligence (EDD)', indent: 1 },
+    { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
 
     {
-      type: 'subAccordion',
-      title: 'AML-CFT Customer Classification',
-      icon: '🛡️',
-      rows: [
-        { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
+      type: 'peopleTable',
+      label: 'EDD Form',
+      columns: [
+        { key: 'name', label: 'No' },
+        { key: 'question', label: 'Questionnaire' },
+        { key: 'yes', label: 'Yes' },
+        { key: 'no', label: 'No' },
+      ],
+      people: [
+        { name: '1', question: 'Has the BM / Department Head Business Unit ensured that the prospective customer is not involved in money laundering activities, either directly or indirectly?', yes: '✓', no: '' },
+        { name: '2', question: 'Has the BM / Department Head Business Unit confirmed that the source of income and down payment of the prospective customer originate from legal sources?', yes: '✓', no: '' },
+        { name: '3', question: "Has the BM / Department Head Business Unit confirmed that the prospective customer's business/profession is not related to illegal activities?", yes: '✓', no: '' },
+        { name: '4', question: 'Has the BM / Department Head Business Unit confirmed that all customer documents are in accordance with the actual condition and supporting evidence?', yes: '✓', no: '' },
       ],
     },
   ],

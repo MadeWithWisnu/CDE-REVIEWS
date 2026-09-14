@@ -52,6 +52,8 @@ export const leasingCorporate = {
       items: [
         { label: 'Pre Scoring Result', value: 'Tend to Approve', tone: 'good' },
         { label: 'Survey Treatment', value: 'SO and Surveyor' },
+        { label: 'Surveyor Name', value: 'Name of Surveyor' },
+
       ],
     },
 

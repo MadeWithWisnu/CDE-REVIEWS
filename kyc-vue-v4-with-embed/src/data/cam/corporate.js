@@ -11,13 +11,6 @@
  * depends on it.
  */
 export const camCorporate = {
-  verdict: {
-    result: 'Recommended to Approve',
-    slikAggregate: 'Good',
-    surveyTreatment: 'SO and Surveyor',
-    instantApproval: 'Yes',
-  },
-
   applicationInfo: [
     { type: 'row', label: 'Application No', value: '23182604001', mono: true },
     { type: 'row', label: 'Order No', value: '23182604001', mono: true },
