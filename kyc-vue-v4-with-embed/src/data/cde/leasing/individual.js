@@ -158,14 +158,13 @@ export const leasingIndividual = {
       columns: [
         { key: 'name', label: 'Item' },
         { key: 'input', label: 'Input' },
-        { key: 'original', label: 'Original / Reference' },
         { key: 'score', label: 'Match Score' },
         { key: 'status', label: 'Status', badge: true },
       ],
       people: [
-        { name: 'Name', input: 'Aswar Pasaribu', original: 'ASWAR PASARIBU (KTP)', score: '99%', status: 'Verified' },
-        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', original: 'SIBOLGA / 06-06-1969 (KTP)', score: '100%', status: 'Verified' },
-        { name: 'Selfie Photo', input: 'Live Selfie Capture', original: 'ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
+        { name: 'Name', input: 'Aswar Pasaribu', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', input: 'Live Selfie Capture ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
       ],
     },
   ],
@@ -239,9 +238,10 @@ export const leasingIndividual = {
     { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
     { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
     { type: 'group', label: 'AML-CFT Customer Classification' },
-    { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
     { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
+    { type: 'badge', label: 'PEP', value: 'Yes', indent: 1 },
     { type: 'row', label: 'Identification & Verification Process', value: 'Enhanced Due Diligence (EDD)', indent: 1 },
+    { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
     { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
 
     {
@@ -302,45 +302,17 @@ export const leasingIndividual = {
     },
 
     { type: 'group', label: 'Bank Statement Analyzer' },
-    { type: 'badge', label: 'Status', value: 'Valid', indent: 1 },
-
-    { type: 'group', label: 'Document Validity' },
     {
       type: 'peopleTable',
       columns: [
-        { key: 'name', label: 'Document' },
-        { key: 'status', label: 'Status', badge: true },
+        { key: 'name', label: 'Document List' },
+        { key: 'validity', label: 'Validity', badge: true },
       ],
       people: [
-        { name: 'KTP Customer', status: 'Valid' },
-        { name: 'KTP Spouse', status: 'Valid' },
-        { name: 'Kartu Keluarga', status: 'Valid' },
-        { name: 'NPWP', status: 'Not Valid' },
-      ],
-    },
-
-    {
-      type: 'subAccordion',
-      title: 'Credit Deviation',
-      icon: '📉',
-      rows: [
-        {
-          type: 'knockoutList',
-          items: [], // no deviation on this application — renders as "-"
-        },
-      ],
-    },
-    {
-      type: 'subAccordion',
-      title: 'Product Deviation',
-      icon: '📦',
-      rows: [
-        {
-          type: 'knockoutList',
-          items: [
-            { result: 'Deviated', reason: 'Unit manufacture year is 1 year older than policy standard' },
-          ],
-        },
+        { name: '22212609005-other3-view4.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view2.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view3.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view1.pdf', validity: 'Not Valid' },
       ],
     },
   ],

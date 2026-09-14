@@ -152,21 +152,6 @@ export const leasingCorporate = {
     { type: 'group', label: 'Bank Statement Analyzer' },
     { type: 'badge', label: 'Status', value: 'Valid', indent: 1 },
 
-    { type: 'group', label: 'Document Validity' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Document' },
-        { key: 'status', label: 'Status', badge: true },
-      ],
-      people: [
-        { name: 'Akta Pendirian & Perubahan', status: 'Valid' },
-        { name: 'SK Kemenkumham', status: 'Valid' },
-        { name: 'NPWP Perusahaan', status: 'Valid' },
-        { name: 'Laporan Keuangan', status: 'Not Valid' },
-      ],
-    },
-
     {
       type: 'subAccordion',
       title: 'Credit Deviation',

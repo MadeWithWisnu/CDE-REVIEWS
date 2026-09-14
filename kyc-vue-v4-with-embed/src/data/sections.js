@@ -29,9 +29,9 @@ export const SECTION_LIBRARY = {
 export function badgeTone(raw) {
   const v = String(raw).toLowerCase();
 
-  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'yes', 'registered', 'valid', 'verified', 'passed'];
+  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'yes', 'registered', 'valid', 'verified', 'passed', 'outstanding', 'listed', 'approved', 'pep'];
   const midWords  = ['medium', 'tend to approve', 'pep'];
-  const riskWords = ['not match', 'high risk', 'no', 'not listed', 'not registered', 'not valid', 'not verified', 'deviated', 'failed'];
+  const riskWords = ['not match', 'high risk', 'no', 'not listed', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'wo'];
 
   if (riskWords.some(w => v.includes(w))) return 'risk';
   if (midWords.some(w => v.includes(w))) return 'mid';
