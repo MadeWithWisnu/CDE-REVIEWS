@@ -6,6 +6,60 @@ export const leasingCorporate = {
     instantApproval: 'Yes',
   },
 
+  rating: [
+    { type: 'group', label: 'Sales Rating' },
+    { type: 'row', label: 'Sales Name', value: 'Hendra Wijaya' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fpd', label: 'FPD' },
+        { key: 'f3pd', label: 'F3PD' },
+        { key: 'rejectReturn', label: 'Reject Return' },
+        { key: 'fid6', label: 'FID 6' },
+        { key: 'achBooking', label: 'Ach Booking' },
+      ],
+      people: [
+        { fpd: '1%', f3pd: '1%', rejectReturn: '1%', fid6: '1%', achBooking: '1%' },
+      ],
+    },
+
+    { type: 'group', label: 'Branch' },
+    { type: 'row', label: 'Branch Name', value: 'Kelapa Gading' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fpd', label: 'FPD' },
+        { key: 'f3pd', label: 'F3PD' },
+        { key: 'fid6', label: 'FID 6' },
+        { key: 'od0', label: '0+' },
+        { key: 'od30', label: '30+' },
+        { key: 'pct90', label: '90%' },
+        { key: 'ncl', label: 'NCL' },
+      ],
+      people: [
+        { fpd: '1%', f3pd: '1%', fid6: '1%', od0: '1%', od30: '1%', pct90: '1%', ncl: '1%' },
+      ],
+    },
+
+    { type: 'group', label: 'Dealer' },
+    { type: 'row', label: 'Supplier Name', value: 'Arista Jaya Niaga, PT.' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    { type: 'row', label: 'Supplier Status', value: 'Dealer' },
+    { type: 'row', label: 'Tier', value: '1' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fid6', label: 'FID6' },
+        { key: 'fid9', label: 'FID9' },
+      ],
+      people: [
+        { fid6: '1%', fid9: '1%' },
+      ],
+    },
+  ],
+
   kyc: [
     { type: 'group', label: 'AHU' },
     { type: 'badge', label: 'Inquiry', value: 'Registered', indent: 1 },
@@ -42,6 +96,24 @@ export const leasingCorporate = {
       people: [
         { name: 'Personal Guarantor', relatedTo: 'Company (Director/Shareholder)', status: 'Verified' },
         { name: 'Company Guarantor', relatedTo: 'Company', status: 'Verified' },
+      ],
+    },
+
+    // Negative Debtor — Blacklist / Watchlist screening. If a check does not
+    // pass, the reason is shown in the Reason column; otherwise it's "—".
+    { type: 'group', label: 'Negative Debtor' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'blacklist', label: 'Blacklist', badge: true },
+        { key: 'watchlist', label: 'Watchlist', badge: true },
+        { key: 'reason', label: 'Reason (if not pass)' },
+      ],
+      people: [
+        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
+        { name: 'Shareholder & Management', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
+        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
       ],
     },
   ],
@@ -149,31 +221,18 @@ export const leasingCorporate = {
       ],
     },
 
-    { type: 'group', label: 'Bank Statement Analyzer' },
-    { type: 'badge', label: 'Status', value: 'Valid', indent: 1 },
-
+     { type: 'group', label: 'Bank Statement Analyzer' },
     {
-      type: 'subAccordion',
-      title: 'Credit Deviation',
-      icon: '📉',
-      rows: [
-        {
-          type: 'knockoutList',
-          items: [
-            { result: 'Deviated', reason: 'Company age below 3 years — mitigated by Personal & Company Guarantor' },
-          ],
-        },
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Document List' },
+        { key: 'validity', label: 'Validity', badge: true },
       ],
-    },
-    {
-      type: 'subAccordion',
-      title: 'Product Deviation',
-      icon: '📦',
-      rows: [
-        {
-          type: 'knockoutList',
-          items: [],
-        },
+      people: [
+        { name: '22212609005-other3-view4.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view2.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view3.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view1.pdf', validity: 'Not Valid' },
       ],
     },
   ],

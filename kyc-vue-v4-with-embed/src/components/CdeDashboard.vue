@@ -9,6 +9,9 @@ import { CDE_DATA } from '../data/cdeData.js';
 import { getCamType } from '../data/camTypes.js';
 import { CAM_SECTION_LIBRARY } from '../data/camSections.js';
 import { CAM_DATA } from '../data/camData.js';
+import { getCbasType } from '../data/cbasTypes.js';
+import { CBAS_SECTION_LIBRARY } from '../data/cbasSections.js';
+import { CBAS_DATA } from '../data/cbasData.js';
 import { useEmbedGuard } from '../composables/useEmbedGuard.js';
 
 const route = useRoute();
@@ -25,14 +28,18 @@ const currentData = CDE_DATA[cdeKey] || {};
 const camType = cdeType ? getCamType(cdeType.debtorType) : null;
 const camData = camType ? (CAM_DATA[camType.key] || {}) : {};
 
+// Summary CBAS — same App No/debtor type again, third tab.
+const cbasType = cdeType ? getCbasType(cdeType.debtorType) : null;
+const cbasData = cbasType ? (CBAS_DATA[cbasType.key] || {}) : {};
+
 // Guard for embed mode (opened inside the Confins iframe). If not embed, status
 // is 'ready' right away and the page behaves normally (relies on the existing
 // Miwanet login session).
 const { isEmbed, status, validate } = useEmbedGuard();
 onMounted(validate);
 
-// --- Tabs: CDE / Report CAM — same App No, different section set ---
-const activeTab = ref('cde'); // 'cde' | 'cam'
+// --- Tabs: CDE / Report CAM / Summary CBAS — same App No, different section set ---
+const activeTab = ref('cde'); // 'cde' | 'cam' | 'cbas'
 
 const activeSections = (cdeType?.sectionOrder || []).map(key => ({
   key,
@@ -61,10 +68,26 @@ function toggleCamSection(key) {
   openCamSections[key] = !openCamSections[key];
 }
 
+// Summary CBAS — flat list, single section (Credit Facilities Summary).
+const cbasActiveSections = (cbasType?.sectionOrder || []).map(key => ({
+  key,
+  meta: CBAS_SECTION_LIBRARY[key],
+}));
+const openCbasSections = reactive(
+  Object.fromEntries(cbasActiveSections.map((s) => [s.key, true]))
+);
+function toggleCbasSection(key) {
+  openCbasSections[key] = !openCbasSections[key];
+}
+
 // Document Upload is always the LAST section in the CDE tab.
 const uploadSectionOpen = reactive({ open: false });
 
-const currentVerdict = computed(() => (activeTab.value === 'cde' ? currentData.verdict : camData.verdict));
+const currentVerdict = computed(() => {
+  if (activeTab.value === 'cde') return currentData.verdict;
+  if (activeTab.value === 'cam') return camData.verdict;
+  return null; // Summary CBAS shows its own highlight inside the section instead
+});
 const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Result' : 'Credit Recommendation'));
 </script>
 
@@ -98,6 +121,13 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
         @click="camType && (activeTab = 'cam')"
       >
         📄 Report CAM
+      </button>
+      <button
+        class="tab-btn" :class="{ active: activeTab === 'cbas' }"
+        :disabled="!cbasType"
+        @click="cbasType && (activeTab = 'cbas')"
+      >
+        🏦 Summary CBAS
       </button>
     </div>
 
@@ -161,8 +191,20 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
       </div>
     </div>
 
+    <!-- Summary CBAS tab -->
+    <div v-else-if="activeTab === 'cbas' && cbasType" class="accordion">
+      <AccordionSection
+        v-for="sec in cbasActiveSections" :key="sec.key"
+        :meta="sec.meta"
+        :rows="cbasData[sec.key] || []"
+        :is-open="openCbasSections[sec.key]"
+        table-mode
+        @toggle="toggleCbasSection(sec.key)"
+      />
+    </div>
+
     <footer class="note">
-      Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : 'Credit Approval Memorandum' }} for App No {{ appNo || cdeKey }}.
+      Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : activeTab === 'cam' ? 'Credit Approval Memorandum' : 'credit bureau (SLIK) summary' }} for App No {{ appNo || cdeKey }}.
     </footer>
   </template>
 </template>

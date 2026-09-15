@@ -11,7 +11,8 @@
  * sediakan datanya di file data CDE tersebut.
  */
 export const SECTION_LIBRARY = {
-  kyc:          { title: 'KYC Screening',    icon: '🪪', color: '#0E5C63', bg: '#E4F1F1' },
+  rating:       { title: 'Rating',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
+  kyc:          { title: 'Screening',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
   preScoring:   { title: 'Pre Scoring',      icon: '📊', color: '#5B4EA6', bg: '#ECE9F8' },
   slikCheck:    { title: 'SLIK Check',       icon: '🧮', color: '#5B4EA6', bg: '#ECE9F8' },
   collateral:   { title: 'Collateral Check', icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },
@@ -25,13 +26,20 @@ export const SECTION_LIBRARY = {
  * --------------------
  * Menentukan warna badge (good / mid / risk / neutral) berdasarkan keyword
  * di value. Tambah/ubah keyword di sini kalau ada istilah status baru.
+ *
+ * NOTE: "no"/"yes" dicek exact-match (bukan substring) supaya tidak salah
+ * tangkap kata seperti "Not Listed" (yang harusnya GOOD, bukan risk hanya
+ * karena mengandung huruf "no").
  */
 export function badgeTone(raw) {
-  const v = String(raw).toLowerCase();
+  const v = String(raw).toLowerCase().trim();
 
-  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'yes', 'registered', 'valid', 'verified', 'passed', 'outstanding', 'listed', 'approved', 'pep'];
-  const midWords  = ['medium', 'tend to approve', 'pep'];
-  const riskWords = ['not match', 'high risk', 'no', 'not listed', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'wo'];
+  if (v === 'no') return 'risk';
+  if (v === 'yes') return 'good';
+
+  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding',];
+  const midWords  = ['medium', 'tend to approve', 'pep', 'yellow'];
+  const riskWords = ['not match', 'high risk', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'dttot', 'blacklist', 'red', 'late payment', 'wo'];
 
   if (riskWords.some(w => v.includes(w))) return 'risk';
   if (midWords.some(w => v.includes(w))) return 'mid';

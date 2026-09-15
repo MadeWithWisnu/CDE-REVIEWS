@@ -44,6 +44,60 @@ export const leasingIndividual = {
     instantApproval: 'Yes',
   },
 
+  rating: [
+    { type: 'group', label: 'Sales Rating' },
+    { type: 'row', label: 'Sales Name', value: 'Budi Santoso' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fpd', label: 'FPD' },
+        { key: 'f3pd', label: 'F3PD' },
+        { key: 'rejectReturn', label: 'Reject Return' },
+        { key: 'fid6', label: 'FID 6' },
+        { key: 'achBooking', label: 'Ach Booking' },
+      ],
+      people: [
+        { fpd: '1%', f3pd: '1%', rejectReturn: '1%', fid6: '1%', achBooking: '1%' },
+      ],
+    },
+
+    { type: 'group', label: 'Branch' },
+    { type: 'row', label: 'Branch Name', value: 'Kelapa Gading' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fpd', label: 'FPD' },
+        { key: 'f3pd', label: 'F3PD' },
+        { key: 'fid6', label: 'FID 6' },
+        { key: 'od0', label: '0+' },
+        { key: 'od30', label: '30+' },
+        { key: 'pct90', label: '90%' },
+        { key: 'ncl', label: 'NCL' },
+      ],
+      people: [
+        { fpd: '1%', f3pd: '1%', fid6: '1%', od0: '1%', od30: '1%', pct90: '1%', ncl: '1%' },
+      ],
+    },
+
+    { type: 'group', label: 'Dealer' },
+    { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang' },
+    { type: 'badge', label: 'Rating', value: 'Green' },
+    { type: 'row', label: 'Supplier Status', value: 'Dealer' },
+    { type: 'row', label: 'Tier', value: '1' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'fid6', label: 'FID6' },
+        { key: 'fid9', label: 'FID9' },
+      ],
+      people: [
+        { fid6: '1%', fid9: '1%' },
+      ],
+    },
+  ],
+
   kyc: [
     { type: 'group', label: 'Dukcapil' },
     {
@@ -113,11 +167,11 @@ export const leasingIndividual = {
           name: 'Debtor',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
           ],
         },
         {
@@ -129,22 +183,22 @@ export const leasingIndividual = {
           name: 'Emergency Contact',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'Outstanding' },
-            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'Outstanding' },
+            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
           ],
         },
         {
           name: 'Board / Management',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '09 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '01 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '06 Jun 2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '11 Nov 2020', status: 'WO' },
+            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
+            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
+            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
+            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'WO' },
+            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
           ],
         },
       ],
@@ -158,13 +212,32 @@ export const leasingIndividual = {
       columns: [
         { key: 'name', label: 'Item' },
         { key: 'input', label: 'Input' },
+        { key: 'original', label: 'Original / Reference' },
         { key: 'score', label: 'Match Score' },
         { key: 'status', label: 'Status', badge: true },
       ],
       people: [
-        { name: 'Name', input: 'Aswar Pasaribu', score: '99%', status: 'Verified' },
-        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', score: '100%', status: 'Verified' },
-        { name: 'Selfie Photo', input: 'Live Selfie Capture ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
+        { name: 'Name', input: 'Aswar Pasaribu', original: 'ASWAR PASARIBU (KTP)', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', original: 'SIBOLGA / 06-06-1969 (KTP)', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', input: 'Live Selfie Capture', original: 'ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
+      ],
+    },
+
+    // Negative Debtor — Blacklist / Watchlist screening. If a check does not
+    // pass, the reason is shown in the Reason column; otherwise it's "—".
+    { type: 'group', label: 'Negative Debtor' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'blacklist', label: 'Blacklist', badge: true },
+        { key: 'watchlist', label: 'Watchlist', badge: true },
+        { key: 'reason', label: 'Reason (if not pass)' },
+      ],
+      people: [
+        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
+        { name: 'Spouse', blacklist: 'DTTOT', watchlist: '3 Consecutive Late Payment (OD 10 Days)', reason: 'Listed on DTTOT registry; watchlist triggered by repeated late payment history' },
+        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
       ],
     },
   ],
@@ -175,8 +248,7 @@ export const leasingIndividual = {
       items: [
         { label: 'Pre Scoring Result', value: 'Tend to Approve', tone: 'good' },
         { label: 'Survey Treatment', value: 'SO and Surveyor' },
-        { label: 'Surveyor Name', value: 'Name of Surveyor' },
-
+         { label: 'Surveyor Name', value: 'Name of Surveyor' },
       ],
     },
 
@@ -200,7 +272,7 @@ export const leasingIndividual = {
       type: 'knockoutList',
       label: 'Knockout',
       items: [
-        { reason: 'Customer age within acceptable range (25–55 years old)' },
+        { result: 'Passed', reason: 'Customer age within acceptable range (25–55 years old)' },
       ],
     },
   ],
@@ -222,13 +294,13 @@ export const leasingIndividual = {
       columns: [
         { key: 'contractNo', label: 'Contract No' },
         { key: 'customerNo', label: 'Customer No' },
-        { key: 'otrAmount', label: 'OTR Amount' },
-        { key: 'totalNetFinance', label: 'Total Net Finance' },
+        { key: 'otrAmount', label: 'OTR Amount', currency: true },
+        { key: 'totalNetFinance', label: 'Total Net Finance', currency: true },
         { key: 'disbursementDate', label: 'Disbursement Date' },
         { key: 'finishDate', label: 'Finish Date' },
       ],
       people: [
-        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '21 Feb 2022', finishDate: '21 Feb 2026' },
+        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', finishDate: '24 Feb 2026' },
       ],
     },
   ],

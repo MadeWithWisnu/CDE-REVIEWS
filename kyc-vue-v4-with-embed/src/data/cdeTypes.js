@@ -49,7 +49,7 @@ export const CDE_TYPES = [
     bg: '#E4F1F1',
     debtorType: 'personal',
     financingWays: ['IF'],
-    sectionOrder: ['kyc', 'preScoring', 'collateral', 'apuppt', 'lpip', 'finalScoring'],
+    sectionOrder: ['rating', 'kyc', 'preScoring', 'collateral', 'apuppt', 'lpip', 'finalScoring'],
   },
   {
     key: 'leasing-corporate',
@@ -60,7 +60,7 @@ export const CDE_TYPES = [
     bg: '#E4F1F1',
     debtorType: 'company',
     financingWays: ['IF'],
-    sectionOrder: ['kyc', 'preScoring', 'collateral', 'apuppt', 'lpip', 'finalScoring'],
+    sectionOrder: ['rating', 'kyc', 'preScoring', 'collateral', 'apuppt', 'lpip', 'finalScoring'],
   },
   {
     key: 'review-cf',
