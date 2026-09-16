@@ -37,7 +37,7 @@ export function badgeTone(raw) {
   if (v === 'no') return 'risk';
   if (v === 'yes') return 'good';
 
-  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding',];
+  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding', 'listed', 'recommended'];
   const midWords  = ['medium', 'tend to approve', 'pep', 'yellow'];
   const riskWords = ['not match', 'high risk', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'dttot', 'blacklist', 'red', 'late payment', 'wo'];
 

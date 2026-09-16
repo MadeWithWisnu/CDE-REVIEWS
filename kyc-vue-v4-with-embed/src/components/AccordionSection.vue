@@ -840,7 +840,7 @@ const defaultPeopleTableColumns = [
 }
 .people-table td {
   padding: 10px 10px;
-  border-bottom: 1px solid #F0F2F7;
+  border-bottom: 2px solid #F0F2F7;
   font-family: var(--font-head);
   font-size: var(--fs-field-value);
   color: var(--ink);

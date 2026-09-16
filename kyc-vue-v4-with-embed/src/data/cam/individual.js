@@ -10,6 +10,11 @@
  */
 export const camIndividual = {
 
+  camNotes: [
+    { type: 'note', label: 'CAM Notes / Comments — Business Notes' },
+    { type: 'row', label: 'Notes', value: 'Customer is an established retail entrepreneur with 7+ years of business history and a spouse with stable formal employment income. Existing MLCI contract has clean repayment history. Requested vehicle is for family/personal use.', indent: 1 },
+  ],
+
   applicationInfo: [
     { type: 'row', label: 'Application No', value: '23182604118', mono: true },
     { type: 'row', label: 'Order No', value: '23182604118', mono: true },
@@ -249,142 +254,6 @@ export const camIndividual = {
     { type: 'row', label: 'BPKB Area', value: 'Wilayah 2 (DKI Jakarta, Banten dan Jawa Barat)', indent: 1 },
   ],
 
-  checkingResult: [
-    { type: 'group', label: 'KYC Checking' },
-    {
-      type: 'peopleTable',
-      label: 'Dukcapil',
-      columns: [
-        { key: 'name', label: 'Name — Role' },
-        { key: 'result', label: 'Match Status', badge: true },
-      ],
-      people: [
-        { name: 'Dewi Anggraini — Customer', result: 'Match' },
-        { name: 'Rudi Hartono — Spouse', result: 'Match' },
-      ],
-    },
-
-    { type: 'group', label: 'Collateral Check' },
-    { type: 'row', label: 'Chassis No', value: 'MHFYX8JT1PJ654321', mono: true, indent: 1 },
-    { type: 'row', label: 'BPKB No', value: 'J-09876543', mono: true, indent: 1 },
-    { type: 'row', label: 'Engine No', value: 'M20A6543210', mono: true, indent: 1 },
-    { type: 'row', label: 'Vehicle Type', value: 'Innova Zenix Hybrid', indent: 1 },
-    { type: 'row', label: 'License Type', value: 'BPKB Baru', indent: 1 },
-    { type: 'row', label: 'Manufacture Year', value: '2026', indent: 1 },
-    { type: 'row', label: 'Brand', value: 'Toyota', indent: 1 },
-    { type: 'badge', label: 'Certificate Status', value: 'Active', indent: 1 },
-    { type: 'row', label: 'Finance Company', value: 'PT Mitsui Leasing Capital Indonesia', indent: 1 },
-
-    {
-      type: 'subAccordion',
-      title: 'Pre-Scoring — 1',
-      icon: '📊',
-      rows: [
-        { type: 'row', label: 'Score', value: '789', indent: 1 },
-        { type: 'badge', label: 'Grade', value: 'Tend to Approve', indent: 1 },
-      ],
-    },
-    {
-      type: 'subAccordion',
-      title: 'Pre-Scoring — 2',
-      icon: '📊',
-      rows: [
-        { type: 'row', label: 'Score', value: '789', indent: 1 },
-        { type: 'badge', label: 'Grade', value: 'Tend to Approve', indent: 1 },
-      ],
-    },
-
-    { type: 'group', label: 'Third Party Checking' },
-    { type: 'row', label: 'Aggregate Credit Bureau Rating', value: '820 — Pefindo', indent: 1 },
-    {
-      type: 'peopleTable',
-      label: 'Phone Verification (ID Match)',
-      columns: [
-        { key: 'name', label: 'Name — Role' },
-        { key: 'result', label: 'Match Status', badge: true },
-      ],
-      people: [
-        { name: 'Dewi Anggraini — Customer', result: 'Match' },
-        { name: 'Rudi Hartono — Spouse', result: 'Match' },
-      ],
-    },
-    {
-      type: 'peopleTable',
-      label: 'Phone Verification (Phone Age)',
-      columns: [
-        { key: 'name', label: 'Name — Role' },
-        { key: 'phoneAge', label: 'Phone Age' },
-      ],
-      people: [
-        { name: 'Dewi Anggraini — Customer', phoneAge: '(>12 months)' },
-        { name: 'Rudi Hartono — Spouse', phoneAge: '(>12 months)' },
-      ],
-    },
-    { type: 'row', label: 'Location Verification (House)', value: '0 - 200 meter', indent: 1 },
-    { type: 'row', label: 'Location Verification (Office)', value: '0 - 200 meter', indent: 1 },
-    { type: 'badge', label: 'Bank Statement', value: 'Valid', indent: 1 },
-
-    { type: 'group', label: 'APU PPT Check' },
-    { type: 'badge', label: 'AML News', value: 'No Issue', indent: 1 },
-    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Low Risk', indent: 1 },
-
-    {
-      type: 'peopleTable',
-      label: 'SLIK',
-      columns: [
-        { key: 'name', label: 'Subject' },
-        { key: 'score', label: 'SLIK Score' },
-        { key: 'grade', label: 'Grade', badge: true },
-        { key: 'summaryUrl', label: 'Summary', link: true, linkText: 'View Summary' },
-      ],
-      people: [
-        { name: 'Customer', score: '870', grade: 'Good', summaryUrl: '#' },
-        { name: 'Spouse', score: '805', grade: 'Good', summaryUrl: '#' },
-      ],
-    },
-
-    { type: 'group', label: 'Scoring Result' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Subject' },
-        { key: 'aggregateScore', label: 'Aggregate Score' },
-        { key: 'instantApproval', label: 'Instant Approval', badge: true },
-        { key: 'aggregateGrade', label: 'Aggregate Grade', badge: true },
-      ],
-      people: [
-        { name: 'Customer', aggregateScore: '832', instantApproval: 'Yes', aggregateGrade: 'Recommended to approve' },
-      ],
-    },
-  ],
-
-  apuppt: [
-    { type: 'group', label: 'Customer Information' },
-    { type: 'row', label: 'Customer Name', value: 'Dewi Anggraini', indent: 1 },
-    { type: 'row', label: 'Customer Type', value: 'Individual — Domestic', indent: 1 },
-    { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
-    { type: 'badge', label: 'AML-CFT Customer Classification', value: 'Low Risk', indent: 1 },
-    { type: 'row', label: 'Identification & Verification Process', value: 'Customer Due Diligence (CDD)', indent: 1 },
-    { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
-
-    {
-      type: 'peopleTable',
-      label: 'EDD Form',
-      columns: [
-        { key: 'name', label: 'No' },
-        { key: 'question', label: 'Questionnaire' },
-        { key: 'yes', label: 'Yes' },
-        { key: 'no', label: 'No' },
-      ],
-      people: [
-        { name: '1', question: 'Has the BM / Department Head Business Unit ensured that the prospective customer is not involved in money laundering activities, either directly or indirectly?', yes: '✓', no: '' },
-        { name: '2', question: 'Has the BM / Department Head Business Unit confirmed that the source of income and down payment of the prospective customer originate from legal sources?', yes: '✓', no: '' },
-        { name: '3', question: "Has the BM / Department Head Business Unit confirmed that the prospective customer's business/profession is not related to illegal activities?", yes: '✓', no: '' },
-        { name: '4', question: 'Has the BM / Department Head Business Unit confirmed that all customer documents are in accordance with the actual condition and supporting evidence?', yes: '✓', no: '' },
-      ],
-    },
-  ],
-
   deviation: [
     {
       type: 'subAccordion',
@@ -511,52 +380,6 @@ export const camIndividual = {
         { type: 'row', label: 'Total Outstanding (Rp.)', value: 'IDR < 600 Mio', indent: 1 },
         { type: 'row', label: 'Dealer Status', value: 'Authorized Dealer', indent: 1 },
         { type: 'row', label: 'Usage of Car', value: 'Private', indent: 1 },
-      ],
-    },
-  ],
-
-  camNotes: [
-    { type: 'note', label: 'CAM Notes / Comments — Business Notes' },
-    { type: 'row', label: 'Notes', value: 'Customer is an established retail entrepreneur with 7+ years of business history and a spouse with stable formal employment income. Existing MLCI contract has clean repayment history. Requested vehicle is for family/personal use.', indent: 1 },
-    { type: 'note', label: 'Credit Recommendation' },
-    { type: 'row', label: 'Recommendation', value: 'Recommended to approve with standard terms. Spouse (Rudi Hartono) to be bound as Guarantor per standard MLCI policy.', indent: 1 },
-  ],
-
-  surveyTask: [
-    {
-      type: 'links',
-      label: 'Survey Task Result',
-      links: [
-        { text: 'Survey Task Result 1 — Residence Verification', url: '#' },
-        { text: 'Survey Task Result 2 — Income Verification', url: '#' },
-        { text: 'Survey Task Result 3 — Asset Inspection', url: '#' },
-        { text: 'Survey Task Result 4 — Character Reference', url: '#' },
-        { text: 'Survey Task Result 5 — Spouse Verification', url: '#' },
-      ],
-    },
-  ],
-
-  termCondition: [
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'No' },
-        { key: 'docName', label: 'Document Name' },
-        { key: 'priorTo', label: 'Prior To' },
-        { key: 'check', label: 'Check' },
-        { key: 'waived', label: 'Waived' },
-        { key: 'promiseDate', label: 'Promise Date' },
-        { key: 'expiredDate', label: 'Expired Date' },
-        { key: 'notes', label: 'Notes' },
-        { key: 'viewUrl', label: 'View', link: true, linkText: 'View' },
-      ],
-      people: [
-        { name: '1', docName: 'KTP Customer (Dewi Anggraini)', priorTo: 'TC', check: 'Yes', waived: 'No', promiseDate: '—', expiredDate: '—', notes: '—', viewUrl: '#' },
-        { name: '2', docName: 'KTP Spouse (Rudi Hartono)', priorTo: 'TC', check: 'Yes', waived: 'No', promiseDate: '—', expiredDate: '—', notes: '—', viewUrl: '#' },
-        { name: '3', docName: 'Kartu Keluarga', priorTo: 'TC', check: 'Yes', waived: 'No', promiseDate: '—', expiredDate: '—', notes: '—', viewUrl: '#' },
-        { name: '4', docName: 'NPWP', priorTo: 'TC', check: 'Yes', waived: 'No', promiseDate: '—', expiredDate: '—', notes: '—', viewUrl: '#' },
-        { name: '5', docName: 'Rekening Koran 3 Bulan Terakhir', priorTo: 'TC', check: 'Yes', waived: 'No', promiseDate: '—', expiredDate: '—', notes: '—', viewUrl: '#' },
-        { name: '6', docName: 'Surat Persetujuan Pasangan (Guarantee)', priorTo: 'Disbursement', check: 'No', waived: 'No', promiseDate: '8 Sep 2026', expiredDate: '—', notes: 'Pending signature', viewUrl: '' },
       ],
     },
   ],

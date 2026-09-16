@@ -62,7 +62,7 @@ export const leasingIndividual = {
       ],
     },
 
-    { type: 'group', label: 'Branch' },
+    { type: 'group', label: 'Branch Rating' },
     { type: 'row', label: 'Branch Name', value: 'Kelapa Gading' },
     { type: 'badge', label: 'Rating', value: 'Green' },
     {
@@ -81,7 +81,7 @@ export const leasingIndividual = {
       ],
     },
 
-    { type: 'group', label: 'Dealer' },
+    { type: 'group', label: 'Dealer Rating' },
     { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang' },
     { type: 'badge', label: 'Rating', value: 'Green' },
     { type: 'row', label: 'Supplier Status', value: 'Dealer' },
@@ -212,14 +212,13 @@ export const leasingIndividual = {
       columns: [
         { key: 'name', label: 'Item' },
         { key: 'input', label: 'Input' },
-        { key: 'original', label: 'Original / Reference' },
         { key: 'score', label: 'Match Score' },
         { key: 'status', label: 'Status', badge: true },
       ],
       people: [
-        { name: 'Name', input: 'Aswar Pasaribu', original: 'ASWAR PASARIBU (KTP)', score: '99%', status: 'Verified' },
-        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', original: 'SIBOLGA / 06-06-1969 (KTP)', score: '100%', status: 'Verified' },
-        { name: 'Selfie Photo', input: 'Live Selfie Capture', original: 'ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
+        { name: 'Name', input: 'Aswar Pasaribu', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', input: 'Live Selfie Capture ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
       ],
     },
 
@@ -230,14 +229,13 @@ export const leasingIndividual = {
       type: 'peopleTable',
       columns: [
         { key: 'name', label: 'Name' },
-        { key: 'blacklist', label: 'Blacklist', badge: true },
-        { key: 'watchlist', label: 'Watchlist', badge: true },
-        { key: 'reason', label: 'Reason (if not pass)' },
+        { key: 'blacklist', label: 'Blacklist'},
+        { key: 'watchlist', label: 'Watchlist'},
       ],
       people: [
-        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
-        { name: 'Spouse', blacklist: 'DTTOT', watchlist: '3 Consecutive Late Payment (OD 10 Days)', reason: 'Listed on DTTOT registry; watchlist triggered by repeated late payment history' },
-        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed', reason: '—' },
+        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed' },
+        { name: 'Spouse', blacklist: 'DTTOT', watchlist: '3 Consecutive Late Payment (OD 10 Days)' },
+        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed' },
       ],
     },
   ],

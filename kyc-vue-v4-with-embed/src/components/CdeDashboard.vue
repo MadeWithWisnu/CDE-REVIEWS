@@ -134,6 +134,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
     <div v-if="currentVerdict" class="verdict">
       <div class="verdict-left">
         <div v-if="appNo" class="verdict-appno">App No: <b>{{ appNo }}</b></div>
+        <div class="verdict-appno">Source Data: Mobile Order</div>
         <div class="label">{{ verdictLabel }}</div>
         <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">

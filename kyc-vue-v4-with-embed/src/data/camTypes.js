@@ -22,10 +22,8 @@ export const CAM_TYPES = [
     bg: '#E4F1F1',
     debtorType: 'company',
     sectionOrder: [
-      'applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',
-      'obligor', 'subsidy', 'equipment', 'checkingResult', 'apuppt', 'deviation',
-      'organization', 'financialReview', 'fiveC', 'camNotes', 'surveyTask',
-      'termCondition', 'loanRatio',
+      'camNotes','applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',
+      'obligor', 'subsidy', 'equipment', 'deviation', 'financialReview', 'fiveC', 'loanRatio',
     ],
   },
   {
@@ -37,10 +35,8 @@ export const CAM_TYPES = [
     bg: '#E4F1F1',
     debtorType: 'personal',
     sectionOrder: [
-      'applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',
-      'obligor', 'subsidy', 'equipment', 'checkingResult', 'apuppt', 'deviation',
-      'financialReview', 'fiveC', 'camNotes', 'surveyTask',
-      'termCondition', 'loanRatio',
+      'camNotes','applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',
+      'obligor', 'subsidy', 'equipment', 'deviation', 'financialReview', 'fiveC', 'loanRatio',
     ],
   },
 ];
