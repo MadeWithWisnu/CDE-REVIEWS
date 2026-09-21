@@ -2,6 +2,7 @@
 import { reactive, ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AccordionSection from './AccordionSection.vue';
+import ContractCamModal from './ContractCamModal.vue';
 import CaReviewUpload from './CaReviewUpload.vue';
 import { getCdeType } from '../data/cdeTypes.js';
 import { SECTION_LIBRARY, badgeTone } from '../data/sections.js';
@@ -83,6 +84,19 @@ function toggleCbasSection(key) {
 // Document Upload is always the LAST section in the CDE tab.
 const uploadSectionOpen = reactive({ open: false });
 
+// Contract No popup — "seperti Report CAM" full-screen view, opened by
+// clicking a Contract No in Asset Financing History or Relationship Check
+// (Contract(s) Related with Customer). See AccordionSection's
+// `contract-click` emit and ContractCamModal.vue.
+const contractModal = reactive({ open: false, contract: null });
+function openContractModal(contract) {
+  contractModal.contract = contract;
+  contractModal.open = true;
+}
+function closeContractModal() {
+  contractModal.open = false;
+}
+
 const currentVerdict = computed(() => {
   if (activeTab.value === 'cde') return currentData.verdict;
   if (activeTab.value === 'cam') return camData.verdict;
@@ -162,6 +176,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
         :is-open="openSections[sec.key]"
         table-mode
         @toggle="toggleSection(sec.key)"
+        @contract-click="openContractModal"
       />
 
       <!-- Document Upload — always the last section of the CDE tab -->
@@ -188,6 +203,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
           :is-open="openCamSections[sec.key]"
           table-mode
           @toggle="toggleCamSection(sec.key)"
+          @contract-click="openContractModal"
         />
       </div>
     </div>
@@ -208,6 +224,14 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
       Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : activeTab === 'cam' ? 'Credit Approval Memorandum' : 'credit bureau (SLIK) summary' }} for App No {{ appNo || cdeKey }}.
     </footer>
   </template>
+
+  <!-- Contract No popup — full-screen "Report CAM"-style view -->
+  <ContractCamModal
+    v-if="contractModal.open"
+    :contract="contractModal.contract"
+    :debtor-type="cdeType ? cdeType.debtorType : 'company'"
+    @close="closeContractModal"
+  />
 </template>
 
 <style scoped>

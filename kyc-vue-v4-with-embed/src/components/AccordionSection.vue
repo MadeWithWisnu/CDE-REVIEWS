@@ -13,7 +13,7 @@ const props = defineProps({
   tableMode: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['toggle']);
+const emit = defineEmits(['toggle', 'contract-click']);
 
 // Only show a badge in the section header when a row explicitly opts in via
 // `summary: true` — picking the FIRST badge found anywhere in the section
@@ -155,6 +155,11 @@ const defaultPeopleTableColumns = [
                           <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
                           <span v-else class="pt-muted">—</span>
                         </template>
+                        <button
+                          v-else-if="col.key === 'contractNo' && p[col.key] && p[col.key] !== '—'"
+                          type="button" class="link contract-link" :title="'View CAM report for contract ' + p[col.key]"
+                          @click="emit('contract-click', p)"
+                        >{{ p[col.key] }}</button>
                         <RpAmount v-else :value="p[col.key] || '—'" />
                       </td>
                     </tr>
@@ -237,7 +242,14 @@ const defaultPeopleTableColumns = [
                         </thead>
                         <tbody>
                           <tr v-for="(c, cci) in cat.contracts" :key="cci">
-                            <td class="mono">{{ c.contractNo }}</td>
+                            <td class="mono">
+                              <button
+                                v-if="c.contractNo && c.contractNo !== '—'"
+                                type="button" class="link contract-link" :title="'View CAM report for contract ' + c.contractNo"
+                                @click="emit('contract-click', c)"
+                              >{{ c.contractNo }}</button>
+                              <span v-else>{{ c.contractNo }}</span>
+                            </td>
                             <td>{{ c.customerName }}</td>
                             <td><RpAmount :value="c.otrAmount" /></td>
                             <td><RpAmount :value="c.totalNetFinance" /></td>
@@ -342,6 +354,11 @@ const defaultPeopleTableColumns = [
                       <a v-if="p[col.key]" class="link" :href="p[col.key]">{{ col.linkText || 'View' }}</a>
                       <span v-else class="pt-muted">—</span>
                     </template>
+                    <button
+                      v-else-if="col.key === 'contractNo' && p[col.key] && p[col.key] !== '—'"
+                      type="button" class="link contract-link" :title="'View CAM report for contract ' + p[col.key]"
+                      @click="emit('contract-click', p)"
+                    >{{ p[col.key] }}</button>
                     <RpAmount v-else :value="p[col.key] || '—'" />
                   </td>
                 </tr>
@@ -413,7 +430,14 @@ const defaultPeopleTableColumns = [
                     </thead>
                     <tbody>
                       <tr v-for="(c, cci) in cat.contracts" :key="cci">
-                        <td class="mono">{{ c.contractNo }}</td>
+                        <td class="mono">
+                              <button
+                                v-if="c.contractNo && c.contractNo !== '—'"
+                                type="button" class="link contract-link" :title="'View CAM report for contract ' + c.contractNo"
+                                @click="emit('contract-click', c)"
+                              >{{ c.contractNo }}</button>
+                              <span v-else>{{ c.contractNo }}</span>
+                            </td>
                         <td>{{ c.customerName }}</td>
                         <td><RpAmount :value="c.otrAmount" /></td>
                         <td><RpAmount :value="c.totalNetFinance" /></td>
@@ -690,6 +714,15 @@ const defaultPeopleTableColumns = [
 .field-cell.wide .links { align-items: flex-start; }
 .link { color: var(--green-dark); font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
 .link:hover { text-decoration: underline; }
+.contract-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: inherit;
+}
 
 .sub-accordion {
   grid-column: 1 / -1;
