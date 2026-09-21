@@ -35,7 +35,7 @@ export const CAM_TYPES = [
     bg: '#E4F1F1',
     debtorType: 'personal',
     sectionOrder: [
-      'camNotes','applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',
+      'camNotes','applicationInfo', ['customer', 'asset'], ['finance', 'disbursement'], 'insurance',['lifeInsurance', 'warranty'],
       'obligor', 'subsidy', 'equipment', 'deviation', 'financialReview', 'fiveC', 'loanRatio',
     ],
   },

@@ -53,24 +53,25 @@ export const camIndividual = {
   ],
 
   finance: [
-    { type: 'group', label: 'Finance Information' },
     { type: 'row', label: 'Asset Value', value: 'Rp 495,000,000', indent: 1 },
-    { type: 'row', label: 'Unit Price', value: 'Rp 495,000,000', indent: 1 },
+    { type: 'row', label: 'Unit Price', value: 'Rp 300,000,000', indent: 1 },
+    { type: 'row', label: 'Karoseri Price', value: 'Rp 195,000,000', indent: 1 },
     { type: 'row', label: 'Down Payment', value: 'Rp 148,500,000', indent: 1 },
     { type: 'row', label: 'Insurance Loan', value: 'Rp 15,850,000', indent: 1 },
     { type: 'row', label: 'Provision Loan', value: 'Rp 3,465,000', indent: 1 },
     { type: 'row', label: 'Other Loan', value: 'Rp 0', indent: 1 },
     { type: 'row', label: 'Net Finance', value: 'Rp 365,815,000', indent: 1 },
+    { type: 'row', label: 'Survey Fee Gross', value: 'Rp 750,000', indent: 1 },
+    { type: 'row', label: 'Notary Fee Gross', value: 'Rp 1,200,000', indent: 1 },
+    { type: 'row', label: 'Provision Fee', value: 'Rp 3,465,000', indent: 1 },
+    { type: 'row', label: 'Installment', value: 'Rp 11,840,000', indent: 1 },
     { type: 'row', label: 'Loan To Value', value: '70%', indent: 1 },
     { type: 'row', label: 'Interest Type / Installment Scheme', value: 'Fixed Rate / Regular Fixed', indent: 1 },
     { type: 'row', label: 'Way of Payment / Payment Frequency', value: 'Autodebet / Monthly', indent: 1 },
     { type: 'row', label: 'Tenor / First Installment Type', value: 'Tenor 36 months / Advance', indent: 1 },
+    { type: 'row', label: 'Advance Grace Period', value: '0 Month(s)', indent: 1 },
     { type: 'row', label: 'MLCI Rate (Flat / Effective)', value: '6.0% / 11.4198%', indent: 1 },
     { type: 'row', label: 'Selling Rate (Flat / Effective)', value: '6.0% / 11.4198%', indent: 1 },
-    { type: 'row', label: 'Survey Fee Gross', value: 'Rp 750,000', indent: 1 },
-    { type: 'row', label: 'Notary Fee Gross', value: 'Rp 1,200,000', indent: 1 },
-    { type: 'row', label: 'Provision Fee', value: 'Rp 3,465,000', indent: 1 },
-    { type: 'row', label: 'Installment', value: 'Rp 11,840,000 / month', indent: 1 },
     { type: 'row', label: 'Grace Period', value: '0 Month(s) 0%', indent: 1 },
 
     { type: 'group', label: 'Notary / Legitimate' },
@@ -99,9 +100,9 @@ export const camIndividual = {
     { type: 'row', label: 'Provision Fee', value: 'Rp 3,465,000', indent: 1 },
     { type: 'row', label: 'Other Fee', value: 'Rp 0', indent: 1 },
     { type: 'row', label: 'Insurance', value: 'Rp 15,850,000', indent: 1 },
+    { type: 'row', label: 'Life Insurance', value: 'Rp 18,350,000', indent: 1 },
     { type: 'row', label: 'Extra Warranty', value: 'Rp 2,500,000', indent: 1 },
     { type: 'row', label: 'First Installment', value: 'Rp 11,840,000', indent: 1 },
-    { type: 'row', label: 'Advance Grace Period', value: '0 Month(s)', indent: 1 },
     { type: 'row', label: 'Agency Fee Gross', value: 'Rp 1,800,000', indent: 1 },
     { type: 'row', label: 'Subsidy From Dealer', value: 'Rp 8,000,000', indent: 1 },
     { type: 'row', label: 'Refund To Dealer', value: 'Rp 0', indent: 1 },
@@ -112,10 +113,6 @@ export const camIndividual = {
 
     { type: 'group', label: 'Commission to Salesman & Broker' },
     { type: 'row', label: 'Total Gross Commission', value: 'Rp 4,950,000', indent: 1 },
-
-    { type: 'group', label: 'Credit Protection' },
-    { type: 'badge', label: 'Credit Protection', value: 'Asuransi Jiwa Kredit', indent: 1 },
-    { type: 'badge', label: 'Guaranteed Acceptance', value: 'Yes', indent: 1 },
   ],
 
   insurance: [
@@ -145,6 +142,19 @@ export const camIndividual = {
         { name: 'Year 1', insAmount: 'Rp 495,000,000', tpl: 'Rp 25,000,000', tloCp: '—', clause: 'Bank/Finance Company Clause', rate: '3.2%', premReceive: 'Rp 15,850,000', premPayment: 'Rp 15,850,000' },
       ],
     },
+  ],
+
+  lifeInsurance: [
+    { type: 'group', label: 'Life Insurance' },
+    { type: 'row', label: 'Life Insurance Company', value: 'PT Asuransi Astra Buana', indent: 1 },
+    { type: 'row', label: 'Life Insurance Amount', value: 'Rp 15,325,000', indent: 1 },
+    { type: 'row', label: 'Admin Fee', value: 'Rp 100,000', indent: 1 },
+  ],
+
+  warranty: [
+    { type: 'group', label: 'Warranty' },
+    { type: 'row', label: 'Warranty Provider', value: 'PT Asuransi Astra Buana', indent: 1 },
+    { type: 'row', label: 'Gross Premium', value: 'Rp 10,325,000', indent: 1 },
   ],
 
   obligor: [

@@ -270,7 +270,7 @@ export const leasingIndividual = {
       type: 'knockoutList',
       label: 'Knockout',
       items: [
-        { result: 'Passed', reason: 'Customer age within acceptable range (25–55 years old)' },
+        { reason: 'Customer age within acceptable range (25–55 years old)' },
       ],
     },
   ],
@@ -291,14 +291,14 @@ export const leasingIndividual = {
       type: 'peopleTable',
       columns: [
         { key: 'contractNo', label: 'Contract No' },
-        { key: 'customerNo', label: 'Customer No' },
+        { key: 'customerName', label: 'Customer Name' },
         { key: 'otrAmount', label: 'OTR Amount', currency: true },
         { key: 'totalNetFinance', label: 'Total Net Finance', currency: true },
         { key: 'disbursementDate', label: 'Disbursement Date' },
         { key: 'finishDate', label: 'Finish Date' },
       ],
       people: [
-        { contractNo: '22045501002', customerNo: 'CUST-88213', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', finishDate: '24 Feb 2026' },
+        { contractNo: '22045501002', customerName: 'Dewi Anggraini', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', finishDate: '24 Feb 2026' },
       ],
     },
   ],

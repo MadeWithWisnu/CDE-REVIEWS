@@ -10,13 +10,15 @@
  * template in camTypes.js via `sectionOrder`, same pattern as CDE_TYPES.
  */
 export const CAM_SECTION_LIBRARY = {
-  camNotes:         { title: 'CAM Notes & Recommendation', icon: '📝', color: '#8E4B8E', bg: '#F4E9F4' },
+  camNotes:         { title: 'CAM Notes',               icon: '📝', color: '#8E4B8E', bg: '#F4E9F4' },
   applicationInfo:  { title: 'Application Info',        icon: '🧾', color: '#0E5C63', bg: '#E4F1F1' },
   customer:         { title: 'Customer',                icon: '🪪', color: '#0E5C63', bg: '#E4F1F1' },
   asset:            { title: 'Asset & Supplier',        icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },
   finance:          { title: 'Finance Information',     icon: '💳', color: '#5B4EA6', bg: '#ECE9F8' },
   disbursement:     { title: 'Disbursement',             icon: '💸', color: '#5B4EA6', bg: '#ECE9F8' },
   insurance:        { title: 'Insurance',                icon: '🛡️', color: '#C43D3D', bg: '#FBE7E7' },
+  lifeInsurance:    { title: 'Life Insurance',           icon: '🛡️', color: '#C43D3D', bg: '#FBE7E7' },
+  warranty:         { title: 'Warranty',                 icon: '🛡️', color: '#C43D3D', bg: '#FBE7E7' },
   obligor:          { title: 'Outstanding & Commission', icon: '📈', color: '#1E7A8C', bg: '#E1F0F4' },
   subsidy:          { title: 'Subsidy & Disbursement Detail', icon: '🔁', color: '#1E7A8C', bg: '#E1F0F4' },
   equipment:        { title: 'Equipment Detail Review',  icon: '⚙️', color: '#B7791F', bg: '#FBF0DC' },
