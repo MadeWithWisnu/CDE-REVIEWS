@@ -58,6 +58,7 @@ const fileInputs = ref({});
 const errorMsg = ref('');
 const sendState = ref('idle'); // 'idle' | 'sending' | 'sent'
 const viewerItem = ref(null);
+const viewerFullscreen = ref(false);
 
 function setFileInputRef(id, el) {
   if (el) fileInputs.value[id] = el;
@@ -114,8 +115,9 @@ function addSection() {
   items.push(makeItem({ label: `Additional Document ${items.filter(i => !i.mandatory).length + 1}` }));
 }
 
-function openViewer(item) { viewerItem.value = item; }
-function closeViewer() { viewerItem.value = null; }
+function openViewer(item) { viewerItem.value = item; viewerFullscreen.value = false; }
+function closeViewer() { viewerItem.value = null; viewerFullscreen.value = false; }
+function toggleFullscreen() { viewerFullscreen.value = !viewerFullscreen.value; }
 
 async function sendAll() {
   errorMsg.value = '';
@@ -226,11 +228,23 @@ onBeforeUnmount(() => {
     </div>
 
     <Teleport to="body">
-      <div v-if="viewerItem" class="modal-backdrop" @click.self="closeViewer">
-        <div class="modal-panel">
+      <div
+        v-if="viewerItem"
+        class="modal-backdrop"
+        :class="{ 'modal-backdrop-full': viewerFullscreen }"
+        @click.self="closeViewer"
+      >
+        <div class="modal-panel" :class="{ 'modal-panel-full': viewerFullscreen }">
           <div class="modal-head">
             <span>{{ viewerItem.fileName }}</span>
-            <button class="modal-close" @click="closeViewer">✕</button>
+            <div class="modal-head-actions">
+              <button
+                class="modal-fullscreen"
+                :title="viewerFullscreen ? 'Exit full screen' : 'Full screen'"
+                @click="toggleFullscreen"
+              >{{ viewerFullscreen ? '⤡' : '⤢' }}</button>
+              <button class="modal-close" @click="closeViewer">✕</button>
+            </div>
           </div>
           <iframe :src="viewerItem.fileUrl" class="modal-frame" title="Document Viewer"></iframe>
         </div>
@@ -366,23 +380,30 @@ onBeforeUnmount(() => {
   position: fixed; inset: 0; background: rgba(18, 35, 63, .55);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000; padding: 30px;
+  transition: padding .18s ease;
 }
+.modal-backdrop-full { padding: 0; }
 .modal-panel {
   background: #fff; border-radius: 14px; overflow: hidden;
   width: min(1000px, 100%); height: min(90vh, 1000px);
   display: flex; flex-direction: column;
   box-shadow: 0 24px 60px -20px rgba(0,0,0,.5);
+  transition: width .18s ease, height .18s ease, border-radius .18s ease;
+}
+.modal-panel-full {
+  width: 100vw; height: 100vh; border-radius: 0;
 }
 .modal-head {
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 18px; border-bottom: 1px solid var(--line);
   font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink);
 }
-.modal-close {
+.modal-head-actions { display: flex; align-items: center; gap: 8px; }
+.modal-close, .modal-fullscreen {
   border: none; background: var(--bg); width: 32px; height: 32px; border-radius: 8px;
   cursor: pointer; font-size: 15px; color: var(--ink-soft);
 }
-.modal-close:hover { background: var(--line); }
+.modal-close:hover, .modal-fullscreen:hover { background: var(--line); }
 .modal-frame { flex: 1; width: 100%; border: none; }
 
 @media (max-width: 640px) {
