@@ -46,8 +46,8 @@ export const leasingIndividual = {
 
   rating: [
     { type: 'group', label: 'Sales Rating' },
-    { type: 'row', label: 'Sales Name', value: 'Budi Santoso' },
-    { type: 'badge', label: 'Rating', value: 'Green' },
+    { type: 'row', label: 'Sales Name', value: 'Budi Santoso', indent: 1 },
+    { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
     {
       type: 'peopleTable',
       columns: [
@@ -63,8 +63,8 @@ export const leasingIndividual = {
     },
 
     { type: 'group', label: 'Branch Rating' },
-    { type: 'row', label: 'Branch Name', value: 'Kelapa Gading' },
-    { type: 'badge', label: 'Rating', value: 'Green' },
+    { type: 'row', label: 'Branch Name', value: 'Kelapa Gading', indent: 1 },
+    { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
     {
       type: 'peopleTable',
       columns: [
@@ -82,10 +82,10 @@ export const leasingIndividual = {
     },
 
     { type: 'group', label: 'Dealer Rating' },
-    { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang' },
-    { type: 'badge', label: 'Rating', value: 'Green' },
-    { type: 'row', label: 'Supplier Status', value: 'Dealer' },
-    { type: 'row', label: 'Tier', value: '1' },
+    { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang', indent: 1 },
+    { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
+    { type: 'row', label: 'Supplier Status', value: 'Dealer', indent: 1 },
+    { type: 'row', label: 'Tier', value: '1', indent: 1 },
     {
       type: 'peopleTable',
       columns: [
@@ -250,21 +250,21 @@ export const leasingIndividual = {
       ],
     },
 
-    { type: 'group', label: 'SLIK Score' },
-    { type: 'group', label: 'Customer' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
-    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
-
-    { type: 'group', label: 'Spouse' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Medium-Good', indent: 1 },
-    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
-
-    { type: 'group', label: 'Guarantor' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Good', indent: 1 },
-    { type: 'links', label: 'Summary SLIK', indent: 1, links: [{ text: 'Link to SLIK Result', url: '#' }] },
+    {
+      type: 'peopleTable',
+      label: 'SLIK Score',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'status', label: 'Status', badge: true },
+        { key: 'grade', label: 'Grade', badge: true },
+        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
+      ],
+      people: [
+        { name: 'Customer', status: 'Available', grade: 'Good', summaryUrl: '#' },
+        { name: 'Spouse', status: 'Available', grade: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Guarantor', status: 'Available', grade: 'Good', summaryUrl: '#' },
+      ],
+    },
 
     {
       type: 'knockoutList',

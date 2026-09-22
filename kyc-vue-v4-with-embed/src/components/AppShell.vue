@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useSidebarVisibility } from '../composables/useSidebarVisibility.js';
 
 const route = useRoute();
+const { hideSidebar, toggleSidebar } = useSidebarVisibility();
 
 // When opened as an embedded iframe from Confins (?embed=1), hide the Miwanet
 // chrome (sidebar, topbar) so only the CDE content shows inside the iframe.
@@ -22,13 +24,17 @@ function isActive(item) {
 
 <template>
   <div class="shell" :class="{ 'shell-embed': isEmbed }">
-    <aside v-if="!isEmbed" class="sidebar">
+    <aside v-if="!isEmbed && !hideSidebar" class="sidebar">
       <div class="brand">
         <div class="brand-mark">C</div>
         <div class="brand-text">
           <div class="brand-name">CDE ORDER</div>
           <div class="brand-sub">Review System</div>
         </div>
+        <button
+          class="sidebar-toggle" type="button" title="Hide sidebar"
+          @click="toggleSidebar"
+        >☰</button>
       </div>
 
       <nav class="nav">
@@ -49,6 +55,11 @@ function isActive(item) {
     <div class="main">
       <header v-if="!isEmbed" class="topbar">
         <div class="topbar-title">
+          <button
+            v-if="hideSidebar"
+            class="sidebar-toggle sidebar-toggle-topbar" type="button" title="Show sidebar"
+            @click="toggleSidebar"
+          >☰</button>
           <slot name="topbar-title">CDE Review Center</slot>
         </div>
         <div class="topbar-user">
@@ -101,6 +112,26 @@ function isActive(item) {
 }
 .brand-name { font-family: var(--font-head); font-weight: 800; font-size: 14.5px; letter-spacing: .02em; }
 .brand-sub { font-size: 11.5px; opacity: .6; margin-top: 1px; }
+.brand-text { flex: 1; min-width: 0; }
+
+.sidebar-toggle {
+  flex: none;
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.sidebar-toggle:hover { background: rgba(255,255,255,.2); }
+.sidebar-toggle-topbar {
+  background: var(--bg);
+  color: var(--ink-soft);
+}
+.sidebar-toggle-topbar:hover { background: var(--line); color: var(--ink); }
 
 .nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
 .nav-item {
@@ -155,6 +186,9 @@ function isActive(item) {
   z-index: 10;
 }
 .topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-head);
   font-weight: 700;
   font-size: 16.5px;
