@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref, onBeforeUnmount } from 'vue';
+import { useCurrentUser, DEMO_USERS } from '../composables/useCurrentUser.js';
 
 /**
  * CaReviewUpload.vue
@@ -13,12 +14,15 @@ import { reactive, ref, onBeforeUnmount } from 'vue';
  *   replace the body of `sendAll()` with a real call to the DMS API, and
  *   `existingItems` prop can be used to hydrate already-sent files coming
  *   from the backend on load.
- * - Delete is only available BEFORE a file has been sent to DMS. Once sent,
- *   the only allowed action is Replace (uploading a new file overwrites it).
+ * - Every file records WHO uploaded it (`uploadedBy`). Once a file exists,
+ *   only that same person can Replace it — everyone else can only View.
+ *   There's no Delete action at all anymore (for anyone, at any stage).
  */
 const props = defineProps({
-  existingItems: { type: Array, default: () => [] }, // [{ id, label, fileName, fileUrl, sent }]
+  existingItems: { type: Array, default: () => [] }, // [{ id, label, fileName, fileUrl, sent, uploadedBy }]
 });
+
+const { currentUser } = useCurrentUser();
 
 let uid = 0;
 function nextId() { return `doc-${Date.now()}-${uid++}`; }
@@ -32,6 +36,7 @@ function makeItem(overrides = {}) {
     fileName: '',
     fileUrl: '',
     uploadedAt: '',
+    uploadedBy: '',
     sent: false,
     ...overrides,
   });
@@ -43,6 +48,12 @@ const items = reactive(
     : [makeItem({ label: 'CA Review', mandatory: true, editableLabel: false })]
 );
 
+// Only the person who uploaded a file may Replace it. Before any file
+// exists there's no owner yet, so the upload slot is open to anyone.
+function canManage(item) {
+  return !item.uploadedBy || item.uploadedBy === currentUser.value;
+}
+
 const fileInputs = ref({});
 const errorMsg = ref('');
 const sendState = ref('idle'); // 'idle' | 'sending' | 'sent'
@@ -52,14 +63,21 @@ function setFileInputRef(id, el) {
   if (el) fileInputs.value[id] = el;
 }
 
-function triggerFileSelect(id) {
+function triggerFileSelect(item) {
+  if (!canManage(item)) return; // guard: only the uploader can replace
   errorMsg.value = '';
-  fileInputs.value[id]?.click();
+  fileInputs.value[item.id]?.click();
 }
 
 function onFileChange(item, e) {
   const file = e.target.files?.[0];
   if (!file) return;
+
+  if (!canManage(item)) {
+    errorMsg.value = `Only ${item.uploadedBy} (who uploaded this file) can replace it.`;
+    e.target.value = '';
+    return;
+  }
 
   if (file.type !== 'application/pdf') {
     errorMsg.value = 'File must be in PDF format.';
@@ -74,21 +92,12 @@ function onFileChange(item, e) {
   item.fileUrl = URL.createObjectURL(file);
   item.fileName = file.name;
   item.uploadedAt = new Date().toLocaleString('en-US');
+  item.uploadedBy = currentUser.value;
   // Replacing a file after it was sent keeps it "sent" only if you want to
   // require re-sending — safest default: mark unsent so it gets re-submitted.
   item.sent = false;
   errorMsg.value = '';
   e.target.value = '';
-}
-
-function removeFile(item) {
-  if (item.sent) return; // guard: delete not allowed after send
-  if (item.fileUrl && item.fileUrl.startsWith('blob:')) {
-    URL.revokeObjectURL(item.fileUrl);
-  }
-  item.fileUrl = '';
-  item.fileName = '';
-  item.uploadedAt = '';
 }
 
 function removeSection(item) {
@@ -115,7 +124,7 @@ async function sendAll() {
   try {
     // TODO: replace with real DMS API call, e.g.:
     // for (const item of items.filter(i => i.fileUrl && !i.sent)) {
-    //   await dmsApi.upload({ label: item.label, file: item.fileBlob });
+    //   await dmsApi.upload({ label: item.label, file: item.fileBlob, uploadedBy: item.uploadedBy });
     // }
     await new Promise(resolve => setTimeout(resolve, 600)); // simulate network
 
@@ -141,6 +150,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="ca-upload">
+    <!-- DEMO ONLY: stand-in for real auth so "only the uploader can Replace"
+         can actually be tried out. Remove once real login/session exists —
+         currentUser would then come from that instead. -->
+    <div class="viewing-as">
+      <span class="viewing-as-label">Viewing as (demo)</span>
+      <select v-model="currentUser" class="viewing-as-select">
+        <option v-for="u in DEMO_USERS" :key="u" :value="u">{{ u }}</option>
+      </select>
+    </div>
+
     <div v-for="item in items" :key="item.id" class="upload-row">
       <input
         :ref="el => setFileInputRef(item.id, el)"
@@ -158,6 +177,7 @@ onBeforeUnmount(() => {
         <span v-else class="label-fixed">{{ item.label }}</span>
 
         <span v-if="item.sent" class="sent-tag">Sent to DMS</span>
+        <span v-if="item.fileUrl && !canManage(item)" class="view-only-tag">View only</span>
         <button
           v-if="!item.mandatory && !item.fileUrl"
           class="remove-section-btn" title="Remove this section"
@@ -170,20 +190,22 @@ onBeforeUnmount(() => {
         <div class="upload-text">
           <div class="upload-sub">No PDF file uploaded yet for this application.</div>
         </div>
-        <button class="btn btn-primary" @click="triggerFileSelect(item.id)">⬆ Upload PDF</button>
+        <button class="btn btn-primary" @click="triggerFileSelect(item)">⬆ Upload PDF</button>
       </div>
 
       <div v-else class="upload-filled">
         <div class="file-icon">📄</div>
         <div class="file-info">
           <div class="file-name">{{ item.fileName }}</div>
-          <div class="file-meta">{{ item.uploadedAt ? `Uploaded ${item.uploadedAt}` : 'Saved' }}</div>
+          <div class="file-meta">
+            {{ item.uploadedAt ? `Uploaded ${item.uploadedAt}` : 'Saved' }}
+            <span v-if="item.uploadedBy" class="file-meta-by">· Uploaded by <b>{{ item.uploadedBy }}</b></span>
+          </div>
         </div>
         <div class="file-actions">
           <button class="btn btn-secondary" @click="openViewer(item)">👁 View PDF</button>
-          <button class="btn btn-ghost" @click="triggerFileSelect(item.id)">Replace File</button>
-          <!-- Delete is only shown BEFORE the file has been sent to the DMS API -->
-          <button v-if="!item.sent" class="btn btn-ghost danger" @click="removeFile(item)">Delete</button>
+          <!-- Replace is only available to the person who uploaded this file — everyone else can only View -->
+          <button v-if="canManage(item)" class="btn btn-ghost" @click="triggerFileSelect(item)">Replace File</button>
         </div>
       </div>
     </div>
@@ -221,6 +243,35 @@ onBeforeUnmount(() => {
 .ca-upload { display: flex; flex-direction: column; gap: 14px; }
 .hidden-input { display: none; }
 
+.viewing-as {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+.viewing-as-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.viewing-as-select {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
 .upload-row {
   background: var(--bg);
   border: 1px solid var(--line);
@@ -240,6 +291,10 @@ onBeforeUnmount(() => {
 
 .sent-tag {
   font-size: 11.5px; font-weight: 700; color: var(--good); background: var(--good-bg);
+  padding: 3px 10px; border-radius: 999px; font-family: var(--font-head);
+}
+.view-only-tag {
+  font-size: 11.5px; font-weight: 700; color: var(--neutral); background: var(--neutral-bg);
   padding: 3px 10px; border-radius: 999px; font-family: var(--font-head);
 }
 .remove-section-btn {
@@ -265,6 +320,8 @@ onBeforeUnmount(() => {
   font-family: var(--font-head); font-weight: 700; font-size: 15px; color: var(--ink);
 }
 .upload-sub, .file-meta { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+.file-meta-by { color: var(--ink-faint); }
+.file-meta-by b { color: var(--ink-soft); font-weight: 700; }
 
 .file-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
@@ -285,7 +342,6 @@ onBeforeUnmount(() => {
 .btn-secondary:hover { opacity: .9; }
 .btn-ghost { background: var(--bg); color: var(--ink-soft); border: 1px solid var(--line); }
 .btn-ghost:hover { background: var(--line); }
-.btn-ghost.danger { color: var(--risk); }
 
 .add-section-btn { align-self: flex-start; }
 .btn-outline { background: transparent; border: 1.5px dashed var(--line); color: var(--ink-soft); }

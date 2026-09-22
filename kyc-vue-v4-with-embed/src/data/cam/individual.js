@@ -53,6 +53,7 @@ export const camIndividual = {
   ],
 
   finance: [
+    { type: 'group', label: 'Finance Information' },
     { type: 'row', label: 'Asset Value', value: 'Rp 495,000,000', indent: 1 },
     { type: 'row', label: 'Unit Price', value: 'Rp 300,000,000', indent: 1 },
     { type: 'row', label: 'Karoseri Price', value: 'Rp 195,000,000', indent: 1 },

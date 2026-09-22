@@ -2,9 +2,12 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSidebarVisibility } from '../composables/useSidebarVisibility.js';
+import { useCurrentUser } from '../composables/useCurrentUser.js';
 
 const route = useRoute();
 const { hideSidebar, toggleSidebar } = useSidebarVisibility();
+const { currentUser } = useCurrentUser();
+const userInitials = computed(() => currentUser.value.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase());
 
 // When opened as an embedded iframe from Confins (?embed=1), hide the Miwanet
 // chrome (sidebar, topbar) so only the CDE content shows inside the iframe.
@@ -63,9 +66,9 @@ function isActive(item) {
           <slot name="topbar-title">CDE Review Center</slot>
         </div>
         <div class="topbar-user">
-          <div class="user-avatar">SA</div>
+          <div class="user-avatar">{{ userInitials }}</div>
           <div class="user-info">
-            <div class="user-name">System Admin</div>
+            <div class="user-name">{{ currentUser }}</div>
             <div class="user-role">Credit Decisions Engine · Head Office</div>
           </div>
         </div>
