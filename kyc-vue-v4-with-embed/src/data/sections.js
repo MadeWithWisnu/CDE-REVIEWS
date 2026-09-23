@@ -11,14 +11,14 @@
  * sediakan datanya di file data CDE tersebut.
  */
 export const SECTION_LIBRARY = {
-  rating:       { title: 'Rating',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
-  kyc:          { title: 'Screening',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
-  preScoring:   { title: 'Pre Scoring',      icon: '📊', color: '#5B4EA6', bg: '#ECE9F8' },
-  slikCheck:    { title: 'SLIK Check',       icon: '🧮', color: '#5B4EA6', bg: '#ECE9F8' },
-  collateral:   { title: 'Collateral Check', icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },
-  apuppt:       { title: 'APU PPT Check',    icon: '🛡️', color: '#C43D3D', bg: '#FBE7E7' },
-  lpip:         { title: 'LPIP Check',       icon: '🔎', color: '#1E7A8C', bg: '#E1F0F4' },
-  finalScoring: { title: 'Final Scoring',    icon: '✅', color: '#1E8E5A', bg: '#E4F6ED' },
+  rating:       { title: 'RATING',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
+  kyc:          { title: 'SCREENING',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
+  preScoring:   { title: 'PRE SCORING',      icon: '📊', color: '#5B4EA6', bg: '#ECE9F8' },
+  slikCheck:    { title: 'SLIK CHECK',       icon: '🧮', color: '#5B4EA6', bg: '#ECE9F8' },
+  collateral:   { title: 'COLLATERAL CHECK', icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },
+  apuppt:       { title: 'APU PPT CHECK',    icon: '🛡️', color: '#C43D3D', bg: '#FBE7E7' },
+  lpip:         { title: 'CREDIT BUREAU CHECK',       icon: '🔎', color: '#1E7A8C', bg: '#E1F0F4' },
+  finalScoring: { title: 'FINAL SCORING',    icon: '✅', color: '#1E8E5A', bg: '#E4F6ED' },
 };
 
 /**
@@ -37,9 +37,9 @@ export function badgeTone(raw) {
   if (v === 'no') return 'risk';
   if (v === 'yes') return 'good';
 
-  const goodWords = ['good', 'match', 'active', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding', 'listed', 'recommended'];
-  const midWords  = ['medium', 'tend to approve', 'pep', 'yellow'];
-  const riskWords = ['not match', 'high risk', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'dttot', 'blacklist', 'red', 'late payment', 'wo'];
+  const goodWords = ['good', 'match', 'inactive', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding', 'recommended'];
+  const midWords  = ['medium', 'tend to approve', 'pep', 'yellow', 'potentially modified'];
+  const riskWords = ['not match', 'active', 'listed', 'high risk', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'dttot', 'blacklist', 'red', 'late payment', 'wo', 'exact'];
 
   if (riskWords.some(w => v.includes(w))) return 'risk';
   if (midWords.some(w => v.includes(w))) return 'mid';

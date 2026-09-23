@@ -234,10 +234,12 @@ const defaultPeopleTableColumns = [
                           <tr>
                             <th>Contract No.</th>
                             <th>Customer Name</th>
-                            <th>OTR Amount</th>
                             <th>Total Net Finance</th>
+                            <th>Outstanding</th>
                             <th>Disbursement Date</th>
-                            <th>Status (Outstanding / WO)</th>
+                            <th>Status</th>
+                            <th>Loss</th>
+                            <th>Amount Loss</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -251,10 +253,12 @@ const defaultPeopleTableColumns = [
                               <span v-else>{{ c.contractNo }}</span>
                             </td>
                             <td>{{ c.customerName }}</td>
-                            <td><RpAmount :value="c.otrAmount" /></td>
                             <td><RpAmount :value="c.totalNetFinance" /></td>
+                            <td><RpAmount :value="c.outstanding" /></td>
                             <td>{{ c.disbursementDate }}</td>
                             <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
+                            <td><RpAmount :value="c.loss" /></td>
+                            <td><RpAmount :value="c.amountLoss" /></td>
                           </tr>
                         </tbody>
                       </table>
@@ -398,56 +402,6 @@ const defaultPeopleTableColumns = [
                   </div>
                 </template>
               </div>
-            </div>
-          </div>
-
-          <!-- Relationship Check summary: category counts, click a count to reveal its contract detail table -->
-          <div v-else-if="row.type === 'relationshipSummary'" class="rel-summary-wrap">
-            <div v-if="row.label" class="grp-label">{{ row.label }}</div>
-            <div class="rel-summary">
-              <template v-for="(cat, ci) in row.categories" :key="ci">
-                <div class="rel-summary-row">
-                  <span class="rel-summary-label">{{ cat.name }}</span>
-                  <span class="rel-summary-sep">:</span>
-                  <button
-                    class="rel-summary-count"
-                    :class="{ zero: !cat.count }"
-                    :disabled="!cat.count"
-                    @click="toggleRelCat(i, ci)"
-                  >{{ cat.count }}</button>
-                </div>
-                <div v-if="openRelCats[`${i}:${ci}`] && cat.contracts?.length" class="rel-detail-wrap">
-                  <table class="people-table">
-                    <thead>
-                      <tr>
-                        <th>Contract No.</th>
-                        <th>Customer Name</th>
-                        <th>OTR Amount</th>
-                        <th>Total Net Finance</th>
-                        <th>Disbursement Date</th>
-                        <th>Status (Outstanding / WO)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(c, cci) in cat.contracts" :key="cci">
-                        <td class="mono">
-                              <button
-                                v-if="c.contractNo && c.contractNo !== '—'"
-                                type="button" class="link contract-link" :title="'View CAM report for contract ' + c.contractNo"
-                                @click="emit('contract-click', c)"
-                              >{{ c.contractNo }}</button>
-                              <span v-else>{{ c.contractNo }}</span>
-                            </td>
-                        <td>{{ c.customerName }}</td>
-                        <td><RpAmount :value="c.otrAmount" /></td>
-                        <td><RpAmount :value="c.totalNetFinance" /></td>
-                        <td>{{ c.disbursementDate }}</td>
-                        <td><span class="badge" :class="badgeTone(c.status)">{{ c.status }}</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </template>
             </div>
           </div>
 

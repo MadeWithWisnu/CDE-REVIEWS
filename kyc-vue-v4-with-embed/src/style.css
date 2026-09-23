@@ -13,7 +13,7 @@
 
   --ink: #1A2333;
   --ink-soft: #56607A;
-  --ink-faint: #8A93A8;
+  --ink-faint: #090a0c;
   --bg: #F1F3F8;
   --surface: #FFFFFF;
   --line: #E2E6EE;
@@ -27,7 +27,7 @@
   --sidebar-w: 240px;
   --font-head: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Inter', system-ui, sans-serif;
 
   /* ------------------------------------------------------------
      TYPOGRAPHY HIERARCHY — field name & isian (value)
@@ -42,7 +42,7 @@
   --fs-header-2: 14.5px;   /* group / category header (mis. grp-label) */
   --fs-header-3: 13.5px;   /* sub-accordion title */
 
-  --fs-field-label: 11px;        /* nama field — konsisten di semua tempat */
+  --fs-field-label: 13.5px;        /* nama field — konsisten di semua tempat */
   --fs-field-value: 14.5px;      /* isian/value — konsisten di semua tempat */
   --fs-field-value-mono: 13.5px; /* varian isian mono (mis. nomor akun) */
 }

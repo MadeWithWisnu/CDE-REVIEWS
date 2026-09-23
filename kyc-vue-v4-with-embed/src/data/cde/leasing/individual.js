@@ -13,10 +13,12 @@ const DUKCAPIL_FIELDS = [
   { key: 'namaProvinsi', label: 'Nama Provinsi' },
   { key: 'namaKabupaten', label: 'Nama Kabupaten' },
   { key: 'namaKecamatan', label: 'Nama Kecamatan' },
+  { key: 'namaKelurahan', label: 'Nama Kelurahan' },
   { key: 'rt', label: 'RT' },
   { key: 'rw', label: 'RW' },
   { key: 'statusPerkawinan', label: 'Status Perkawinan' },
   { key: 'jenisPekerjaan', label: 'Jenis Pekerjaan' },
+  { key: 'namaLengkapIbu', label: 'Nama Lengkap Ibu' },
 ];
 const DUKCAPIL_MANDATORY_KEYS = DUKCAPIL_FIELDS.filter(f => f.mandatory).map(f => f.key);
 
@@ -45,7 +47,7 @@ export const leasingIndividual = {
   },
 
   rating: [
-    { type: 'group', label: 'Sales Rating' },
+    { type: 'group', label: 'SALES RATING' },
     { type: 'row', label: 'Sales Name', value: 'Budi Santoso', indent: 1 },
     { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
     {
@@ -53,16 +55,16 @@ export const leasingIndividual = {
       columns: [
         { key: 'fpd', label: 'FPD' },
         { key: 'f3pd', label: 'F3PD' },
-        { key: 'rejectReturn', label: 'Reject Return' },
         { key: 'fid6', label: 'FID 6' },
         { key: 'achBooking', label: 'Ach Booking' },
+        { key: 'rejectReturn', label: 'Reject Return' },
       ],
       people: [
         { fpd: '1%', f3pd: '1%', rejectReturn: '1%', fid6: '1%', achBooking: '1%' },
       ],
     },
 
-    { type: 'group', label: 'Branch Rating' },
+    { type: 'group', label: 'BRANCH RATING' },
     { type: 'row', label: 'Branch Name', value: 'Kelapa Gading', indent: 1 },
     { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
     {
@@ -81,7 +83,7 @@ export const leasingIndividual = {
       ],
     },
 
-    { type: 'group', label: 'Dealer Rating' },
+    { type: 'group', label: 'DEALER RATING' },
     { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang', indent: 1 },
     { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
     { type: 'row', label: 'Supplier Status', value: 'Dealer', indent: 1 },
@@ -99,7 +101,7 @@ export const leasingIndividual = {
   ],
 
   kyc: [
-    { type: 'group', label: 'Dukcapil' },
+    { type: 'group', label: 'DUKCAPIL' },
     {
       type: 'personFieldCards',
       fields: DUKCAPIL_FIELDS,
@@ -110,18 +112,21 @@ export const leasingIndividual = {
         buildDukcapilPerson('Customer', {
           nik: 'Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
           tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
-          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaKecamatan: 'Match', namaKelurahan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaLengkapIbu: 'Match',
         }),
         buildDukcapilPerson('Spouse', {
           nik: 'Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
           tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
-          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaKecamatan: 'Match', namaKelurahan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaLengkapIbu: 'Match',
         }),
         // Example: NIK doesn't match → cascades to Not Match across every field for this person
         buildDukcapilPerson('Guarantor', {
           nik: 'Not Match', namaLengkap: 'Match', tanggalLahir: 'Match', jenisKelamin: 'Match',
           tempatLahir: 'Match', alamat: 'Match', namaProvinsi: 'Match', namaKabupaten: 'Match',
-          namaKecamatan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaKecamatan: 'Match', namaKelurahan: 'Match', rt: 'Match', rw: 'Match', statusPerkawinan: 'Match', jenisPekerjaan: 'Match',
+          namaLengkapIbu: 'Match',
         }),
       ],
     },
@@ -167,11 +172,11 @@ export const leasingIndividual = {
           name: 'Debtor',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
+            { contractNo: '23018804011', customerName: 'Aswar Pasaribu', totalNetFinance: 'Rp 412,500,000', outstanding: 'Rp 550,000,000', disbursementDate: '08 Jan 2023', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22045501002', customerName: 'Aswar Pasaribu', totalNetFinance: 'Rp 336,000,000', outstanding: 'Rp 420,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22091203045', customerName: 'Aswar Pasaribu', totalNetFinance: 'Rp 210,000,000', outstanding: 'Rp 320,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '21076602087', customerName: 'Aswar Pasaribu', totalNetFinance: 'Rp 196,000,000', outstanding: 'Rp 280,000,000', disbursementDate: '24 Nov 2021', status: 'WO', loss: '-', amountLoss: '-' },
+            { contractNo: '20115509033', customerName: 'Aswar Pasaribu', totalNetFinance: 'Rp 133,000,000', outstanding: 'Rp 190,000,000', disbursementDate: '03 Nov 2020', status: 'WO', loss: '-', amountLoss: '-' },
           ],
         },
         {
@@ -183,22 +188,22 @@ export const leasingIndividual = {
           name: 'Emergency Contact',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'Darman Pasaribu', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'Rina Kartika', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'Budi Santoso', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'Outstanding' },
-            { contractNo: '20115509033', customerName: 'Siti Marlina', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
+            { contractNo: '23018804011', customerName: 'Budi Santoso', totalNetFinance: 'Rp 412,500,000', outstanding: 'Rp 550,000,000', disbursementDate: '08 Jan 2023', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22045501002', customerName: 'Darman Pasaribu', totalNetFinance: 'Rp 336,000,000', outstanding: 'Rp 420,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22091203045', customerName: 'Rina Kartika', totalNetFinance: 'Rp 210,000,000', outstanding: 'Rp 320,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '21076602087', customerName: 'Ahmad Fauzi', totalNetFinance: 'Rp 196,000,000', outstanding: 'Rp 280,000,000', disbursementDate: '24 Nov 2021', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '20115509033', customerName: 'Siti Marlina', totalNetFinance: 'Rp 133,000,000', outstanding: 'Rp 190,000,000', disbursementDate: '03 Nov 2020', status: 'WO', loss: '-', amountLoss: '-' },
           ],
         },
         {
           name: 'Board / Management',
           count: 5,
           contracts: [
-            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding' },
-            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 320,000,000', totalNetFinance: 'Rp 210,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding' },
-            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 550,000,000', totalNetFinance: 'Rp 412,500,000', disbursementDate: '08 Jan 2023', status: 'Outstanding' },
-            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', otrAmount: 'Rp 280,000,000', totalNetFinance: 'Rp 196,000,000', disbursementDate: '24 Nov 2021', status: 'WO' },
-            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', otrAmount: 'Rp 190,000,000', totalNetFinance: 'Rp 133,000,000', disbursementDate: '03 Nov 2020', status: 'WO' },
+            { contractNo: '23018804011', customerName: 'PT Mitra Logistik Jaya', totalNetFinance: 'Rp 412,500,000', outstanding: 'Rp 550,000,000', disbursementDate: '08 Jan 2023', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22045501002', customerName: 'CV. Anugerah Mandiri', totalNetFinance: 'Rp 336,000,000', outstanding: 'Rp 420,000,000', disbursementDate: '24 Feb 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '22091203045', customerName: 'CV. Anugerah Mandiri', totalNetFinance: 'Rp 210,000,000', outstanding: 'Rp 320,000,000', disbursementDate: '15 Sep 2022', status: 'Outstanding', loss: '-', amountLoss: '-' },
+            { contractNo: '21076602087', customerName: 'PT Mitra Logistik Jaya', totalNetFinance: 'Rp 196,000,000', outstanding: 'Rp 280,000,000', disbursementDate: '24 Nov 2021', status: 'WO', loss: '-', amountLoss: '-' },
+            { contractNo: '20115509033', customerName: 'CV. Anugerah Mandiri', totalNetFinance: 'Rp 133,000,000', outstanding: 'Rp 190,000,000', disbursementDate: '03 Nov 2020', status: 'WO', loss: '-', amountLoss: '-' },
           ],
         },
       ],
@@ -265,14 +270,6 @@ export const leasingIndividual = {
         { name: 'Guarantor', status: 'Available', grade: 'Good', summaryUrl: '#' },
       ],
     },
-
-    {
-      type: 'knockoutList',
-      label: 'Knockout',
-      items: [
-        { reason: 'Customer age within acceptable range (25–55 years old)' },
-      ],
-    },
   ],
 
   collateral: [
@@ -309,7 +306,7 @@ export const leasingIndividual = {
     { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
     { type: 'group', label: 'AML-CFT Customer Classification' },
     { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
-    { type: 'badge', label: 'PEP', value: 'Yes', indent: 1 },
+    { type: 'badge', label: 'PEP', value: 'Exact', indent: 1 },
     { type: 'row', label: 'Identification & Verification Process', value: 'Enhanced Due Diligence (EDD)', indent: 1 },
     { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
     { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
@@ -333,17 +330,17 @@ export const leasingIndividual = {
   ],
 
   lpip: [
-    { type: 'group', label: 'Customer LPIP' },
+    { type: 'group', label: 'Customer' },
     { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
     { type: 'row', label: 'Score', value: '123', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result', url: '#' }] },
+    { type: 'links', label: 'Summary Bureau', indent: 1, links: [{ text: 'Link to BUREAU Result', url: '#' }] },
 
-    { type: 'group', label: 'Spouse LPIP' },
+    { type: 'group', label: 'Spouse' },
     { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
     { type: 'row', label: 'Score', value: '123', indent: 1 },
     { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary LPIP', indent: 1, links: [{ text: 'Link to LPIP Result', url: '#' }] },
+    { type: 'links', label: 'Summary Bureau', indent: 1, links: [{ text: 'Link to BUREAU Result', url: '#' }] },
   ],
 
   finalScoring: [
@@ -357,7 +354,7 @@ export const leasingIndividual = {
 
     {
       type: 'peopleTable',
-      label: 'SLIK Score Final',
+      label: 'SLIK SCORE FINAL',
       columns: [
         { key: 'name', label: 'Name' },
         { key: 'result', label: 'Check Result', badge: true },
@@ -371,7 +368,7 @@ export const leasingIndividual = {
       ],
     },
 
-    { type: 'group', label: 'Bank Statement Analyzer' },
+    { type: 'group', label: 'BANK STATEMENT ANALYZER' },
     {
       type: 'peopleTable',
       columns: [
@@ -381,8 +378,8 @@ export const leasingIndividual = {
       people: [
         { name: '22212609005-other3-view4.pdf', validity: 'Valid' },
         { name: '22212609005-other3-view2.pdf', validity: 'Valid' },
-        { name: '22212609005-other3-view3.pdf', validity: 'Valid' },
-        { name: '22212609005-other3-view1.pdf', validity: 'Not Valid' },
+        { name: '22212609005-other3-view3.pdf', validity: 'Potentially Modified' },
+        { name: '22212609005-other3-view1.pdf', validity: 'Potentially Modified' },
       ],
     },
   ],
