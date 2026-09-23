@@ -129,6 +129,31 @@ const defaultPeopleTableColumns = [
               <td class="ft-value"><span class="badge" :class="badgeTone(row.value)" :title="row.value">{{ row.value }}</span></td>
             </tr>
 
+            <!-- rowPair: two Field:Value pairs shown side by side on one line
+                 (e.g. "Supplier Name: Auto 2000 Kemang | Group Supplier: ...").
+                 Each side accepts { label, value, badge, mono }. -->
+            <tr v-else-if="row.type === 'rowPair'" :class="{ indent: row.indent }">
+              <td colspan="2" class="ft-pair-cell">
+                <div class="row-pair">
+                  <div class="row-pair-item">
+                    <span class="ft-field">{{ row.left.label }}</span>
+                    <span class="ft-value" :class="{ mono: row.left.mono }">
+                      <span v-if="row.left.badge" class="badge" :class="badgeTone(row.left.value)" :title="row.left.value">{{ row.left.value }}</span>
+                      <RpAmount v-else :value="row.left.value" />
+                    </span>
+                  </div>
+                  <div v-if="row.right" class="row-pair-sep">|</div>
+                  <div v-if="row.right" class="row-pair-item">
+                    <span class="ft-field">{{ row.right.label }}</span>
+                    <span class="ft-value" :class="{ mono: row.right.mono }">
+                      <span v-if="row.right.badge" class="badge" :class="badgeTone(row.right.value)" :title="row.right.value">{{ row.right.value }}</span>
+                      <RpAmount v-else :value="row.right.value" />
+                    </span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
             <tr v-else-if="row.type === 'links'" :class="{ indent: row.indent }">
               <td class="ft-field">{{ row.label }}</td>
               <td class="ft-value">
@@ -367,6 +392,25 @@ const defaultPeopleTableColumns = [
             <div class="field-value"><span class="badge" :class="badgeTone(row.value)" :title="row.value">{{ row.value }}</span></div>
           </div>
 
+          <!-- rowPair: two Field:Value pairs kept aligned side by side even
+               in the card/mobile layout, matching table mode. -->
+          <div v-else-if="row.type === 'rowPair'" class="field-cell wide fg-pair" :class="{ indent: row.indent }">
+            <div class="fg-pair-item">
+              <div class="field-label">{{ row.left.label }}</div>
+              <div class="field-value" :class="{ mono: row.left.mono }">
+                <span v-if="row.left.badge" class="badge" :class="badgeTone(row.left.value)" :title="row.left.value">{{ row.left.value }}</span>
+                <RpAmount v-else :value="row.left.value" />
+              </div>
+            </div>
+            <div v-if="row.right" class="fg-pair-item">
+              <div class="field-label">{{ row.right.label }}</div>
+              <div class="field-value" :class="{ mono: row.right.mono }">
+                <span v-if="row.right.badge" class="badge" :class="badgeTone(row.right.value)" :title="row.right.value">{{ row.right.value }}</span>
+                <RpAmount v-else :value="row.right.value" />
+              </div>
+            </div>
+          </div>
+
           <div v-else-if="row.type === 'links'" class="field-cell wide" :class="{ indent: row.indent }">
             <div class="field-label">{{ row.label }}</div>
             <div class="field-value links">
@@ -596,6 +640,21 @@ const defaultPeopleTableColumns = [
 .field-table > tbody > tr:first-child > td { padding-top: 14px; }
 .field-table > tbody > tr:last-child > td { border-bottom: none; padding-bottom: 4px; }
 
+/* rowPair — table mode: "Supplier Name: Auto 2000 Kemang | Group Supplier: ..."
+   on one line. Reuses .ft-field / .ft-value typography but as inline flex
+   items instead of fixed-width <td>s, so each pair only takes the room it
+   needs and both sides stay vertically aligned line by line. */
+.ft-pair-cell { padding: 10px 14px !important; text-align: end; }
+.row-pair { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 22px; }
+.row-pair-item { display: flex; align-items: baseline; gap: 10px; flex: 1 1 260px; min-width: 0; }
+.row-pair-item .ft-field { width: auto; flex: 0 0 auto; }
+.row-pair-item .ft-value { flex: 1 1 auto; min-width: 0; }
+.row-pair-sep { color: var(--ink-faint); font-weight: 300; flex: none; align-self: stretch; display: flex; align-items: center; }
+@media (max-width: 640px) {
+  .row-pair { flex-direction: column; align-items: stretch; gap: 8px; }
+  .row-pair-sep { display: none; }
+}
+
 /* Highlighted result banner — used for the section's main takeaway
    (Pre Scoring Result + Survey Treatment, Final Score + Instant Approval) */
 .highlight-bar {
@@ -710,6 +769,15 @@ const defaultPeopleTableColumns = [
    RpAmount di dalamnya bisa align-right dengan tepi yang konsisten
    antar baris di kolom grid yang sama. */
 .field-value.value-rp { flex: 1 1 auto; }
+
+/* rowPair — card/mobile mode: keep the two pairs on one visual line, wrapping
+   to stacked pairs only on narrow screens. */
+.fg-pair { display: flex; flex-wrap: wrap; gap: 6px 28px; padding-top: 10px; padding-bottom: 10px; }
+.fg-pair-item { display: flex; align-items: baseline; gap: 8px; flex: 1 1 220px; min-width: 0; }
+.fg-pair-item .field-label { max-width: none; }
+@media (max-width: 480px) {
+  .fg-pair { flex-direction: column; gap: 6px; }
+}
 
 .badge {
   display: inline-block;

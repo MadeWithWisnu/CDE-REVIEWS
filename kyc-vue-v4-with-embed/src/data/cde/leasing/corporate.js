@@ -44,10 +44,26 @@ export const leasingCorporate = {
     },
 
     { type: 'group', label: 'Dealer' },
-    { type: 'row', label: 'Supplier Name', value: 'Arista Jaya Niaga, PT.' },
-    { type: 'badge', label: 'Rating', value: 'Green' },
-    { type: 'row', label: 'Supplier Status', value: 'Dealer' },
-    { type: 'row', label: 'Tier', value: '1' },
+    {
+      type: 'rowPair',
+      left: { label: 'Supplier Name', value: 'Arista Jaya Niaga, PT.' },
+      right: { label: 'Group Supplier', value: 'Arista Group' },
+    },
+    {
+      type: 'rowPair',
+      left: { label: 'Rating', value: 'Green', badge: true },
+      right: { label: 'Group Rating', value: 'Green', badge: true },
+    },
+    {
+      type: 'rowPair',
+      left: { label: 'Supplier Status', value: 'Dealer' },
+      right: { label: 'Group Status', value: 'Dealer' },
+    },
+    {
+      type: 'rowPair',
+      left: { label: 'Tier', value: '1' },
+      right: { label: 'Group Tier', value: '1' },
+    },
     {
       type: 'peopleTable',
       columns: [

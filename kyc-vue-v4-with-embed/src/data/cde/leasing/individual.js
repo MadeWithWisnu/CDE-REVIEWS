@@ -84,10 +84,26 @@ export const leasingIndividual = {
     },
 
     { type: 'group', label: 'DEALER RATING' },
-    { type: 'row', label: 'Supplier Name', value: 'Auto 2000 Kemang', indent: 1 },
-    { type: 'badge', label: 'Rating', value: 'Green', indent: 1 },
-    { type: 'row', label: 'Supplier Status', value: 'Dealer', indent: 1 },
-    { type: 'row', label: 'Tier', value: '1', indent: 1 },
+    {
+      type: 'rowPair', indent: 1,
+      left: { label: 'Supplier Name', value: 'Auto 2000 Kemang' },
+      right: { label: 'Group Supplier', value: 'Astra International, PT.' },
+    },
+    {
+      type: 'rowPair', indent: 1,
+      left: { label: 'Rating', value: 'Green', badge: true },
+      right: { label: 'Group Rating', value: 'Green', badge: true },
+    },
+    {
+      type: 'rowPair', indent: 1,
+      left: { label: 'Supplier Status', value: 'Dealer' },
+      right: { label: 'Group Status', value: 'Dealer' },
+    },
+    {
+      type: 'rowPair', indent: 1,
+      left: { label: 'Tier', value: '1' },
+      right: { label: 'Group Tier', value: '1' },
+    },
     {
       type: 'peopleTable',
       columns: [
