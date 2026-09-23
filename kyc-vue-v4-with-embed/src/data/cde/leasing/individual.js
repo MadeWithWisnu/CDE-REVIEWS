@@ -254,10 +254,9 @@ export const leasingIndividual = {
          { label: 'Surveyor Name', value: 'Name of Surveyor' },
       ],
     },
-
+    { type: 'group', label: 'SLIK SCORE' },
     {
       type: 'peopleTable',
-      label: 'SLIK Score',
       columns: [
         { key: 'name', label: 'Name' },
         { key: 'status', label: 'Status', badge: true },
@@ -351,10 +350,9 @@ export const leasingIndividual = {
         { label: 'Instant Approval', value: 'Yes', tone: 'good' },
       ],
     },
-
+    { type: 'group', label: 'SLIK SCORE FINAL' },
     {
       type: 'peopleTable',
-      label: 'SLIK SCORE FINAL',
       columns: [
         { key: 'name', label: 'Name' },
         { key: 'result', label: 'Check Result', badge: true },

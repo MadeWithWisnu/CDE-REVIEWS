@@ -560,12 +560,15 @@ const defaultPeopleTableColumns = [
   font-weight: 700;
   font-size: var(--fs-header-2);
   color: var(--navy);
-  background: var(--surface);
-  border-top: 1px dashed var(--line);
+  background: rgb(2 1 1 / 25%);
+  border-top: 2px solid var(--navy);
   border-bottom: 1px solid var(--line);
-  padding-top: 14px;
+  padding: 14px 18px;
+  box-shadow: 0 3px 8px rgba(30, 41, 71, 0.14);
+  position: relative;
+  z-index: 1;
 }
-.field-table tbody tr:first-child.ft-group-row td { border-top: none; }
+.field-table tbody tr:first-child.ft-group-row td { border-top: none; box-shadow: none; }
 
 .ft-note-row td {
   font-family: var(--font-body);
@@ -575,8 +578,15 @@ const defaultPeopleTableColumns = [
   background: var(--green-soft);
 }
 
-.ft-nested-table-cell { padding: 12px 14px !important; background: var(--surface); }
+.ft-nested-table-cell {
+  padding: 12px 14px !important;
+  background: var(--surface);
+  box-shadow: 0 3px 8px rgba(30, 41, 71, 0.14);
+  position: relative;
+  z-index: 1;
+}
 .ft-nested-table-cell .people-table { margin-top: 4px; }
+.field-table tbody tr:first-child .ft-nested-table-cell { border-top: none; box-shadow: none; }
 
 .ft-highlight-cell { padding: 14px !important; background: var(--surface); }
 
