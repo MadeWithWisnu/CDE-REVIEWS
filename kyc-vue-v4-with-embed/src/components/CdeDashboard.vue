@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed, onMounted } from 'vue';
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AccordionSection from './AccordionSection.vue';
 import ContractCamModal from './ContractCamModal.vue';
@@ -103,6 +103,19 @@ const currentVerdict = computed(() => {
   return null; // Summary CBAS shows its own highlight inside the section instead
 });
 const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Result' : 'Credit Recommendation'));
+
+// --- Scroll-to-top button: shows once the page has been scrolled down a
+// bit, hidden near the top. Listens on window since the page itself
+// scrolls (the sidebar/topbar are sticky, not the content). ---
+const showScrollTop = ref(false);
+function onWindowScroll() {
+  showScrollTop.value = window.scrollY > 320;
+}
+onMounted(() => window.addEventListener('scroll', onWindowScroll, { passive: true }));
+onUnmounted(() => window.removeEventListener('scroll', onWindowScroll));
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 
 <template>
@@ -124,8 +137,11 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
   <template v-else>
     <button v-if="!isEmbed" class="back-link" @click="router.back()">← Back to document list</button>
 
-    <!-- Tab switcher: CDE / Report CAM — same App No, different section set -->
-    <div class="tab-bar">
+    <!-- Tab switcher: CDE / Report CAM — same App No, different section set.
+         Sticky so it stays visible (freezes at the top) while the section
+         list below is scrolled — top offset accounts for the sticky topbar
+         (absent in embed mode). -->
+    <div class="tab-bar" :style="{ top: isEmbed ? '0px' : '64px' }">
       <button class="tab-btn" :class="{ active: activeTab === 'cde' }" @click="activeTab = 'cde'">
         🔍 CDE
       </button>
@@ -223,6 +239,22 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
     <footer class="note">
       Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : activeTab === 'cam' ? 'Credit Approval Memorandum' : 'credit bureau (SLIK) summary' }} for App No {{ appNo || cdeKey }}.
     </footer>
+
+    <!-- Scroll-to-top: appears after scrolling down, jumps smoothly back up -->
+    <Transition name="scroll-top-fade">
+      <button
+        v-if="showScrollTop"
+        type="button"
+        class="scroll-top-btn"
+        title="Back to top"
+        aria-label="Back to top"
+        @click="scrollToTop"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </Transition>
   </template>
 
   <!-- Contract No popup — full-screen "Report CAM"-style view -->
@@ -268,6 +300,9 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
   padding: 6px;
   margin-bottom: 20px;
   width: fit-content;
+  position: sticky;
+  z-index: 9;
+  box-shadow: 0 6px 14px rgba(30, 41, 71, 0.08);
 }
 .tab-btn {
   font-family: var(--font-head);
@@ -324,8 +359,32 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 
 footer.note { margin-top: 28px; font-size: 14px; color: var(--ink-faint); text-align: center; }
 
+/* Floating "back to top" button */
+.scroll-top-btn {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vw, 32px);
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: none;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30, 41, 71, 0.28);
+  z-index: 20;
+  transition: background .15s ease, transform .15s ease;
+}
+.scroll-top-btn:hover { background: var(--green-dark); transform: translateY(-2px); }
+.scroll-top-fade-enter-active, .scroll-top-fade-leave-active { transition: opacity .18s ease, transform .18s ease; }
+.scroll-top-fade-enter-from, .scroll-top-fade-leave-to { opacity: 0; transform: translateY(8px); }
+
 @media (max-width: 640px) {
   .tab-bar { width: 100%; }
   .tab-btn { flex: 1; padding: 10px 12px; font-size: 13.5px; }
+  .scroll-top-btn { width: 42px; height: 42px; }
 }
 </style>
