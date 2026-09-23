@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed, onMounted, onUnmounted } from 'vue';
+import { reactive, ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AccordionSection from './AccordionSection.vue';
 import ContractCamModal from './ContractCamModal.vue';
@@ -84,6 +84,73 @@ function toggleCbasSection(key) {
 // Document Upload is always the LAST section in the CDE tab.
 const uploadSectionOpen = reactive({ open: false });
 
+// --- Floating right-side section nav — one per tab (CDE / Report CAM /
+// Summary CBAS), each listing that tab's own accordion sections. Clicking
+// an entry scrolls + opens that section; scrollspy highlights whichever is
+// currently in view. Each tab keeps its own set of DOM anchors since a
+// section key (e.g. "customer") can appear in more than one tab. ---
+const sectionAnchors = { cde: {}, cam: {}, cbas: {} };
+function setSectionAnchor(tab, key, el) {
+  if (el) sectionAnchors[tab][key] = el;
+}
+function sectionMeta(tab, key) {
+  if (tab === 'cde') return key === 'documentUpload' ? { title: 'Document Upload', icon: '📎' } : SECTION_LIBRARY[key];
+  if (tab === 'cam') return CAM_SECTION_LIBRARY[key];
+  if (tab === 'cbas') return CBAS_SECTION_LIBRARY[key];
+  return null;
+}
+const navKeysByTab = {
+  cde: [...activeSections.map((s) => s.key), 'documentUpload'],
+  cam: camAllKeys,
+  cbas: cbasActiveSections.map((s) => s.key),
+};
+const currentNavKeys = computed(() => navKeysByTab[activeTab.value] || []);
+const activeSectionKey = ref(currentNavKeys.value[0] || '');
+
+function openSectionByKey(tab, key) {
+  if (tab === 'cde') {
+    if (key === 'documentUpload') uploadSectionOpen.open = true;
+    else openSections[key] = true;
+  } else if (tab === 'cam') {
+    openCamSections[key] = true;
+  } else if (tab === 'cbas') {
+    openCbasSections[key] = true;
+  }
+}
+function scrollToSection(key) {
+  const el = sectionAnchors[activeTab.value]?.[key];
+  if (!el) return;
+  openSectionByKey(activeTab.value, key);
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function updateActiveSection() {
+  const tab = activeTab.value;
+  const keys = currentNavKeys.value;
+  const anchors = sectionAnchors[tab] || {};
+  const offset = (isEmbed.value ? 0 : 64) + 90; // topbar + sticky tab-bar
+  let current = keys[0] || '';
+  for (const key of keys) {
+    const el = anchors[key];
+    if (!el) continue;
+    if (el.getBoundingClientRect().top - offset <= 0) current = key;
+  }
+  activeSectionKey.value = current;
+}
+watch(activeTab, () => nextTick(updateActiveSection));
+
+// Side nav can be hidden by the user — one shared preference, remembered
+// across reloads (only one tab's nav is ever shown at a time anyway).
+function readSideNavHidden() {
+  try { return localStorage.getItem('sideNavHidden') === '1'; }
+  catch { return false; }
+}
+const sideNavHidden = ref(readSideNavHidden());
+function toggleSideNav() {
+  sideNavHidden.value = !sideNavHidden.value;
+  try { localStorage.setItem('sideNavHidden', sideNavHidden.value ? '1' : '0'); }
+  catch { /* storage unavailable (e.g. blocked in embed iframe) — ignore */ }
+}
+
 // Contract No popup — "seperti Report CAM" full-screen view, opened by
 // clicking a Contract No in Asset Financing History or Relationship Check
 // (Contract(s) Related with Customer). See AccordionSection's
@@ -110,6 +177,7 @@ const verdictLabel = computed(() => (activeTab.value === 'cde' ? 'Final Score Re
 const showScrollTop = ref(false);
 function onWindowScroll() {
   showScrollTop.value = window.scrollY > 320;
+  updateActiveSection();
 }
 onMounted(() => window.addEventListener('scroll', onWindowScroll, { passive: true }));
 onUnmounted(() => window.removeEventListener('scroll', onWindowScroll));
@@ -187,6 +255,8 @@ function scrollToTop() {
     <div v-if="activeTab === 'cde'" class="accordion">
       <AccordionSection
         v-for="sec in activeSections" :key="sec.key"
+        :ref="(el) => setSectionAnchor('cde', sec.key, el?.$el || el)"
+        :style="{ scrollMarginTop: (isEmbed ? 0 : 64) + 90 + 'px' }"
         :meta="sec.meta"
         :rows="currentData[sec.key] || []"
         :is-open="openSections[sec.key]"
@@ -197,6 +267,8 @@ function scrollToTop() {
 
       <!-- Document Upload — always the last section of the CDE tab -->
       <AccordionSection
+        :ref="(el) => setSectionAnchor('cde', 'documentUpload', el?.$el || el)"
+        :style="{ scrollMarginTop: (isEmbed ? 0 : 64) + 90 + 'px' }"
         :meta="{ title: 'Document Upload', icon: '📎' }"
         :is-open="uploadSectionOpen.open"
         table-mode
@@ -214,6 +286,8 @@ function scrollToTop() {
       >
         <AccordionSection
           v-for="sec in row" :key="sec.key"
+          :ref="(el) => setSectionAnchor('cam', sec.key, el?.$el || el)"
+          :style="{ scrollMarginTop: (isEmbed ? 0 : 64) + 90 + 'px' }"
           :meta="sec.meta"
           :rows="camData[sec.key] || []"
           :is-open="openCamSections[sec.key]"
@@ -228,6 +302,8 @@ function scrollToTop() {
     <div v-else-if="activeTab === 'cbas' && cbasType" class="accordion">
       <AccordionSection
         v-for="sec in cbasActiveSections" :key="sec.key"
+        :ref="(el) => setSectionAnchor('cbas', sec.key, el?.$el || el)"
+        :style="{ scrollMarginTop: (isEmbed ? 0 : 64) + 90 + 'px' }"
         :meta="sec.meta"
         :rows="cbasData[sec.key] || []"
         :is-open="openCbasSections[sec.key]"
@@ -235,6 +311,39 @@ function scrollToTop() {
         @toggle="toggleCbasSection(sec.key)"
       />
     </div>
+
+    <!-- Floating right-side section nav — same one for whichever tab is
+         active (CDE / Report CAM / Summary CBAS), listing that tab's own
+         sections. Hidden state is shared and remembered across reloads. -->
+    <nav v-if="currentNavKeys.length && !sideNavHidden" class="side-nav" aria-label="Section navigation">
+      <div class="side-nav-head">
+        <div class="side-nav-title">Sections</div>
+        <button type="button" class="side-nav-hide" title="Hide" aria-label="Hide sections nav" @click="toggleSideNav">✕</button>
+      </div>
+      <button
+        v-for="key in currentNavKeys" :key="key"
+        type="button"
+        class="side-nav-item"
+        :class="{ active: activeSectionKey === key }"
+        :title="sectionMeta(activeTab, key)?.title"
+        @click="scrollToSection(key)"
+      >
+        <span class="side-nav-icon">{{ sectionMeta(activeTab, key)?.icon }}</span>
+        <span class="side-nav-label">{{ sectionMeta(activeTab, key)?.title }}</span>
+      </button>
+    </nav>
+
+    <!-- Re-open pill, shown when the sections nav has been hidden -->
+    <button
+      v-if="currentNavKeys.length && sideNavHidden"
+      type="button"
+      class="side-nav-reopen"
+      title="Show sections"
+      aria-label="Show sections nav"
+      @click="toggleSideNav"
+    >
+      📑
+    </button>
 
     <footer class="note">
       Data shown reflects the latest {{ activeTab === 'cde' ? 'screening result' : activeTab === 'cam' ? 'Credit Approval Memorandum' : 'credit bureau (SLIK) summary' }} for App No {{ appNo || cdeKey }}.
@@ -358,6 +467,104 @@ function scrollToTop() {
 }
 
 footer.note { margin-top: 28px; font-size: 14px; color: var(--ink-faint); text-align: center; }
+
+/* Floating right-side section nav (Report CAM tab) */
+.side-nav {
+  position: fixed;
+  right: clamp(10px, 2vw, 22px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  width: 208px;
+  max-height: 74vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 8px 22px rgba(30, 41, 71, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.side-nav-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 4px 8px 8px;
+}
+.side-nav-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.side-nav-hide {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: none;
+  background: var(--bg);
+  color: var(--ink-faint);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.side-nav-hide:hover { background: var(--line); color: var(--ink); }
+.side-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  padding: 8px 8px;
+  font-family: var(--font-head);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.side-nav-item:hover { background: var(--bg); color: var(--ink); }
+.side-nav-item.active { background: var(--navy); color: #fff; }
+.side-nav-icon { flex: none; font-size: 14px; line-height: 1; }
+.side-nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 1240px) {
+  .side-nav { display: none; }
+  .side-nav-reopen { display: none; }
+}
+
+/* Re-open pill for the hidden sections nav */
+.side-nav-reopen {
+  position: fixed;
+  right: clamp(10px, 2vw, 22px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30, 41, 71, 0.16);
+  transition: background .15s ease, transform .15s ease;
+}
+.side-nav-reopen:hover { background: var(--bg); transform: translateY(-50%) translateX(-2px); }
 
 /* Floating "back to top" button */
 .scroll-top-btn {
