@@ -135,15 +135,15 @@ export const leasingIndividual = {
     {
       type: 'peopleTable',
       columns: [
-        { key: 'name', label: 'Name' },
+        { key: 'entity', label: 'Entity' },
         { key: 'typeName', label: 'Type' },
         { key: 'idMatch', label: 'ID Match', badge: true },
         { key: 'phoneAge', label: 'Phone Age' },
       ],
       people: [
-        { name: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
-        { name: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
-        { name: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { entity: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { entity: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { entity: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
       ],
     },
 

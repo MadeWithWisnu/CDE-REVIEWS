@@ -44,6 +44,37 @@ function toggleRelCat(rowIndex, catIndex) {
   openRelCats[key] = !openRelCats[key];
 }
 
+// Parse a "Rp 1,234,567" style string back into a plain number so
+// per-group (category) and grand totals can be summed, then re-formatted
+// into the same "Rp ..." shape RpAmount already knows how to render.
+function parseRp(val) {
+  if (typeof val !== 'string') return 0;
+  const m = val.trim().match(/^Rp\.?\s*([\d.,]+)/i);
+  if (!m) return 0;
+  return parseInt(m[1].replace(/[.,]/g, ''), 10) || 0;
+}
+function formatRp(n) {
+  return 'Rp ' + Math.round(n || 0).toLocaleString('en-US');
+}
+// Per-category (per-group) subtotal — shown as a "Total" row under each
+// category's expanded contract table.
+function categoryTotal(cat) {
+  const contracts = cat.contracts || [];
+  return {
+    totalNetFinance: formatRp(contracts.reduce((s, c) => s + parseRp(c.totalNetFinance), 0)),
+    outstanding: formatRp(contracts.reduce((s, c) => s + parseRp(c.outstanding), 0)),
+  };
+}
+// Grand total across every category (Debtor + Spouse + Emergency Contact +
+// Board/Management, etc.), regardless of which ones are currently expanded.
+function grandTotal(categories) {
+  const all = (categories || []).flatMap(cat => cat.contracts || []);
+  return {
+    totalNetFinance: formatRp(all.reduce((s, c) => s + parseRp(c.totalNetFinance), 0)),
+    outstanding: formatRp(all.reduce((s, c) => s + parseRp(c.outstanding), 0)),
+  };
+}
+
 // Default columns for `peopleTable` rows that don't specify their own
 // `columns` — keeps existing SLIK-style tables working unchanged.
 const defaultPeopleTableColumns = [
@@ -229,7 +260,7 @@ const defaultPeopleTableColumns = [
                       >{{ cat.count }}</button>
                     </div>
                     <div v-if="openRelCats[`${i}:${ci}`] && cat.contracts?.length" class="rel-detail-wrap">
-                      <table class="people-table">
+                      <table class="people-table rel-detail-table">
                         <thead>
                           <tr>
                             <th>Contract No.</th>
@@ -261,9 +292,32 @@ const defaultPeopleTableColumns = [
                             <td><RpAmount :value="c.amountLoss" /></td>
                           </tr>
                         </tbody>
+                        <tfoot>
+                          <tr class="rel-total-row">
+                            <td colspan="2" class="rel-total-label">Total — {{ cat.name }}</td>
+                            <td><RpAmount :value="categoryTotal(cat).totalNetFinance" /></td>
+                            <td><RpAmount :value="categoryTotal(cat).outstanding" /></td>
+                            <td colspan="5"></td>
+                          </tr>
+                        </tfoot>
                       </table>
                     </div>
                   </template>
+
+                  <!-- Grand Total: Total Net Finance & Outstanding summed across EVERY
+                       category above (Debtor + Spouse + Emergency Contact + Board/Management...),
+                       regardless of which category tables are currently expanded. -->
+                  <div v-if="row.categories?.length" class="rel-grandtotal">
+                    <span class="rel-grandtotal-label">Grand Total</span>
+                    <span class="rel-grandtotal-item">
+                      <span class="rel-grandtotal-key">Total Net Finance</span>
+                      <RpAmount :value="grandTotal(row.categories).totalNetFinance" />
+                    </span>
+                    <span class="rel-grandtotal-item">
+                      <span class="rel-grandtotal-key">Outstanding</span>
+                      <RpAmount :value="grandTotal(row.categories).outstanding" />
+                    </span>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -649,7 +703,7 @@ const defaultPeopleTableColumns = [
 
 .badge {
   display: inline-block;
-  font-size: 11px;
+  font-size: 13.5px;
   font-weight: 700;
   padding: 3px 7px;
   border-radius: 999px;
@@ -756,6 +810,33 @@ const defaultPeopleTableColumns = [
 }
 .rel-detail-wrap { padding: 4px 0 14px; }
 .rel-detail-wrap .people-table { margin-top: 0; }
+
+/* Per-category (per-group) subtotal row, shown under each category's
+   expanded contract table — "aggregate per group" totals. */
+.rel-detail-table tfoot .rel-total-row { background: var(--bg); border-top: 1.5px solid var(--line); }
+.rel-detail-table tfoot td { padding: 9px 10px; font-family: var(--font-head); border-bottom: none; }
+.rel-total-label {
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  font-size: var(--fs-field-label);
+  letter-spacing: .03em;
+}
+
+/* Grand Total bar — Total Net Finance & Outstanding summed across every
+   category in this Relationship Check group. */
+.rel-grandtotal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 2px;
+  padding: 10px 2px 12px;
+  border-top: 2px solid var(--line);
+}
+.rel-grandtotal-label { font-family: var(--font-head); font-weight: 800; font-size: 14px; color: var(--ink); margin-right: auto; }
+.rel-grandtotal-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-head); font-weight: 700; font-size: var(--fs-field-value); color: var(--ink); }
+.rel-grandtotal-key { font-family: var(--font-mono); font-size: var(--fs-field-label); text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); }
 
 /* Repeating small person cards (e.g. Dukcapil Customer/Spouse/Guarantor...) —
    data-driven: add/remove an entry in row.people and a card appears/disappears
