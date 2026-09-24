@@ -31,7 +31,7 @@ function submit() {
   <div class="search-page">
     <div class="search-bar">
       <div class="field">
-        <label>App No</label>
+        <label>APP NO</label>
         <input
           v-model="appNo" type="text" placeholder="mis. APP-2026-00123"
           class="input" :class="{ invalid: touched && !appNo.trim() }"

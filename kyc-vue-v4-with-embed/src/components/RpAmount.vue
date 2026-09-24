@@ -50,7 +50,6 @@ const parsed = computed(() => {
 .rp-symbol {
   flex: none;
   font-family: var(--font-mono);
-  font-weight: 600;
   font-size: 0.78em;
   letter-spacing: .02em;
   color: var(--ink-faint);

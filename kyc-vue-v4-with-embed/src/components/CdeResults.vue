@@ -26,7 +26,7 @@ function openCde(key) {
 
     <div class="summary-bar">
       <div class="summary-item">
-        <span class="summary-label">App No</span>
+        <span class="summary-label">APP NO</span>
         <span class="summary-value">{{ appNo || '—' }}</span>
       </div>
       <div class="summary-item">

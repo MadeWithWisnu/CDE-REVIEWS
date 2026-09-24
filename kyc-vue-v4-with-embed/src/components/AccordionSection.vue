@@ -589,13 +589,12 @@ const defaultPeopleTableColumns = [
 }
 .ft-value {
   font-family: var(--font-head);
-  font-weight: 700;
   font-size: var(--fs-field-value);
   color: var(--ink);
   white-space: normal;
   word-break: break-word;
 }
-.ft-value.mono { font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-field-value-mono); }
+.ft-value.mono { font-family: var(--font-mono); font-size: var(--fs-field-value-mono); }
 
 .field-table tbody tr:nth-child(even):not(.ft-group-row):not(.ft-note-row) { background: var(--bg); }
 

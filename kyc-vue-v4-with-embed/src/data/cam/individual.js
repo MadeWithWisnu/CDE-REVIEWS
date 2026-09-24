@@ -16,6 +16,7 @@ export const camIndividual = {
   ],
 
   applicationInfo: [
+    { type: 'row', label: 'Type of Financing/Financing Method/Purpose of Financing', value: 'Retail Automotive Financing / Investasi / Pembelian dengan cara Pembayaran secara Angsuran', mono: true },
     { type: 'row', label: 'Application No', value: '23182604118', mono: true },
     { type: 'row', label: 'Order No', value: '23182604118', mono: true },
     { type: 'badge', label: 'Status', value: 'Customer New' },
@@ -41,8 +42,8 @@ export const camIndividual = {
     { type: 'row', label: 'Type / Year', value: 'Innova Zenix Hybrid / 2026', indent: 1 },
     { type: 'row', label: 'Condition / Model / Karoseri', value: 'New / MPV / —', indent: 1 },
     { type: 'row', label: 'Name in BPKB', value: 'Dewi Anggraini', indent: 1 },
+    { type: 'row', label: 'Relationship with in BPKB', value: 'Spouse', indent: 1 },
     { type: 'row', label: 'Address in BPKB', value: 'Jl. Kemang Timur No. 12, Jakarta Selatan', indent: 1 },
-    { type: 'row', label: 'Purpose of Finance', value: 'Konsumtif', indent: 1 },
 
     { type: 'group', label: 'Supplier Information' },
     { type: 'row', label: 'Dealer Name', value: 'AUTO 2000 KEMANG', indent: 1 },

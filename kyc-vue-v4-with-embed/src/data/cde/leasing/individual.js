@@ -386,7 +386,7 @@ export const leasingIndividual = {
     {
       type: 'peopleTable',
       columns: [
-        { key: 'name', label: 'Document List' },
+        { key: 'name', label: 'DOCUMENT LIST' },
         { key: 'validity', label: 'Validity', badge: true },
       ],
       people: [

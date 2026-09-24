@@ -231,8 +231,8 @@ function scrollToTop() {
 
     <div v-if="currentVerdict" class="verdict">
       <div class="verdict-left">
-        <div v-if="appNo" class="verdict-appno">App No: <b>{{ appNo }}</b></div>
-        <div class="verdict-appno">Source Data: Mobile Order</div>
+        <div v-if="appNo" class="verdict-appno">APP NO: <b>{{ appNo }}</b></div>
+        <div class="verdict-appno">SOURCE DATA: MOBILE ORDER</div>
         <div class="label">{{ verdictLabel }}</div>
         <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">
@@ -269,7 +269,7 @@ function scrollToTop() {
       <AccordionSection
         :ref="(el) => setSectionAnchor('cde', 'documentUpload', el?.$el || el)"
         :style="{ scrollMarginTop: (isEmbed ? 0 : 64) + 90 + 'px' }"
-        :meta="{ title: 'Document Upload', icon: '📎' }"
+        :meta="{ title: 'DOCUMENT UPLOAD', icon: '📎' }"
         :is-open="uploadSectionOpen.open"
         table-mode
         @toggle="uploadSectionOpen.open = !uploadSectionOpen.open"
