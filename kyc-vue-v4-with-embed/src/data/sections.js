@@ -11,8 +11,8 @@
  * sediakan datanya di file data CDE tersebut.
  */
 export const SECTION_LIBRARY = {
-  rating:       { title: 'RATING',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
-  kyc:          { title: 'SCREENING',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
+  rating:       { title: 'SALES, BRANCH & DEALER RATING',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
+  kyc:          { title: 'KYC',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
   preScoring:   { title: 'PRE SCORING',      icon: '📊', color: '#5B4EA6', bg: '#ECE9F8' },
   slikCheck:    { title: 'SLIK CHECK',       icon: '🧮', color: '#5B4EA6', bg: '#ECE9F8' },
   collateral:   { title: 'COLLATERAL CHECK', icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },

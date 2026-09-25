@@ -237,11 +237,9 @@ function scrollToTop() {
         <div class="value">{{ currentVerdict.result }}</div>
         <div class="verdict-meta">
           <div class="vm-item">
-            <div class="vm-label">SLIK Aggregate</div>
             <div class="vm-value">{{ currentVerdict.slikAggregate }}</div>
           </div>
           <div class="vm-item">
-            <div class="vm-label">Survey Treatment</div>
             <div class="vm-value">{{ currentVerdict.surveyTreatment }}</div>
           </div>
         </div>

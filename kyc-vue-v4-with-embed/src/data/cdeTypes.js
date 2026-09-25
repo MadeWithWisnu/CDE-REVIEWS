@@ -41,7 +41,18 @@ export const FINANCING_WAYS = [
 
 export const CDE_TYPES = [
   {
-    key: 'leasing-individual',
+    key: 'leasing-individual-consumptive',
+    name: 'CDE Leasing — Individual',
+    description: 'Pembiayaan kendaraan perorangan — full pipeline scoring sampai final approval.',
+    icon: '🚗',
+    color: '#0E5C63',
+    bg: '#E4F1F1',
+    debtorType: 'personal',
+    financingWays: ['IF'],
+    sectionOrder: ['rating', 'kyc', 'preScoring', 'collateral', 'apuppt', 'lpip', 'finalScoring'],
+  },
+  {
+    key: 'leasing-individual-productive',
     name: 'CDE Leasing — Individual',
     description: 'Pembiayaan kendaraan perorangan — full pipeline scoring sampai final approval.',
     icon: '🚗',

@@ -38,11 +38,9 @@ function buildDukcapilPerson(name, raw) {
   return { name, overall: failed ? 'Not Match' : 'Match', values };
 }
 
-export const leasingIndividual = {
+export const leasingIndividualProductive = {
   verdict: {
     result: 'Recommend to Approve',
-    slikAggregate: 'Good',
-    surveyTreatment: 'SO and Surveyor',
     instantApproval: 'Yes',
   },
 
