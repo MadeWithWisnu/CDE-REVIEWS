@@ -11,8 +11,9 @@
  * sediakan datanya di file data CDE tersebut.
  */
 export const SECTION_LIBRARY = {
-  rating:       { title: 'SALES, BRANCH & DEALER RATING',           icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
-  kyc:          { title: 'KYC',        icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
+  rating:       { title: 'SALES, BRANCH & DEALER RATING', icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
+  debtor:       { title: 'NEGATIVE DEBTOR',   icon: '⭐', color: '#B7791F', bg: '#FBF0DC' },
+  kyc:          { title: 'KYC',                           icon: '🛂', color: '#0E5C63', bg: '#E4F1F1' },
   preScoring:   { title: 'PRE SCORING',      icon: '📊', color: '#5B4EA6', bg: '#ECE9F8' },
   slikCheck:    { title: 'SLIK CHECK',       icon: '🧮', color: '#5B4EA6', bg: '#ECE9F8' },
   collateral:   { title: 'COLLATERAL CHECK', icon: '🚚', color: '#B7791F', bg: '#FBF0DC' },
@@ -36,8 +37,10 @@ export function badgeTone(raw) {
 
   if (v === 'no') return 'risk';
   if (v === 'yes') return 'good';
+  if (v === 'not listed') return 'good';
 
-  const goodWords = ['good', 'match', 'inactive', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding', 'recommended', 'customer new'];
+
+  const goodWords = ['good', 'match', 'inactive', 'available', 'low risk', 'recommend to approve', 'registered', 'valid', 'verified', 'passed', 'not listed', 'green', 'outstanding', 'recommended', 'customer new', 'ro good'];
   const midWords  = ['medium', 'tend to approve', 'pep', 'yellow', 'potentially modified'];
   const riskWords = ['not match', 'active', 'listed', 'high risk', 'not registered', 'not valid', 'not verified', 'deviated', 'failed', 'dttot', 'blacklist', 'red', 'late payment', 'wo', 'exact'];
 

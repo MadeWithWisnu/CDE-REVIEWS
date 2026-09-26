@@ -780,7 +780,7 @@ const defaultPeopleTableColumns = [
 
 .badge {
   display: inline-block;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 700;
   padding: 3px 7px;
   border-radius: 999px;

@@ -14,8 +14,8 @@ const DUKCAPIL_FIELDS = [
   { key: 'namaKabupaten', label: 'Nama Kabupaten' },
   { key: 'namaKecamatan', label: 'Nama Kecamatan' },
   { key: 'namaKelurahan', label: 'Nama Kelurahan' },
-  { key: 'rt', label: 'RT' },
   { key: 'rw', label: 'RW' },
+  { key: 'rt', label: 'RT' },
   { key: 'statusPerkawinan', label: 'Status Perkawinan' },
   { key: 'jenisPekerjaan', label: 'Jenis Pekerjaan' },
   { key: 'namaLengkapIbu', label: 'Nama Lengkap Ibu' },
@@ -113,7 +113,24 @@ export const leasingIndividualProductive = {
       ],
     },
   ],
-
+  debtor: [
+    // Negative Debtor — Blacklist / Watchlist screening. If a check does not
+    // pass, the reason is shown in the Reason column; otherwise it's "—".
+    { type: 'group', label: 'Negative Debtor' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'blacklist', label: 'Blacklist'},
+        { key: 'watchlist', label: 'Watchlist'},
+      ],
+      people: [
+        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed' },
+        { name: 'Spouse', blacklist: 'DTTOT', watchlist: '3 Consecutive Late Payment (OD 10 Days)' },
+        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed' },
+      ],
+    },
+  ],
   kyc: [
     { type: 'group', label: 'DUKCAPIL' },
     {
@@ -145,22 +162,6 @@ export const leasingIndividualProductive = {
       ],
     },
 
-    { type: 'group', label: 'Phone Verification' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'entity', label: 'Entity' },
-        { key: 'typeName', label: 'Type' },
-        { key: 'idMatch', label: 'ID Match', badge: true },
-        { key: 'phoneAge', label: 'Phone Age' },
-      ],
-      people: [
-        { entity: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
-        { entity: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
-        { entity: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
-      ],
-    },
-
     { type: 'group', label: 'Location Verification' },
     {
       type: 'peopleTable',
@@ -173,6 +174,24 @@ export const leasingIndividualProductive = {
       people: [
         { address: 'Jl. Merdeka No. 123', typeName: 'House', rangeMatch: '0 - 200 meter', status: 'Verified' },
         { address: 'Jl. MH. Thamrin No. 123', typeName: 'Office', rangeMatch: '0 - 200 meter', status: 'Verified' },
+      ],
+    },
+
+    // Biometric Check — Personal debtor only.
+    { type: 'group', label: 'Biometric Check' },
+    { type: 'note', label: 'Selfie Photo requires ≥75% match to be considered Verified.' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Item' },
+        { key: 'input', label: 'Input' },
+        { key: 'score', label: 'Match Score' },
+        { key: 'status', label: 'Status', badge: true },
+      ],
+      people: [
+        { name: 'Name', input: 'Aswar Pasaribu', score: '99%', status: 'Verified' },
+        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', score: '100%', status: 'Verified' },
+        { name: 'Selfie Photo', input: 'Live Selfie Capture ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
       ],
     },
 
@@ -222,41 +241,6 @@ export const leasingIndividualProductive = {
         },
       ],
     },
-
-    // Biometric Check — Personal debtor only.
-    { type: 'group', label: 'Biometric Check' },
-    { type: 'note', label: 'Selfie Photo requires ≥75% match to be considered Verified.' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Item' },
-        { key: 'input', label: 'Input' },
-        { key: 'score', label: 'Match Score' },
-        { key: 'status', label: 'Status', badge: true },
-      ],
-      people: [
-        { name: 'Name', input: 'Aswar Pasaribu', score: '99%', status: 'Verified' },
-        { name: 'Place and Date of Birth', input: 'Sibolga, 06-06-1969', score: '100%', status: 'Verified' },
-        { name: 'Selfie Photo', input: 'Live Selfie Capture ID Photo Reference (KTP)', score: '83%', status: 'Verified' },
-      ],
-    },
-
-    // Negative Debtor — Blacklist / Watchlist screening. If a check does not
-    // pass, the reason is shown in the Reason column; otherwise it's "—".
-    { type: 'group', label: 'Negative Debtor' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Name' },
-        { key: 'blacklist', label: 'Blacklist'},
-        { key: 'watchlist', label: 'Watchlist'},
-      ],
-      people: [
-        { name: 'Customer', blacklist: 'Not Listed', watchlist: 'Not Listed' },
-        { name: 'Spouse', blacklist: 'DTTOT', watchlist: '3 Consecutive Late Payment (OD 10 Days)' },
-        { name: 'Guarantor', blacklist: 'Not Listed', watchlist: 'Not Listed' },
-      ],
-    },
   ],
 
   preScoring: [
@@ -283,9 +267,123 @@ export const leasingIndividualProductive = {
         { name: 'Guarantor', status: 'Available', grade: 'Good', summaryUrl: '#' },
       ],
     },
+
+    { type: 'group', label: 'MLCI INTERNAL HISTORY:' },
+    { type: 'badge', label: 'CREDIT HISTORY', value: 'RO Good', indent: 1 },
+    { type: 'badge', label: 'WATCHLIST', value: 'Not Listed', indent: 1 },
+
+    { type: 'group', label: 'Phone Verification' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'entity', label: 'Entity' },
+        { key: 'typeName', label: 'Type' },
+        { key: 'idMatch', label: 'ID Match', badge: true },
+        { key: 'phoneAge', label: 'Phone Age' },
+      ],
+      people: [
+        { entity: 'Customer Name', typeName: 'Customer', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { entity: 'Spouse Name', typeName: 'Spouse', idMatch: 'Match', phoneAge: '(>12 months)' },
+        { entity: 'Guarantor Name', typeName: 'Guarantor', idMatch: 'Match', phoneAge: '(>12 months)' },
+      ],
+    },
   ],
 
-  collateral: [
+  finalScoring: [
+    {
+      type: 'highlight',
+      items: [
+        { label: 'Final Score Result', value: 'Recommend to Approve', tone: 'good' },
+        { label: 'Instant Approval', value: 'Yes', tone: 'good' },
+      ],
+    },
+    { type: 'group', label: 'FINAL SLIK SCORE' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'result', label: 'Check Result', badge: true },
+        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
+      ],
+      people: [
+        { name: 'Customer', result: 'Good', summaryUrl: '#' },
+        { name: 'Spouse', result: 'Medium-Good', summaryUrl: '#' },
+        { name: 'Guarantor', result: 'Good', summaryUrl: '#' },
+        { name: 'Aggregate', result: 'Good', summaryUrl: '' },
+      ],
+    },
+
+    { type: 'group', label: 'MLCI INTERNAL HISTORY:' },
+    { type: 'badge', label: 'CREDIT HISTORY', value: 'RO Good', indent: 1 },
+    { type: 'badge', label: 'WATCHLIST', value: 'Not Listed', indent: 1 },
+
+    { type: 'group', label: 'FINAL CREDIT BUREAU CHECK' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'Name' },
+        { key: 'status', label: 'Status', badge: true },
+        { key: 'score', label: 'Score', badge: true },
+        { key: 'grade', label: 'Grade', badge: true },
+        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'Link to CREDIT BUREAU CHECK Result ' },
+      ],
+      people: [
+        { name: 'Customer', status: 'Available', score: '123', grade: 'Low Risk', summaryUrl: '#' },
+        { name: 'Spouse', status: 'Available', score: '123', grade: 'Low Risk', summaryUrl: '#' },
+      ],
+    },
+
+    { type: 'group', label: 'FINAL APPLICATION INFO:' },
+    { type: 'row', label: 'DBR / DSCR', value: '5.59%', indent: 1 },
+    { type: 'row', label: 'LTV', value: '10.46%', indent: 1 },
+
+
+    { type: 'group', label: 'BANK STATEMENT ANALYZER' },
+    {
+      type: 'peopleTable',
+      columns: [
+        { key: 'name', label: 'DOCUMENT LIST' },
+        { key: 'validity', label: 'Validity', badge: true },
+      ],
+      people: [
+        { name: '22212609005-other3-view4.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view2.pdf', validity: 'Valid' },
+        { name: '22212609005-other3-view3.pdf', validity: 'Potentially Modified' },
+        { name: '22212609005-other3-view1.pdf', validity: 'Potentially Modified' },
+      ],
+    },
+  ],
+
+   apuppt: [
+    { type: 'group', label: 'AML News' },
+    { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
+    { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
+    { type: 'group', label: 'AML-CFT Customer Classification' },
+    { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
+    { type: 'badge', label: 'PEP', value: 'Listed', indent: 1 },
+    { type: 'row', label: 'Identification & Verification Process', value: 'Enhanced Due Diligence (EDD)', indent: 1 },
+    { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
+    { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
+
+    {
+      type: 'peopleTable',
+      label: 'EDD Form',
+      columns: [
+        { key: 'name', label: 'No' },
+        { key: 'question', label: 'Questionnaire' },
+        { key: 'yes', label: 'Yes' },
+        { key: 'no', label: 'No' },
+      ],
+      people: [
+        { name: '1', question: 'Has the BM / Department Head Business Unit ensured that the prospective customer is not involved in money laundering activities, either directly or indirectly?', yes: '✓', no: '' },
+        { name: '2', question: 'Has the BM / Department Head Business Unit confirmed that the source of income and down payment of the prospective customer originate from legal sources?', yes: '✓', no: '' },
+        { name: '3', question: "Has the BM / Department Head Business Unit confirmed that the prospective customer's business/profession is not related to illegal activities?", yes: '✓', no: '' },
+        { name: '4', question: 'Has the BM / Department Head Business Unit confirmed that all customer documents are in accordance with the actual condition and supporting evidence?', yes: '✓', no: '' },
+      ],
+    },
+  ],
+
+   collateral: [
     { type: 'group', label: 'Rapindo:' },
     { type: 'row', label: 'Chassis No', value: 'MJEC1JG43J1234567', mono: true, indent: 1 },
     { type: 'row', label: 'Engine No', value: 'W04DTRR12345', mono: true, indent: 1 },
@@ -309,89 +407,6 @@ export const leasingIndividualProductive = {
       ],
       people: [
         { contractNo: '22045501002', customerName: 'Dewi Anggraini', otrAmount: 'Rp 420,000,000', totalNetFinance: 'Rp 336,000,000', disbursementDate: '24 Feb 2022', finishDate: '24 Feb 2026' },
-      ],
-    },
-  ],
-
-  apuppt: [
-    { type: 'group', label: 'AML News' },
-    { type: 'badge', label: 'Status', value: 'Listed', indent: 1 },
-    { type: 'links', label: 'AML News Link', indent: 1, links: [{ text: 'Link to AML News', url: '#' }] },
-    { type: 'group', label: 'AML-CFT Customer Classification' },
-    { type: 'row', label: 'Occupation / Business Type', value: 'Wiraswasta — Perdagangan Retail', indent: 1 },
-    { type: 'badge', label: 'PEP', value: 'Exact', indent: 1 },
-    { type: 'row', label: 'Identification & Verification Process', value: 'Enhanced Due Diligence (EDD)', indent: 1 },
-    { type: 'badge', label: 'Rating', value: 'Medium Risk', indent: 1 },
-    { type: 'badge', label: 'APU PPT Customer Status', value: 'Recommended', indent: 1 },
-
-    {
-      type: 'peopleTable',
-      label: 'EDD Form',
-      columns: [
-        { key: 'name', label: 'No' },
-        { key: 'question', label: 'Questionnaire' },
-        { key: 'yes', label: 'Yes' },
-        { key: 'no', label: 'No' },
-      ],
-      people: [
-        { name: '1', question: 'Has the BM / Department Head Business Unit ensured that the prospective customer is not involved in money laundering activities, either directly or indirectly?', yes: '✓', no: '' },
-        { name: '2', question: 'Has the BM / Department Head Business Unit confirmed that the source of income and down payment of the prospective customer originate from legal sources?', yes: '✓', no: '' },
-        { name: '3', question: "Has the BM / Department Head Business Unit confirmed that the prospective customer's business/profession is not related to illegal activities?", yes: '✓', no: '' },
-        { name: '4', question: 'Has the BM / Department Head Business Unit confirmed that all customer documents are in accordance with the actual condition and supporting evidence?', yes: '✓', no: '' },
-      ],
-    },
-  ],
-
-  lpip: [
-    { type: 'group', label: 'Customer' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'row', label: 'Score', value: '123', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary Bureau', indent: 1, links: [{ text: 'Link to BUREAU Result', url: '#' }] },
-
-    { type: 'group', label: 'Spouse' },
-    { type: 'badge', label: 'Status', value: 'Available', indent: 1 },
-    { type: 'row', label: 'Score', value: '123', indent: 1 },
-    { type: 'badge', label: 'Grade', value: 'Low Risk', indent: 1 },
-    { type: 'links', label: 'Summary Bureau', indent: 1, links: [{ text: 'Link to BUREAU Result', url: '#' }] },
-  ],
-
-  finalScoring: [
-    {
-      type: 'highlight',
-      items: [
-        { label: 'Final Score Result', value: 'Recommend to Approve', tone: 'good' },
-        { label: 'Instant Approval', value: 'Yes', tone: 'good' },
-      ],
-    },
-    { type: 'group', label: 'SLIK SCORE FINAL' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'Name' },
-        { key: 'result', label: 'Check Result', badge: true },
-        { key: 'summaryUrl', label: 'Summary Link', link: true, linkText: 'View Summary' },
-      ],
-      people: [
-        { name: 'Customer', result: 'Good', summaryUrl: '#' },
-        { name: 'Spouse', result: 'Medium-Good', summaryUrl: '#' },
-        { name: 'Guarantor', result: 'Good', summaryUrl: '#' },
-        { name: 'Aggregate', result: 'Good', summaryUrl: '' },
-      ],
-    },
-
-    { type: 'group', label: 'BANK STATEMENT ANALYZER' },
-    {
-      type: 'peopleTable',
-      columns: [
-        { key: 'name', label: 'DOCUMENT LIST' },
-        { key: 'validity', label: 'Validity', badge: true },
-      ],
-      people: [
-        { name: '22212609005-other3-view4.pdf', validity: 'Valid' },
-        { name: '22212609005-other3-view2.pdf', validity: 'Valid' },
-        { name: '22212609005-other3-view3.pdf', validity: 'Potentially Modified' },
-        { name: '22212609005-other3-view1.pdf', validity: 'Potentially Modified' },
       ],
     },
   ],
